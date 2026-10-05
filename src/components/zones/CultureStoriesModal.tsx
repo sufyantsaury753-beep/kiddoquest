@@ -125,11 +125,8 @@ export default function CultureStoriesModal({
             </div>
             <div>
               <h3 className="text-xl sm:text-2xl font-black font-display text-slate-800">
-                Tebak Kata & Cerita Nusantara 🏝️
+                Tebak Kata & Cerita Nusantara
               </h3>
-              <p className="text-xs font-semibold text-purple-700">
-                Literasi Bergambar, Cerita Audio Karaoke, & Kuis Budaya Indonesia
-              </p>
             </div>
           </div>
 

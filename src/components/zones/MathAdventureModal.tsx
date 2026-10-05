@@ -567,9 +567,6 @@ export default function MathAdventureModal({
               <h3 className="text-xl sm:text-2xl font-black font-display text-slate-800">
                 Detektif Logika 10 Variabel Buah
               </h3>
-              <p className="text-xs font-semibold text-rose-600">
-                Latihan Berpikir Komputasional & Aljabar Visual Interaktif
-              </p>
             </div>
           </div>
 
@@ -635,12 +632,9 @@ export default function MathAdventureModal({
           <div>
             {/* 1. Kamus Nilai Variabel Aktif (Papan Pengumuman Koding) */}
             <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
+              <div className="mb-2">
                 <span className="text-xs font-black text-slate-600 uppercase tracking-wider">
                   Variabel Buah Terdaftar:
-                </span>
-                <span className="text-[11px] font-bold text-rose-600">
-                  Konsep Dasar Variabel Pemrograman
                 </span>
               </div>
 
@@ -669,10 +663,6 @@ export default function MathAdventureModal({
 
             {/* 2. Papan Persamaan Matematika Visual */}
             <div className="p-4 sm:p-6 rounded-3xl bg-slate-50 border-3 border-rose-300 mb-5 text-center shadow-inner">
-              <span className="inline-block text-xs font-extrabold text-slate-500 mb-2">
-                Hitung Persamaan Logika Berikut:
-              </span>
-
               {/* Barisan Buah Visual & Operator */}
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 my-2">
                 {varQuestion.terms.map((t, idx) => {
@@ -685,21 +675,16 @@ export default function MathAdventureModal({
                         </span>
                       )}
                       
-                      <div className="flex items-center gap-1.5 p-2 sm:p-2.5 rounded-2xl bg-white border-2 border-slate-200 shadow-sm">
+                      <div className="flex items-center gap-2 p-2 sm:p-2.5 rounded-2xl bg-white border-2 border-slate-200 shadow-sm">
                         {/* Repeat fruit icons visually based on count */}
                         <div className="flex items-center gap-0.5">
                           {Array.from({ length: t.count }).map((_, cIdx) => (
                             <Svg key={cIdx} className="w-8 h-8 sm:w-10 sm:h-10" />
                           ))}
                         </div>
-                        <div className="flex flex-col text-left">
-                          <span className="text-xs sm:text-sm font-black text-slate-800">
-                            {t.count > 1 ? `${t.count} ` : ""}{t.fruit.name}
-                          </span>
-                          <span className="text-[10px] font-bold text-slate-500 font-mono">
-                            ({t.count} × {t.fruit.value})
-                          </span>
-                        </div>
+                        <span className="text-xs sm:text-sm font-black text-slate-800">
+                          {t.count > 1 ? `${t.count} ` : ""}{t.fruit.name}
+                        </span>
                       </div>
                     </React.Fragment>
                   );
@@ -709,10 +694,6 @@ export default function MathAdventureModal({
                   = ?
                 </span>
               </div>
-
-              <p className="text-xs sm:text-sm font-black text-slate-700 mt-2">
-                {varQuestion.questionText}
-              </p>
             </div>
           </div>
         ) : (

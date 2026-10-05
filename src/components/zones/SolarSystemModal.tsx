@@ -326,10 +326,6 @@ export default function SolarSystemModal({
                 )}
               </div>
             </div>
-
-            <span className="text-[11px] font-bold text-indigo-300 mt-2 flex items-center gap-1">
-              ✨ Sentuh planet untuk berputar & mendengar suara!
-            </span>
           </div>
 
           {/* Planet Details & Fact Sheet (Right) */}
