@@ -17,7 +17,11 @@ import {
   CheckCircle2,
   Sprout,
   ArrowRight,
-  Shuffle
+  Shuffle,
+  Zap,
+  Power,
+  Lightbulb,
+  Info
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -768,7 +772,17 @@ export default function ScienceLabModal({
   audioEnabled,
   liteMode,
 }: ScienceLabModalProps) {
-  const [activeTab, setActiveTab] = useState<"colors" | "waterCycle" | "foodChain">("colors");
+  const [activeTab, setActiveTab] = useState<"colors" | "waterCycle" | "foodChain" | "circuits">("colors");
+
+  // Tab 4: Laboratorium Listrik Cilik State
+  const [circuitMode, setCircuitMode] = useState<"basic" | "series" | "parallel">("basic");
+  const [basicSwitch, setBasicSwitch] = useState<boolean>(false);
+  const [seriesSwitch, setSeriesSwitch] = useState<boolean>(false);
+  const [bulbAAttached, setBulbAAttached] = useState<boolean>(true);
+  const [bulbBAttached, setBulbBAttached] = useState<boolean>(true);
+  const [parallelSwitchA, setParallelSwitchA] = useState<boolean>(false);
+  const [parallelSwitchB, setParallelSwitchB] = useState<boolean>(false);
+  const [completedCircuitModes, setCompletedCircuitModes] = useState<string[]>([]);
 
   // Color selection state (tube IDs)
   const [selectedTube1, setSelectedTube1] = useState<string | null>(null);
@@ -979,10 +993,198 @@ export default function ScienceLabModal({
     }
   };
 
+  // Handlers for Tab 4: Laboratorium Listrik Cilik
+  const handleToggleBasicSwitch = () => {
+    const nextVal = !basicSwitch;
+    setBasicSwitch(nextVal);
+    sound.playChime();
+
+    if (nextVal) {
+      if (!completedCircuitModes.includes("basic")) {
+        onEarnStars(45);
+        setCompletedCircuitModes((prev) => [...prev, "basic"]);
+        if (!liteMode) {
+          confetti({
+            particleCount: 50,
+            spread: 70,
+            origin: { y: 0.6 },
+          });
+        }
+      }
+      sound.playCelebration();
+      if (audioEnabled) {
+        sound.speak("Luar biasa! Saklar pisau ditutup, rangkaian listrik tersambung menjadi sirkuit tertutup. Arus listrik mengalir dari kutub baterai menyalakan lampu pijar hingga berpendar emas terang!");
+      }
+    } else {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Saklar pisau dibuka! Rangkaian listrik terputus menjadi sirkuit terbuka, aliran elektron terhenti dan lampu padam.");
+      }
+    }
+  };
+
+  const handleToggleSeriesSwitch = () => {
+    const nextVal = !seriesSwitch;
+    setSeriesSwitch(nextVal);
+    sound.playChime();
+
+    if (nextVal && bulbAAttached && bulbBAttached) {
+      if (!completedCircuitModes.includes("series")) {
+        onEarnStars(45);
+        setCompletedCircuitModes((prev) => [...prev, "series"]);
+        if (!liteMode) {
+          confetti({
+            particleCount: 50,
+            spread: 70,
+            origin: { y: 0.6 },
+          });
+        }
+      }
+      sound.playCelebration();
+      if (audioEnabled) {
+        sound.speak("Hebat! Pada rangkaian seri, kedua lampu berada dalam satu jalur kawat yang sama sehingga menyala bersamaan.");
+      }
+    } else if (!nextVal) {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Saklar utama dibuka, sirkuit seri terputus dan kedua lampu padam.");
+      }
+    } else {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Saklar sudah ditutup, tetapi salah satu lampu dicopot! Karena kawat terputus, arus listrik tidak dapat mengalir ke lampu lainnya.");
+      }
+    }
+  };
+
+  const handleToggleBulbA = () => {
+    const nextVal = !bulbAAttached;
+    setBulbAAttached(nextVal);
+    sound.playChime();
+
+    if (!nextVal) {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Lihat! Saat Lampu 1 dicopot atau rusak, jalur rangkaian seri terputus total. Akibatnya Lampu 2 otomatis ikut padam!");
+      }
+    } else {
+      if (seriesSwitch && bulbBAttached) {
+        sound.playCelebration();
+        if (audioEnabled) {
+          sound.speak("Lampu 1 dipasang kembali! Jalur sirkuit tersambung utuh dan kedua lampu menyala bersamaan.");
+        }
+      }
+    }
+  };
+
+  const handleToggleBulbB = () => {
+    const nextVal = !bulbBAttached;
+    setBulbBAttached(nextVal);
+    sound.playChime();
+
+    if (!nextVal) {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Lampu 2 dicopot! Karena berada di satu jalur seri, aliran listrik terhenti dan Lampu 1 otomatis ikut padam!");
+      }
+    } else {
+      if (seriesSwitch && bulbAAttached) {
+        sound.playCelebration();
+        if (audioEnabled) {
+          sound.speak("Lampu 2 dipasang kembali! Sirkuit seri kembali tertutup dan kedua lampu menyala.");
+        }
+      }
+    }
+  };
+
+  const handleToggleParallelSwitchA = () => {
+    const nextVal = !parallelSwitchA;
+    setParallelSwitchA(nextVal);
+    sound.playChime();
+
+    if (nextVal) {
+      handleCheckParallelReward(nextVal, parallelSwitchB);
+      if (audioEnabled) {
+        sound.speak("Saklar Cabang 1 ditutup! Lampu 1 menyala terang secara mandiri.");
+      }
+    } else {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        if (parallelSwitchB) {
+          sound.speak("Saklar Cabang 1 dimatikan, namun Lampu 2 di Cabang 2 tetap menyala! Inilah keunggulan rangkaian paralel.");
+        } else {
+          sound.speak("Cabang 1 dimatikan.");
+        }
+      }
+    }
+  };
+
+  const handleToggleParallelSwitchB = () => {
+    const nextVal = !parallelSwitchB;
+    setParallelSwitchB(nextVal);
+    sound.playChime();
+
+    if (nextVal) {
+      handleCheckParallelReward(parallelSwitchA, nextVal);
+      if (audioEnabled) {
+        sound.speak("Saklar Cabang 2 ditutup! Lampu 2 menyala terang secara mandiri.");
+      }
+    } else {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        if (parallelSwitchA) {
+          sound.speak("Saklar Cabang 2 dimatikan, namun Lampu 1 di Cabang 1 tetap menyala! Persis seperti lampu di rumah kita.");
+        } else {
+          sound.speak("Cabang 2 dimatikan.");
+        }
+      }
+    }
+  };
+
+  const handleCheckParallelReward = (swA: boolean, swB: boolean) => {
+    if ((swA || swB) && !completedCircuitModes.includes("parallel")) {
+      onEarnStars(45);
+      setCompletedCircuitModes((prev) => [...prev, "parallel"]);
+      sound.playCelebration();
+      if (!liteMode) {
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      }
+    } else if (swA || swB) {
+      sound.playCelebration();
+    }
+  };
+
+  const handleSpeakCircuitExplanation = () => {
+    sound.playChime();
+    if (!audioEnabled) return;
+
+    if (circuitMode === "basic") {
+      sound.speak(
+        basicSwitch
+          ? "Rangkaian Dasar sedang tertutup dan aktif! Arus listrik mengalir dari kutub baterai melewati saklar pisau dan filamen lampu, menghasilkan energi panas dan cahaya terang berpendar."
+          : "Rangkaian Dasar sedang terbuka. Saklar pisau terangkat sehingga terdapat celah udara yang memutus arus listrik. Klik saklar untuk menutup rangkaian!"
+      );
+    } else if (circuitMode === "series") {
+      sound.speak(
+        seriesSwitch && bulbAAttached && bulbBAttached
+          ? "Rangkaian Seri menghubungkan dua lampu dalam satu jalur berurutan. Coba kamu copot salah satu lampu untuk membuktikan bahwa lampu lainnya akan otomatis ikut padam!"
+          : "Pada rangkaian seri, arus listrik hanya punya satu jalur kawat. Jika salah satu lampu putus atau dicopot, sirkuit langsung terbuka dan seluruh lampu padam."
+      );
+    } else {
+      sound.speak(
+        "Rangkaian Paralel memiliki percabangan kabel mandiri. Seperti instalasi listrik di rumah, mematikan saklar lampu satu tidak akan mematikan lampu yang lain!"
+      );
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto">
       <div className="relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto">
-        {/* Header (No Tata Surya button, clean chemistry focus) */}
+        {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b-2 border-emerald-100 mb-4">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center border border-emerald-300">
@@ -993,7 +1195,7 @@ export default function ScienceLabModal({
                 Lab Sains Cilik
               </h3>
               <p className="text-xs font-semibold text-emerald-700">
-                Eksperimen Kimia Warna, Siklus Hidrologi & Rantai Makanan Ekosistem
+                Eksperimen Kimia Warna, Siklus Air, Rantai Makanan & Rangkaian Listrik
               </p>
             </div>
           </div>
@@ -1007,8 +1209,8 @@ export default function ScienceLabModal({
           </button>
         </div>
 
-        {/* Tab Switcher (3 Tabs Responsif) */}
-        <div className="grid grid-cols-3 gap-2 mb-4 sm:mb-5">
+        {/* Tab Switcher (4 Tabs Responsif) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4 sm:mb-5">
           <button
             onClick={() => {
               setActiveTab("colors");
@@ -1055,6 +1257,22 @@ export default function ScienceLabModal({
             <Sprout className="w-4 h-4 flex-shrink-0 text-emerald-600" />
             <span className="hidden md:inline">Eksperimen 3: </span>
             <span className="truncate">Rantai Makanan</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("circuits");
+              sound.playChime();
+            }}
+            className={`py-2 sm:py-2.5 px-2 sm:px-3 rounded-2xl font-black text-xs sm:text-sm border-2 btn-chunky flex items-center justify-center gap-1.5 transition-all ${
+              activeTab === "circuits"
+                ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_3px_0_0_#b45309]"
+                : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-amber-50"
+            }`}
+          >
+            <Zap className="w-4 h-4 flex-shrink-0 text-amber-600" />
+            <span className="hidden md:inline">Eksperimen 4: </span>
+            <span className="truncate">Rangkaian Listrik</span>
           </button>
         </div>
 
@@ -1810,6 +2028,703 @@ export default function ScienceLabModal({
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 4: LABORATORIUM LISTRIK CILIK (FISIKA IPAS SD KELAS 6)                */}
+        {/* ========================================================================= */}
+        {activeTab === "circuits" && (
+          <div className="space-y-4">
+            {/* CSS Animation for Electron Flow Stream */}
+            <style>{`
+              @keyframes electronStreamMove {
+                to {
+                  stroke-dashoffset: -24;
+                }
+              }
+              .animate-electron-stream {
+                stroke-dasharray: 6 6;
+                animation: electronStreamMove 0.8s linear infinite;
+              }
+            `}</style>
+
+            {/* Top Mode Selector & Audio Explanation Bar */}
+            <div className="bg-slate-100 rounded-2xl p-3 border border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
+              {/* Mode Buttons */}
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <button
+                  onClick={() => {
+                    setCircuitMode("basic");
+                    sound.playChime();
+                  }}
+                  className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
+                    circuitMode === "basic"
+                      ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+                  }`}
+                >
+                  Mode 1: Rangkaian Dasar
+                </button>
+
+                <button
+                  onClick={() => {
+                    setCircuitMode("series");
+                    sound.playChime();
+                  }}
+                  className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
+                    circuitMode === "series"
+                      ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+                  }`}
+                >
+                  Mode 2: Rangkaian Seri
+                </button>
+
+                <button
+                  onClick={() => {
+                    setCircuitMode("parallel");
+                    sound.playChime();
+                  }}
+                  className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
+                    circuitMode === "parallel"
+                      ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+                  }`}
+                >
+                  Mode 3: Rangkaian Paralel
+                </button>
+              </div>
+
+              {/* Reward & Voice Guide */}
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] sm:text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-1 rounded-full border border-amber-300 flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                  +45 Bintang Tiap Misi
+                </span>
+
+                <button
+                  onClick={handleSpeakCircuitExplanation}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 text-slate-800 text-xs font-bold border border-slate-300 shadow-sm btn-chunky"
+                  title="Dengarkan penjelasan Tobi"
+                >
+                  <Volume2 className="w-4 h-4 text-amber-600" />
+                  <span className="hidden sm:inline">Dengarkan Tobi</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Papan Sirkuit Listrik Interaktif (Pure SVG Canvas) */}
+            <div className="bg-slate-950 rounded-3xl p-3 sm:p-5 border-4 border-slate-800 shadow-xl relative overflow-hidden">
+              {/* Header Status di Atas Papan Sirkuit */}
+              <div className="flex items-center justify-between gap-2 mb-3 px-1">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  <span className="text-xs font-black tracking-wider text-slate-300 uppercase">
+                    Papan Sirkuit Fisika Cilik (Tegangan DC 1.5V)
+                  </span>
+                </div>
+
+                {/* Status Rangkaian */}
+                <div>
+                  {circuitMode === "basic" && (
+                    <span
+                      className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                        basicSwitch
+                          ? "bg-emerald-950 text-emerald-300 border-emerald-500 animate-pulse"
+                          : "bg-slate-900 text-slate-400 border-slate-700"
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3 h-3" />
+                      {basicSwitch ? "Sirkuit Tertutup (Lampu ON)" : "Sirkuit Terbuka (Lampu OFF)"}
+                    </span>
+                  )}
+
+                  {circuitMode === "series" && (
+                    <span
+                      className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                        seriesSwitch && bulbAAttached && bulbBAttached
+                          ? "bg-emerald-950 text-emerald-300 border-emerald-500 animate-pulse"
+                          : "bg-slate-900 text-slate-400 border-slate-700"
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3 h-3" />
+                      {seriesSwitch && bulbAAttached && bulbBAttached
+                        ? "Seri Menyala Bersama"
+                        : "Sirkuit Seri Terputus"}
+                    </span>
+                  )}
+
+                  {circuitMode === "parallel" && (
+                    <span
+                      className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                        parallelSwitchA || parallelSwitchB
+                          ? "bg-emerald-950 text-emerald-300 border-emerald-500"
+                          : "bg-slate-900 text-slate-400 border-slate-700"
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3 h-3" />
+                      {parallelSwitchA && parallelSwitchB
+                        ? "Kedua Cabang Aktif"
+                        : parallelSwitchA
+                        ? "Cabang 1 Aktif"
+                        : parallelSwitchB
+                        ? "Cabang 2 Aktif"
+                        : "Semua Saklar Terbuka"}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* ============================================================== */}
+              {/* SVG DIAGRAM MODE 1: RANGKAIAN DASAR (SEDERHANA)               */}
+              {/* ============================================================== */}
+              {circuitMode === "basic" && (
+                <div className="w-full flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 600 300"
+                    className="w-full h-auto max-h-[290px] sm:max-h-[330px] select-none"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <radialGradient id="bulbGlowGrad1" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#fef08a" stopOpacity="0.9" />
+                        <stop offset="40%" stopColor="#facc15" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                      </radialGradient>
+                      <linearGradient id="battGrad1" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#1e3a8a" />
+                        <stop offset="50%" stopColor="#2563eb" />
+                        <stop offset="100%" stopColor="#1d4ed8" />
+                      </linearGradient>
+                      <linearGradient id="goldCapGrad1" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fef08a" />
+                        <stop offset="100%" stopColor="#d97706" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Canvas Background Texture */}
+                    <rect width="600" height="300" rx="20" fill="#0f172a" />
+
+                    {/* Wire Base (Tembaga) */}
+                    <path
+                      d="M 90 94 L 90 50 L 230 50 M 310 50 L 510 50 L 510 120 M 510 178 L 510 250 L 90 250 L 90 201"
+                      stroke={basicSwitch ? "#f59e0b" : "#475569"}
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Animated Electron Stream (Saat Saklar Tertutup) */}
+                    {basicSwitch && (
+                      <path
+                        d="M 90 94 L 90 50 L 230 50 L 310 50 L 510 50 L 510 120 M 510 178 L 510 250 L 90 250 L 90 201"
+                        stroke="#fef08a"
+                        strokeWidth="3"
+                        fill="none"
+                        className="animate-electron-stream"
+                      />
+                    )}
+
+                    {/* Baterai 1.5V (Kiri) */}
+                    <g>
+                      {/* Body Baterai */}
+                      <rect x="70" y="105" width="40" height="90" rx="6" fill="url(#battGrad1)" stroke="#334155" strokeWidth="2" />
+                      {/* Tutup Kutub Positif (+) */}
+                      <rect x="83" y="94" width="14" height="11" rx="2" fill="url(#goldCapGrad1)" stroke="#b45309" strokeWidth="1.5" />
+                      <text x="90" y="86" fill="#facc15" fontSize="13" fontWeight="bold" textAnchor="middle">+</text>
+                      {/* Alas Kutub Negatif (-) */}
+                      <rect x="75" y="195" width="30" height="6" rx="1" fill="#94a3b8" />
+                      <text x="90" y="217" fill="#94a3b8" fontSize="15" fontWeight="bold" textAnchor="middle">-</text>
+                      {/* Label Baterai */}
+                      <text x="90" y="148" fill="#ffffff" fontSize="11" fontWeight="900" textAnchor="middle" letterSpacing="1">1.5V</text>
+                      <text x="90" y="163" fill="#93c5fd" fontSize="8" fontWeight="bold" textAnchor="middle">BATERAI</text>
+                    </g>
+
+                    {/* Saklar Pisau Fisika (Atas) - Interactive Click */}
+                    <g onClick={handleToggleBasicSwitch} className="cursor-pointer group">
+                      {/* Alas Kayu Saklar */}
+                      <rect x="210" y="38" width="120" height="24" rx="4" fill="#78350f" stroke="#451a03" strokeWidth="1.5" />
+                      {/* Terminal Kuningan Kiri & Kanan */}
+                      <circle cx="230" cy="50" r="7" fill="#d97706" stroke="#92400e" strokeWidth="1.5" />
+                      <circle cx="310" cy="50" r="7" fill="#d97706" stroke="#92400e" strokeWidth="1.5" />
+
+                      {/* Bilah Saklar Pisau */}
+                      {basicSwitch ? (
+                        /* Saklar Tertutup (ON) */
+                        <>
+                          <line x1="230" y1="50" x2="310" y2="50" stroke="#f59e0b" strokeWidth="6" strokeLinecap="round" />
+                          <circle cx="310" cy="50" r="8" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
+                          <text x="270" y="30" fill="#22c55e" fontSize="10" fontWeight="900" textAnchor="middle">SAKLAR ON</text>
+                        </>
+                      ) : (
+                        /* Saklar Terbuka (OFF) */
+                        <>
+                          <line x1="230" y1="50" x2="295" y2="18" stroke="#d97706" strokeWidth="6" strokeLinecap="round" />
+                          <circle cx="295" cy="18" r="8" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
+                          <text x="270" y="30" fill="#f87171" fontSize="10" fontWeight="900" textAnchor="middle">SAKLAR OFF</text>
+                        </>
+                      )}
+                      <text x="270" y="78" fill="#94a3b8" fontSize="9" fontWeight="bold" textAnchor="middle">KLIK SAKLAR</text>
+                    </g>
+
+                    {/* Lampu Bohlam Pijar (Kanan) */}
+                    <g>
+                      {basicSwitch ? (
+                        /* Lampu Menyala Terang */
+                        <>
+                          {/* Pendar Sinar Kuning Emas */}
+                          <circle cx="510" cy="140" r="50" fill="url(#bulbGlowGrad1)" opacity="0.85" />
+                          {/* Garis Kilau Radiasi */}
+                          <line x1="475" y1="105" x2="465" y2="95" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                          <line x1="545" y1="105" x2="555" y2="95" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                          <line x1="510" y1="90" x2="510" y2="78" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                          <line x1="460" y1="140" x2="448" y2="140" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                          <line x1="560" y1="140" x2="572" y2="140" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                          {/* Kubah Kaca Menyala */}
+                          <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#fef08a" stroke="#f59e0b" strokeWidth="2.5" />
+                          {/* Filamen Pijar Membara */}
+                          <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#ea580c" strokeWidth="2.5" strokeLinecap="round" />
+                          <text x="510" y="210" fill="#facc15" fontSize="11" fontWeight="900" textAnchor="middle">LAMPU MENYALA</text>
+                        </>
+                      ) : (
+                        /* Lampu Padam */
+                        <>
+                          {/* Kubah Kaca Padam */}
+                          <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#1e293b" stroke="#64748b" strokeWidth="2" opacity="0.8" />
+                          {/* Filamen Dingin */}
+                          <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                          <text x="510" y="210" fill="#64748b" fontSize="11" fontWeight="bold" textAnchor="middle">LAMPU MATI</text>
+                        </>
+                      )}
+
+                      {/* Fitting Dudukan Logam Berulir */}
+                      <rect x="498" y="160" width="24" height="18" rx="2" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+                      <line x1="498" y1="166" x2="522" y2="166" stroke="#475569" strokeWidth="1.5" />
+                      <line x1="498" y1="172" x2="522" y2="172" stroke="#475569" strokeWidth="1.5" />
+                    </g>
+                  </svg>
+                </div>
+              )}
+
+              {/* ============================================================== */}
+              {/* SVG DIAGRAM MODE 2: RANGKAIAN SERI (2 LAMPU 1 JALUR)          */}
+              {/* ============================================================== */}
+              {circuitMode === "series" && (
+                <div className="w-full flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 600 320"
+                    className="w-full h-auto max-h-[300px] sm:max-h-[340px] select-none"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <radialGradient id="bulbGlowGrad2" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#fef08a" stopOpacity="0.85" />
+                        <stop offset="50%" stopColor="#facc15" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+
+                    <rect width="600" height="320" rx="20" fill="#0f172a" />
+
+                    {/* Kondisi Nyala Seri: Saklar tertutup DAN kedua lampu terpasang */}
+                    {(() => {
+                      const isBothLit = seriesSwitch && bulbAAttached && bulbBAttached;
+                      return (
+                        <>
+                          {/* Kawat Sirkuit Utama Seri */}
+                          <path
+                            d="M 90 94 L 90 50 L 195 50 M 275 50 L 510 50 L 510 95 M 510 145 L 510 185 M 510 235 L 510 270 L 90 270 L 90 201"
+                            stroke={isBothLit ? "#f59e0b" : "#475569"}
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+
+                          {/* Aliran Elektron Seri */}
+                          {isBothLit && (
+                            <path
+                              d="M 90 94 L 90 50 L 195 50 L 275 50 L 510 50 L 510 95 L 510 145 L 510 185 L 510 235 L 510 270 L 90 270 L 90 201"
+                              stroke="#fef08a"
+                              strokeWidth="3"
+                              fill="none"
+                              className="animate-electron-stream"
+                            />
+                          )}
+
+                          {/* Baterai 1.5V */}
+                          <g>
+                            <rect x="70" y="105" width="40" height="90" rx="6" fill="#1e40af" stroke="#334155" strokeWidth="2" />
+                            <rect x="83" y="94" width="14" height="11" rx="2" fill="#facc15" stroke="#b45309" strokeWidth="1.5" />
+                            <text x="90" y="86" fill="#facc15" fontSize="13" fontWeight="bold" textAnchor="middle">+</text>
+                            <rect x="75" y="195" width="30" height="6" rx="1" fill="#94a3b8" />
+                            <text x="90" y="217" fill="#94a3b8" fontSize="15" fontWeight="bold" textAnchor="middle">-</text>
+                            <text x="90" y="148" fill="#ffffff" fontSize="11" fontWeight="900" textAnchor="middle">1.5V</text>
+                            <text x="90" y="163" fill="#93c5fd" fontSize="8" fontWeight="bold" textAnchor="middle">BATERAI</text>
+                          </g>
+
+                          {/* Saklar Utama Seri */}
+                          <g onClick={handleToggleSeriesSwitch} className="cursor-pointer">
+                            <rect x="180" y="38" width="110" height="24" rx="4" fill="#78350f" stroke="#451a03" strokeWidth="1.5" />
+                            <circle cx="195" cy="50" r="7" fill="#d97706" />
+                            <circle cx="275" cy="50" r="7" fill="#d97706" />
+                            {seriesSwitch ? (
+                              <>
+                                <line x1="195" y1="50" x2="275" y2="50" stroke="#f59e0b" strokeWidth="6" strokeLinecap="round" />
+                                <circle cx="275" cy="50" r="8" fill="#dc2626" />
+                                <text x="235" y="30" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR UTAMA ON</text>
+                              </>
+                            ) : (
+                              <>
+                                <line x1="195" y1="50" x2="260" y2="18" stroke="#d97706" strokeWidth="6" strokeLinecap="round" />
+                                <circle cx="260" cy="18" r="8" fill="#dc2626" />
+                                <text x="235" y="30" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR UTAMA OFF</text>
+                              </>
+                            )}
+                          </g>
+
+                          {/* Lampu Seri 1 (Atas) */}
+                          <g onClick={handleToggleBulbA} className="cursor-pointer">
+                            {bulbAAttached ? (
+                              <>
+                                {isBothLit && <circle cx="510" cy="115" r="38" fill="url(#bulbGlowGrad2)" opacity="0.8" />}
+                                <path
+                                  d="M 498 132 C 493 125 490 117 490 110 C 490 98 499 90 510 90 C 521 90 530 98 530 110 C 530 117 527 125 522 132 Z"
+                                  fill={isBothLit ? "#fef08a" : "#1e293b"}
+                                  stroke={isBothLit ? "#f59e0b" : "#64748b"}
+                                  strokeWidth="2"
+                                />
+                                <rect x="500" y="132" width="20" height="13" rx="2" fill="#94a3b8" />
+                                <text x="545" y="115" fill={isBothLit ? "#facc15" : "#94a3b8"} fontSize="10" fontWeight="900">LAMPU 1</text>
+                              </>
+                            ) : (
+                              /* Lampu 1 Dicopot/Rusak */
+                              <>
+                                <rect x="495" y="95" width="30" height="40" rx="6" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+                                <text x="510" y="120" fill="#ef4444" fontSize="9" fontWeight="900" textAnchor="middle">DICOPOT</text>
+                                <text x="545" y="115" fill="#f87171" fontSize="10" fontWeight="900">LAMPU 1 (PUTUS)</text>
+                              </>
+                            )}
+                          </g>
+
+                          {/* Lampu Seri 2 (Bawah) */}
+                          <g onClick={handleToggleBulbB} className="cursor-pointer">
+                            {bulbBAttached ? (
+                              <>
+                                {isBothLit && <circle cx="510" cy="205" r="38" fill="url(#bulbGlowGrad2)" opacity="0.8" />}
+                                <path
+                                  d="M 498 222 C 493 215 490 207 490 200 C 490 188 499 180 510 180 C 521 180 530 188 530 200 C 530 207 527 215 522 222 Z"
+                                  fill={isBothLit ? "#fef08a" : "#1e293b"}
+                                  stroke={isBothLit ? "#f59e0b" : "#64748b"}
+                                  strokeWidth="2"
+                                />
+                                <rect x="500" y="222" width="20" height="13" rx="2" fill="#94a3b8" />
+                                <text x="545" y="205" fill={isBothLit ? "#facc15" : "#94a3b8"} fontSize="10" fontWeight="900">LAMPU 2</text>
+                              </>
+                            ) : (
+                              /* Lampu 2 Dicopot/Rusak */
+                              <>
+                                <rect x="495" y="185" width="30" height="40" rx="6" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+                                <text x="510" y="210" fill="#ef4444" fontSize="9" fontWeight="900" textAnchor="middle">DICOPOT</text>
+                                <text x="545" y="205" fill="#f87171" fontSize="10" fontWeight="900">LAMPU 2 (PUTUS)</text>
+                              </>
+                            )}
+                          </g>
+                        </>
+                      );
+                    })()}
+                  </svg>
+                </div>
+              )}
+
+              {/* ============================================================== */}
+              {/* SVG DIAGRAM MODE 3: RANGKAIAN PARALEL (2 SAKLAR BERCABANG)    */}
+              {/* ============================================================== */}
+              {circuitMode === "parallel" && (
+                <div className="w-full flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 600 330"
+                    className="w-full h-auto max-h-[300px] sm:max-h-[340px] select-none"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <radialGradient id="bulbGlowGrad3" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#fef08a" stopOpacity="0.85" />
+                        <stop offset="45%" stopColor="#facc15" stopOpacity="0.45" />
+                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+
+                    <rect width="600" height="330" rx="20" fill="#0f172a" />
+
+                    {/* Rel Utama Baterai & Percabangan */}
+                    <path
+                      d="M 80 108 L 80 60 L 170 60 M 170 60 L 170 200 L 210 200 M 170 60 L 210 60"
+                      stroke={parallelSwitchA || parallelSwitchB ? "#f59e0b" : "#475569"}
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Cabang 1 (Atas) */}
+                    <path
+                      d="M 290 60 L 460 60 L 460 75 M 460 115 L 460 125 L 530 125"
+                      stroke={parallelSwitchA ? "#f59e0b" : "#475569"}
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    {parallelSwitchA && (
+                      <path
+                        d="M 80 108 L 80 60 L 210 60 L 290 60 L 460 60 L 460 125 L 530 125 L 530 280 L 80 280 L 80 216"
+                        stroke="#fef08a"
+                        strokeWidth="3"
+                        fill="none"
+                        className="animate-electron-stream"
+                      />
+                    )}
+
+                    {/* Cabang 2 (Bawah) */}
+                    <path
+                      d="M 290 200 L 460 200 L 460 215 M 460 255 L 460 265 L 530 265"
+                      stroke={parallelSwitchB ? "#f59e0b" : "#475569"}
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    {parallelSwitchB && (
+                      <path
+                        d="M 80 108 L 80 60 L 170 60 L 170 200 L 290 200 L 460 200 L 460 265 L 530 265 L 530 280 L 80 280 L 80 216"
+                        stroke="#fef08a"
+                        strokeWidth="3"
+                        fill="none"
+                        className="animate-electron-stream"
+                      />
+                    )}
+
+                    {/* Rel Kembali Bersama (Bawah) */}
+                    <path
+                      d="M 530 125 L 530 280 L 80 280 L 80 216"
+                      stroke={parallelSwitchA || parallelSwitchB ? "#f59e0b" : "#475569"}
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Titik Percabangan Node */}
+                    <circle cx="170" cy="60" r="5" fill="#facc15" />
+                    <circle cx="530" cy="265" r="5" fill="#facc15" />
+
+                    {/* Baterai 1.5V */}
+                    <g>
+                      <rect x="60" y="118" width="40" height="90" rx="6" fill="#1e40af" stroke="#334155" strokeWidth="2" />
+                      <rect x="73" y="107" width="14" height="11" rx="2" fill="#facc15" stroke="#b45309" strokeWidth="1.5" />
+                      <text x="80" y="99" fill="#facc15" fontSize="13" fontWeight="bold" textAnchor="middle">+</text>
+                      <rect x="65" y="208" width="30" height="6" rx="1" fill="#94a3b8" />
+                      <text x="80" y="230" fill="#94a3b8" fontSize="15" fontWeight="bold" textAnchor="middle">-</text>
+                      <text x="80" y="161" fill="#ffffff" fontSize="11" fontWeight="900" textAnchor="middle">1.5V</text>
+                      <text x="80" y="176" fill="#93c5fd" fontSize="8" fontWeight="bold" textAnchor="middle">BATERAI</text>
+                    </g>
+
+                    {/* Saklar Cabang 1 (Atas) */}
+                    <g onClick={handleToggleParallelSwitchA} className="cursor-pointer">
+                      <rect x="210" y="48" width="90" height="24" rx="4" fill="#78350f" stroke="#451a03" strokeWidth="1.5" />
+                      <circle cx="225" cy="60" r="6" fill="#d97706" />
+                      <circle cx="285" cy="60" r="6" fill="#d97706" />
+                      {parallelSwitchA ? (
+                        <>
+                          <line x1="225" y1="60" x2="285" y2="60" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
+                          <circle cx="285" cy="60" r="7" fill="#dc2626" />
+                          <text x="255" y="40" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 1 ON</text>
+                        </>
+                      ) : (
+                        <>
+                          <line x1="225" y1="60" x2="275" y2="35" stroke="#d97706" strokeWidth="5" strokeLinecap="round" />
+                          <circle cx="275" cy="35" r="7" fill="#dc2626" />
+                          <text x="255" y="40" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 1 OFF</text>
+                        </>
+                      )}
+                    </g>
+
+                    {/* Lampu Cabang 1 (Atas) */}
+                    <g>
+                      {parallelSwitchA && <circle cx="460" cy="85" r="35" fill="url(#bulbGlowGrad3)" opacity="0.8" />}
+                      <path
+                        d="M 448 102 C 443 95 440 87 440 80 C 440 68 449 60 460 60 C 471 60 480 68 480 80 C 480 87 477 95 472 102 Z"
+                        fill={parallelSwitchA ? "#fef08a" : "#1e293b"}
+                        stroke={parallelSwitchA ? "#f59e0b" : "#64748b"}
+                        strokeWidth="2"
+                      />
+                      <rect x="450" y="102" width="20" height="13" rx="2" fill="#94a3b8" />
+                      <text x="460" y="130" fill={parallelSwitchA ? "#facc15" : "#64748b"} fontSize="10" fontWeight="900" textAnchor="middle">
+                        LAMPU 1 {parallelSwitchA ? "(ON)" : "(OFF)"}
+                      </text>
+                    </g>
+
+                    {/* Saklar Cabang 2 (Bawah) */}
+                    <g onClick={handleToggleParallelSwitchB} className="cursor-pointer">
+                      <rect x="210" y="188" width="90" height="24" rx="4" fill="#78350f" stroke="#451a03" strokeWidth="1.5" />
+                      <circle cx="225" cy="200" r="6" fill="#d97706" />
+                      <circle cx="285" cy="200" r="6" fill="#d97706" />
+                      {parallelSwitchB ? (
+                        <>
+                          <line x1="225" y1="200" x2="285" y2="200" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
+                          <circle cx="285" cy="200" r="7" fill="#dc2626" />
+                          <text x="255" y="180" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 2 ON</text>
+                        </>
+                      ) : (
+                        <>
+                          <line x1="225" y1="200" x2="275" y2="175" stroke="#d97706" strokeWidth="5" strokeLinecap="round" />
+                          <circle cx="275" cy="175" r="7" fill="#dc2626" />
+                          <text x="255" y="180" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 2 OFF</text>
+                        </>
+                      )}
+                    </g>
+
+                    {/* Lampu Cabang 2 (Bawah) */}
+                    <g>
+                      {parallelSwitchB && <circle cx="460" cy="225" r="35" fill="url(#bulbGlowGrad3)" opacity="0.8" />}
+                      <path
+                        d="M 448 242 C 443 235 440 227 440 220 C 440 208 449 200 460 200 C 471 200 480 208 480 220 C 480 227 477 235 472 242 Z"
+                        fill={parallelSwitchB ? "#fef08a" : "#1e293b"}
+                        stroke={parallelSwitchB ? "#f59e0b" : "#64748b"}
+                        strokeWidth="2"
+                      />
+                      <rect x="450" y="242" width="20" height="13" rx="2" fill="#94a3b8" />
+                      <text x="460" y="270" fill={parallelSwitchB ? "#facc15" : "#64748b"} fontSize="10" fontWeight="900" textAnchor="middle">
+                        LAMPU 2 {parallelSwitchB ? "(ON)" : "(OFF)"}
+                      </text>
+                    </g>
+                  </svg>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Touch-Friendly Chunky Control Buttons */}
+            <div className="bg-white rounded-2xl p-4 border-2 border-slate-200 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black uppercase text-slate-500 tracking-wider">
+                  Panel Kontrol Saklar & Komponen:
+                </span>
+                <span className="text-[11px] font-bold text-slate-400">
+                  Sentuh tombol di bawah untuk menguji sirkuit
+                </span>
+              </div>
+
+              {/* Controls Mode 1 */}
+              {circuitMode === "basic" && (
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={handleToggleBasicSwitch}
+                    className={`flex-1 min-w-[200px] py-3 px-4 rounded-2xl font-black text-sm sm:text-base border-3 flex items-center justify-center gap-2 btn-chunky transition-all ${
+                      basicSwitch
+                        ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_4px_0_0_#065f46]"
+                        : "bg-amber-400 text-amber-950 border-amber-500 shadow-[0_4px_0_0_#b45309]"
+                    }`}
+                  >
+                    <Power className="w-5 h-5" />
+                    <span>{basicSwitch ? "Buka Saklar (Matikan Lampu)" : "Tutup Saklar (Nyalakan Lampu)"}</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Controls Mode 2 */}
+              {circuitMode === "series" && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <button
+                    onClick={handleToggleSeriesSwitch}
+                    className={`py-3 px-3 rounded-2xl font-black text-xs sm:text-sm border-3 flex items-center justify-center gap-1.5 btn-chunky ${
+                      seriesSwitch
+                        ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_3px_0_0_#065f46]"
+                        : "bg-slate-200 text-slate-800 border-slate-400 shadow-[0_3px_0_0_#94a3b8]"
+                    }`}
+                  >
+                    <Power className="w-4 h-4" />
+                    <span>{seriesSwitch ? "Saklar Utama: ON" : "Saklar Utama: OFF"}</span>
+                  </button>
+
+                  <button
+                    onClick={handleToggleBulbA}
+                    className={`py-3 px-3 rounded-2xl font-black text-xs sm:text-sm border-3 flex items-center justify-center gap-1.5 btn-chunky ${
+                      bulbAAttached
+                        ? "bg-amber-400 text-amber-950 border-amber-500 shadow-[0_3px_0_0_#b45309]"
+                        : "bg-rose-500 text-white border-rose-600 shadow-[0_3px_0_0_#9f1239]"
+                    }`}
+                  >
+                    <Lightbulb className="w-4 h-4" />
+                    <span>{bulbAAttached ? "Lampu 1: Terpasang" : "Lampu 1: Dicopot (Putus)"}</span>
+                  </button>
+
+                  <button
+                    onClick={handleToggleBulbB}
+                    className={`py-3 px-3 rounded-2xl font-black text-xs sm:text-sm border-3 flex items-center justify-center gap-1.5 btn-chunky ${
+                      bulbBAttached
+                        ? "bg-amber-400 text-amber-950 border-amber-500 shadow-[0_3px_0_0_#b45309]"
+                        : "bg-rose-500 text-white border-rose-600 shadow-[0_3px_0_0_#9f1239]"
+                    }`}
+                  >
+                    <Lightbulb className="w-4 h-4" />
+                    <span>{bulbBAttached ? "Lampu 2: Terpasang" : "Lampu 2: Dicopot (Putus)"}</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Controls Mode 3 */}
+              {circuitMode === "parallel" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    onClick={handleToggleParallelSwitchA}
+                    className={`py-3 px-4 rounded-2xl font-black text-xs sm:text-sm border-3 flex items-center justify-center gap-2 btn-chunky ${
+                      parallelSwitchA
+                        ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_4px_0_0_#065f46]"
+                        : "bg-slate-200 text-slate-800 border-slate-400 shadow-[0_4px_0_0_#94a3b8]"
+                    }`}
+                  >
+                    <Power className="w-4 h-4" />
+                    <span>{parallelSwitchA ? "Saklar Cabang 1: ON (Menyala)" : "Saklar Cabang 1: OFF (Mati)"}</span>
+                  </button>
+
+                  <button
+                    onClick={handleToggleParallelSwitchB}
+                    className={`py-3 px-4 rounded-2xl font-black text-xs sm:text-sm border-3 flex items-center justify-center gap-2 btn-chunky ${
+                      parallelSwitchB
+                        ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_4px_0_0_#065f46]"
+                        : "bg-slate-200 text-slate-800 border-slate-400 shadow-[0_4px_0_0_#94a3b8]"
+                    }`}
+                  >
+                    <Power className="w-4 h-4" />
+                    <span>{parallelSwitchB ? "Saklar Cabang 2: ON (Menyala)" : "Saklar Cabang 2: OFF (Mati)"}</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Catatan Konsep Edukatif IPAS SD Kelas 6 */}
+            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-4 border-2 border-amber-200 shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-amber-200 text-amber-900 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Info className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="font-black text-sm text-slate-900 mb-1">
+                    {circuitMode === "basic" && "Konsep Rangkaian Dasar & Arus Listrik"}
+                    {circuitMode === "series" && "Karakteristik Kunci Rangkaian Seri"}
+                    {circuitMode === "parallel" && "Keunggulan Rangkaian Paralel di Rumah"}
+                  </h5>
+                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                    {circuitMode === "basic" &&
+                      "Arus listrik hanya dapat mengalir pada rangkaian tertutup (sirkuit tanpa celah). Baterai berperan sebagai sumber energi listrik, sedangkan saklar berfungsi sebagai alat pemutus dan penyambung aliran elektron secara aman."}
+                    {circuitMode === "series" &&
+                      "Pada rangkaian seri, seluruh lampu dipasang secara berurutan dalam satu jalur kawat tunggal. Kelemahannya: jika salah satu lampu rusak atau dicopot, sirkuit langsung terbuka dan seluruh lampu lainnya otomatis ikut padam!"}
+                    {circuitMode === "parallel" &&
+                      "Pada rangkaian paralel, kawat listrik memiliki percabangan mandiri ke tiap lampu. Tiap cabang memiliki jalur arus sendiri, sehingga saat satu saklar dimatikan, lampu di cabang lain tetap menyala terang. Ini adalah jenis rangkaian yang digunakan pada instalasi listrik rumah tangga!"}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
