@@ -820,6 +820,18 @@ export default function ScienceLabModal({
     setChainErrorFeedback(null);
   }, [selectedEcosystemId]);
 
+  // Preload gambar WebP siklus air untuk instan zero-latency switching
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const img1 = new Image();
+      img1.src = "/images/evaporasi.webp";
+      const img2 = new Image();
+      img2.src = "/images/kondensasi.webp";
+      const img3 = new Image();
+      img3.src = "/images/presipitasi.webp";
+    }
+  }, [isOpen, activeTab]);
+
   const handleSelectOrganism = (organismId: string) => {
     if (foodChainComplete) return;
 
@@ -1483,10 +1495,10 @@ export default function ScienceLabModal({
                 key={waterStep}
                 src={
                   waterStep === 1
-                    ? "/images/evaporasi.jpg"
+                    ? "/images/evaporasi.webp"
                     : waterStep === 2
-                    ? "/images/kondensasi.jpg"
-                    : "/images/presipitasi.jpg"
+                    ? "/images/kondensasi.webp"
+                    : "/images/presipitasi.webp"
                 }
                 alt={
                   waterStep === 1
@@ -1495,7 +1507,7 @@ export default function ScienceLabModal({
                     ? "Tahap Kondensasi Pembentukan Awan"
                     : "Tahap Presipitasi Turunnya Hujan"
                 }
-                className="w-full h-full object-cover object-center transition-all duration-500"
+                className="w-full h-full object-cover object-center transition-opacity duration-200"
               />
 
               {/* Step Title Badge Overlay */}
