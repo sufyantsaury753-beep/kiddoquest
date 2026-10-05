@@ -137,22 +137,10 @@ export default function LearningZonesGrid({
 
   return (
     <section className="py-6 sm:py-8">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-200 text-amber-900 border border-amber-400 mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Zona Petualangan Belajar Kurikulum Merdeka (Tahap 2)</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display text-slate-800">
-            Pilih Petualangan Serumu! 🚀
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 font-medium">
-            Setiap zona dirancang visual, interaktif, bernarasi suara, dan memberikan bintang penghargaan.
-          </p>
-        </div>
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-500 bg-white px-3 py-2 rounded-2xl border border-slate-200 self-start sm:self-auto">
-          <span>Target Usia: SD Kelas 1–6</span>
-        </div>
+      <div className="mb-5 sm:mb-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display text-slate-800">
+          Pilih Petualangan Serumu!
+        </h2>
       </div>
 
       {/* Grid Cards (Responsive 4 Columns on large screen, 2 on tablet, 1 on mobile) */}

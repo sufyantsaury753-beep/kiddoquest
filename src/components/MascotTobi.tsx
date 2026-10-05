@@ -153,12 +153,6 @@ export default function MascotTobi({
               </div>
             )}
           </div>
-
-          <div className="mt-2 text-center">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-black bg-sky-200 text-sky-900 border border-sky-400">
-              🤖 Tobi si Robot Sahabat
-            </span>
-          </div>
         </div>
 
         {/* Speech Bubble & Interactive Prompts */}
@@ -168,16 +162,11 @@ export default function MascotTobi({
             {/* Small pointer triangle on desktop */}
             <div className="hidden md:block absolute -left-3 top-8 w-6 h-6 bg-white border-l-3 border-b-3 border-amber-300 transform rotate-45" />
 
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
-                <h3 className="text-base sm:text-lg font-black font-display text-slate-800">
-                  Kata Tobi Hari Ini:
-                </h3>
-              </div>
-              <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
-                AI Socratic Mentor
-              </span>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
+              <h3 className="text-base sm:text-lg font-black font-display text-slate-800">
+                Kata Tobi Hari Ini:
+              </h3>
             </div>
 
             <p className="text-base sm:text-lg font-medium text-slate-700 leading-relaxed font-sans min-h-[56px]">
@@ -196,22 +185,17 @@ export default function MascotTobi({
                   }`}
                 >
                   <Volume2 className={`w-4 h-4 ${isSpeaking ? "animate-spin" : ""}`} />
-                  <span>{isSpeaking ? "Berhenti Bicara" : "🔊 Dengarkan Suara Tobi"}</span>
+                  <span>{isSpeaking ? "Berhenti Bicara" : "Dengarkan Suara Tobi"}</span>
                 </button>
 
                 <button
                   onClick={() => handleSpeak("Semangat belajarnya ya sahabat cilik! Kamu adalah anak hebat dan cerdas!", "excited")}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-300 text-xs sm:text-sm font-bold shadow-[0_3px_0_0_#d97706] btn-chunky"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-300 text-xs sm:text-sm font-bold shadow-[0_3px_0_0_#d97706] btn-chunky"
                 >
                   <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
-                  <span>Beri Semangat!</span>
+                  <span>Beri Semangat</span>
                 </button>
               </div>
-
-              <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
-                <Lightbulb className="w-3.5 h-3.5 text-amber-500" />
-                Tekan tombol di bawah untuk bertanya pada Tobi
-              </span>
             </div>
           </div>
 

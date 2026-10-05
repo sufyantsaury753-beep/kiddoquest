@@ -51,7 +51,7 @@ export default function StatsAndBadges({
               <div className="mt-2.5">
                 <div className="flex justify-between text-xs font-bold text-slate-600 mb-1">
                   <span>Level {currentLevel}</span>
-                  <span>Menuju Level {currentLevel + 1} ({starsInCurrentLevel}/50 ⭐)</span>
+                  <span>Menuju Level {currentLevel + 1} ({starsInCurrentLevel}/50 Bintang)</span>
                 </div>
                 <div className="w-full h-3.5 bg-amber-100 rounded-full overflow-hidden border border-amber-300">
                   <div
@@ -86,25 +86,23 @@ export default function StatsAndBadges({
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {AVAILABLE_BADGES.map((b) => {
               const isUnlocked = profile.badges.includes(b.id);
               return (
                 <div
                   key={b.id}
-                  className={`p-3.5 rounded-2xl border-2 flex flex-col items-center text-center transition-transform ${
+                  className={`p-3.5 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all ${
                     isUnlocked
-                      ? `${b.color} shadow-sm`
+                      ? `${b.color} shadow-sm hover:scale-105`
                       : "bg-slate-50 border-slate-200 text-slate-400 opacity-60"
                   }`}
+                  title={b.desc}
                 >
-                  <div className="text-3xl mb-1">{b.icon}</div>
-                  <h5 className="font-black text-xs leading-tight mb-1 font-display">
+                  <div className="text-3xl mb-1.5 select-none">{b.icon}</div>
+                  <h5 className="font-black text-xs leading-tight font-display text-center">
                     {b.title}
                   </h5>
-                  <p className="text-[10px] font-semibold leading-tight line-clamp-2">
-                    {b.desc}
-                  </p>
                 </div>
               );
             })}

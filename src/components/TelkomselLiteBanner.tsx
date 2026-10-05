@@ -52,17 +52,17 @@ export default function TelkomselLiteBanner({
               <h3 className={`text-xl sm:text-2xl font-black font-display ${
                 liteMode ? "text-slate-900" : "text-white"
               }`}>
-                Mode Hemat Data: Telkomsel Lite untuk Anak se-Nusantara 🇮🇩
+                Mode Hemat Data: Telkomsel Lite untuk Anak Indonesia
               </h3>
 
-              <p className={`text-xs sm:text-sm font-medium mt-1.5 max-w-2xl leading-relaxed ${
+              <p className={`text-xs sm:text-sm font-semibold mt-1.5 leading-relaxed ${
                 liteMode ? "text-slate-700" : "text-red-100"
               }`}>
-                Dirancang khusus untuk siswa SD di pelosok dan daerah 3T dengan keterbatasan kuota atau sinyal internet. Seluruh simulasi, suara sintesis, dan manipulatif matematika berjalan 100% di browser tanpa download aset video yang berat.
+                Akses super cepat & hemat kuota untuk belajar di mana saja.
               </p>
 
               {/* Badges checklist */}
-              <div className="flex flex-wrap items-center gap-3 mt-4 text-xs font-bold">
+              <div className="flex flex-wrap items-center gap-3 mt-3 text-xs font-bold">
                 <span className={`flex items-center gap-1 ${liteMode ? "text-slate-800" : "text-white"}`}>
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   Zero Server Crash
@@ -83,29 +83,24 @@ export default function TelkomselLiteBanner({
           <div className="flex flex-col items-center flex-shrink-0 w-full md:w-auto">
             <button
               onClick={handleToggle}
-              className={`w-full md:w-auto px-6 py-3.5 rounded-2xl font-black text-sm sm:text-base border-2 btn-chunky flex items-center justify-center gap-2 shadow-md ${
+              className={`w-full md:w-auto px-5 py-2.5 sm:py-3 rounded-2xl font-black text-xs sm:text-sm border-2 btn-chunky flex items-center justify-center gap-2 shadow-md ${
                 liteMode
-                  ? "bg-red-600 text-white border-red-700 hover:bg-red-700 shadow-[0_4px_0_0_#7f1d1d]"
-                  : "bg-white text-red-700 border-white hover:bg-amber-50 shadow-[0_4px_0_0_#b91c1c]"
+                  ? "bg-red-600 text-white border-red-700 hover:bg-red-700 shadow-[0_3px_0_0_#7f1d1d]"
+                  : "bg-white text-red-700 border-white hover:bg-amber-50 shadow-[0_3px_0_0_#b91c1c]"
               }`}
             >
               {liteMode ? (
                 <>
-                  <Wifi className="w-5 h-5" />
-                  <span>Kembali ke Mode Normal</span>
+                  <Wifi className="w-4 h-4" />
+                  <span>Mode Normal</span>
                 </>
               ) : (
                 <>
-                  <Zap className="w-5 h-5 fill-red-600 text-red-600" />
-                  <span>Aktifkan Mode Telkomsel Lite</span>
+                  <Zap className="w-4 h-4 fill-red-600 text-red-600" />
+                  <span>Mode Hemat Kuota</span>
                 </>
               )}
             </button>
-            <span className={`text-[11px] font-semibold mt-2 ${
-              liteMode ? "text-red-700" : "text-red-200"
-            }`}>
-              {liteMode ? "⚡ Mode Ringan Aktif" : "Klik untuk mencoba performa super ringan"}
-            </span>
           </div>
         </div>
       </div>
