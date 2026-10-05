@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { 
-  Sparkles, 
+  Compass, 
   Volume2, 
   VolumeX, 
   Award, 
@@ -27,6 +27,7 @@ export default function Navbar({
   onOpenCertificate,
   onOpenProfile,
 }: NavbarProps) {
+  const [logoBounce, setLogoBounce] = useState(false);
   const [starBounce, setStarBounce] = useState(false);
 
   const toggleSpeech = () => {
@@ -54,6 +55,12 @@ export default function Navbar({
     }
   };
 
+  const handleLogoClick = () => {
+    setLogoBounce(true);
+    sound.playChime();
+    setTimeout(() => setLogoBounce(false), 450);
+  };
+
   const handleStarClick = () => {
     setStarBounce(true);
     sound.playChime();
@@ -62,28 +69,30 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-200/80 shadow-sm no-print">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-4">
-        {/* Logo and Competition Badge */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
+        {/* Logo and Competition Badge (Authentic Edutech Adventure Brand) */}
         <div className="flex items-center gap-3">
           <div 
-            onClick={handleStarClick}
-            className="cursor-pointer flex items-center justify-center w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white shadow-[0_4px_0_0_#d97706] active:translate-y-1 active:shadow-none transition-transform"
-            title="Klik bintang logo!"
+            onClick={handleLogoClick}
+            className={`cursor-pointer flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_4px_0_0_#c2410c] active:translate-y-1 active:shadow-none transition-all ${
+              logoBounce ? "scale-110 -rotate-6" : "hover:scale-105"
+            }`}
+            title="KiddoQuest - Petualangan Edukasi Cilik"
           >
-            <Sparkles className={`w-6 h-6 sm:w-7 sm:h-7 text-yellow-100 ${starBounce ? "animate-spin" : "animate-pulse"}`} />
+            <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-amber-50" strokeWidth={2.5} />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight font-display bg-gradient-to-r from-amber-500 via-rose-500 to-sky-600 bg-clip-text text-transparent">
+              <span className="text-2xl sm:text-3xl font-extrabold tracking-tight font-display bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 bg-clip-text text-transparent">
                 KiddoQuest
               </span>
-              <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-300">
+              <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-black bg-rose-100 text-rose-700 border border-rose-300">
                 SD Merdeka Belajar
               </span>
             </div>
-            <p className="text-[10px] sm:text-xs font-semibold text-slate-500 flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping inline-block" />
-              M-ONE Telkomsel Coding Competition
+            <p className="text-[10px] sm:text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block" />
+              <span>M-ONE Telkomsel Coding Competition</span>
             </p>
           </div>
         </div>
