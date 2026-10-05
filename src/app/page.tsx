@@ -148,7 +148,6 @@ export default function KiddoQuestHomePage() {
         onEarnStars={handleEarnStars}
         audioEnabled={profile.audioEnabled}
         liteMode={profile.liteMode}
-        onOpenSolarSystem={() => setActiveZoneModal("tatasurya")}
       />
 
       {/* Zone 2: Petualangan Berhitung Ceria Modal */}
