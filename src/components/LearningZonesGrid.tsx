@@ -17,7 +17,7 @@ interface LearningZonesGridProps {
 const ScienceFlaskIcon = () => (
   <svg
     viewBox="0 0 120 120"
-    className="w-28 h-28 sm:w-32 sm:h-32 drop-shadow-lg group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -98,7 +98,7 @@ const ScienceFlaskIcon = () => (
 const MathNumbersIcon = () => (
   <svg
     viewBox="0 0 120 120"
-    className="w-28 h-28 sm:w-32 sm:h-32 drop-shadow-lg group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-300"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-300"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -173,7 +173,7 @@ const MathNumbersIcon = () => (
 const SolarPlanetIcon = () => (
   <svg
     viewBox="0 0 120 120"
-    className="w-28 h-28 sm:w-32 sm:h-32 drop-shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -279,7 +279,7 @@ const SolarPlanetIcon = () => (
 const StoryBookIcon = () => (
   <svg
     viewBox="0 0 120 120"
-    className="w-28 h-28 sm:w-32 sm:h-32 drop-shadow-lg group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-300"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-300"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -380,7 +380,7 @@ export const LEARNING_ZONES = [
     colorScheme: {
       bg: "bg-emerald-50 hover:bg-emerald-100/60",
       border: "border-emerald-400",
-      shadow: "shadow-[0_10px_0_0_#059669]",
+      shadow: "shadow-[0_4px_0_0_#059669] sm:shadow-[0_8px_0_0_#059669]",
     },
   },
   {
@@ -390,7 +390,7 @@ export const LEARNING_ZONES = [
     colorScheme: {
       bg: "bg-rose-50 hover:bg-rose-100/60",
       border: "border-rose-400",
-      shadow: "shadow-[0_10px_0_0_#e11d48]",
+      shadow: "shadow-[0_4px_0_0_#e11d48] sm:shadow-[0_8px_0_0_#e11d48]",
     },
   },
   {
@@ -400,7 +400,7 @@ export const LEARNING_ZONES = [
     colorScheme: {
       bg: "bg-indigo-50 hover:bg-indigo-100/60",
       border: "border-indigo-400",
-      shadow: "shadow-[0_10px_0_0_#4338ca]",
+      shadow: "shadow-[0_4px_0_0_#4338ca] sm:shadow-[0_8px_0_0_#4338ca]",
     },
   },
   {
@@ -410,7 +410,7 @@ export const LEARNING_ZONES = [
     colorScheme: {
       bg: "bg-purple-50 hover:bg-purple-100/60",
       border: "border-purple-400",
-      shadow: "shadow-[0_10px_0_0_#9333ea]",
+      shadow: "shadow-[0_4px_0_0_#9333ea] sm:shadow-[0_8px_0_0_#9333ea]",
     },
   },
 ];
@@ -427,35 +427,35 @@ export default function LearningZonesGrid({
 
   return (
     <section className="py-6 sm:py-8">
-      <div className="mb-6 sm:mb-8 text-center sm:text-left">
+      <div className="mb-5 sm:mb-8 text-center sm:text-left">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display text-slate-800 tracking-tight">
           Pilih Petualangan Serumu!
         </h2>
       </div>
 
-      {/* Grid Menu Ikon Game Anak (Game Tiles ala Nintendo/iPad) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
+      {/* Grid Menu Ikon Game Anak (2 Kolom Kompak di Layar HP, 4 Kolom di Layar Lebar) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {LEARNING_ZONES.map((zone) => {
           const Icon = zone.IconComponent;
           return (
             <div
               key={zone.id}
               onClick={() => handleZoneClick(zone.id)}
-              className={`group relative rounded-3xl sm:rounded-4xl py-10 px-6 sm:py-12 sm:px-8 flex flex-col items-center justify-center text-center border-4 transition-all duration-200 cursor-pointer select-none ${
+              className={`group relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex flex-col items-center justify-center text-center border-3 sm:border-4 transition-all duration-200 cursor-pointer select-none ${
                 zone.colorScheme.bg
               } ${zone.colorScheme.border} ${
                 liteMode
                   ? "hover:opacity-95"
-                  : `${zone.colorScheme.shadow} hover:-translate-y-2 hover:scale-[1.03] active:translate-y-2 active:shadow-none`
+                  : `${zone.colorScheme.shadow} hover:-translate-y-1.5 hover:scale-[1.03] active:translate-y-1 active:shadow-none`
               }`}
             >
-              {/* 1. Ikon SVG Murni Berukuran Besar Mengambang Bebas (Tanpa Bingkai Kotak) */}
-              <div className="mb-5 sm:mb-6 flex items-center justify-center">
+              {/* 1. Ikon SVG Murni Berukuran Pas di HP & Besar di Desktop */}
+              <div className="mb-2 sm:mb-4 flex items-center justify-center">
                 <Icon />
               </div>
 
               {/* 2. Judul Singkat, Tebal, dan Ceria */}
-              <h3 className="text-2xl sm:text-3xl font-black font-display text-slate-800 tracking-wide group-hover:text-amber-800 transition-colors">
+              <h3 className="text-sm sm:text-xl font-black font-display text-slate-800 tracking-wide text-center group-hover:text-amber-800 transition-colors leading-tight">
                 {zone.title}
               </h3>
             </div>
