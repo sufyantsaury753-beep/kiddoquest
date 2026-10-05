@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { 
   X, 
@@ -9,10 +9,10 @@ import {
   Volume2, 
   Star, 
   CheckCircle2, 
-  Info,
-  Compass,
-  ArrowRight,
-  Sun
+  Info, 
+  Compass, 
+  ArrowRight, 
+  Sun 
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -28,10 +28,11 @@ interface PlanetData {
   id: string;
   name: string;
   order: string;
-  emoji: string;
+  image: string;
+  emoji?: string;
   colorHex: string;
   gradient: string;
-  sizeRem: string;
+  sizeRem?: string;
   orbitRadius: number; // for visual representation
   tag: string;
   nickname: string;
@@ -46,6 +47,7 @@ const PLANETS: PlanetData[] = [
     id: "sun",
     name: "Matahari",
     order: "Pusat Tata Surya",
+    image: "/images/planets/sun.webp",
     emoji: "☀️",
     colorHex: "#f59e0b",
     gradient: "from-yellow-400 via-amber-500 to-orange-600",
@@ -62,6 +64,7 @@ const PLANETS: PlanetData[] = [
     id: "mercury",
     name: "Merkurius",
     order: "Planet ke-1",
+    image: "/images/planets/mercury.webp",
     emoji: "🪨",
     colorHex: "#94a3b8",
     gradient: "from-slate-300 via-slate-400 to-slate-600",
@@ -78,6 +81,7 @@ const PLANETS: PlanetData[] = [
     id: "venus",
     name: "Venus",
     order: "Planet ke-2",
+    image: "/images/planets/venus.webp",
     emoji: "🟡",
     colorHex: "#eab308",
     gradient: "from-yellow-300 via-amber-400 to-yellow-600",
@@ -94,6 +98,7 @@ const PLANETS: PlanetData[] = [
     id: "earth",
     name: "Bumi",
     order: "Planet ke-3",
+    image: "/images/planets/earth.webp",
     emoji: "🌍",
     colorHex: "#0284c7",
     gradient: "from-sky-400 via-blue-500 to-emerald-500",
@@ -110,6 +115,7 @@ const PLANETS: PlanetData[] = [
     id: "mars",
     name: "Mars",
     order: "Planet ke-4",
+    image: "/images/planets/mars.webp",
     emoji: "🔴",
     colorHex: "#ef4444",
     gradient: "from-red-400 via-rose-500 to-orange-700",
@@ -126,6 +132,7 @@ const PLANETS: PlanetData[] = [
     id: "jupiter",
     name: "Jupiter",
     order: "Planet ke-5",
+    image: "/images/planets/jupiter.webp",
     emoji: "🪐",
     colorHex: "#d97706",
     gradient: "from-amber-300 via-orange-400 to-amber-700",
@@ -142,6 +149,7 @@ const PLANETS: PlanetData[] = [
     id: "saturn",
     name: "Saturnus",
     order: "Planet ke-6",
+    image: "/images/planets/saturn.webp",
     emoji: "🪐",
     colorHex: "#eab308",
     gradient: "from-yellow-200 via-amber-300 to-yellow-600",
@@ -153,6 +161,40 @@ const PLANETS: PlanetData[] = [
     voiceScript: "Lihatlah cincin indah Saturnus! Saturnus adalah permata tata surya yang anggun. Cincinnya terbentuk dari jutaan serpihan es dan bebatuan berkilau yang berputar melingkar!",
     temperature: "-140 °C (Sangat Dingin)",
     moons: "146 Bulan (Terbanyak!)",
+  },
+  {
+    id: "uranus",
+    name: "Uranus",
+    order: "Planet ke-7",
+    image: "/images/planets/uranus.webp",
+    emoji: "🔵",
+    colorHex: "#38bdf8",
+    gradient: "from-cyan-300 via-sky-400 to-teal-600",
+    sizeRem: "w-14 h-14 sm:w-17 sm:h-17",
+    orbitRadius: 7,
+    tag: "Planet Es",
+    nickname: "Raksasa Es Cincin Miring",
+    funFact: "Uranus adalah planet es terdingin yang berputar menyamping seperti bola menggelinding!",
+    voiceScript: "Halo! Aku Uranus, planet ketujuh yang berputar menyamping seperti bola menggelinding di luar angkasa! Warnaku biru kehijauan yang dingin dan tenang!",
+    temperature: "-224 °C (Ekstrem Dingin)",
+    moons: "27 Bulan",
+  },
+  {
+    id: "neptune",
+    name: "Neptunus",
+    order: "Planet ke-8",
+    image: "/images/planets/neptune.webp",
+    emoji: "🌊",
+    colorHex: "#2563eb",
+    gradient: "from-blue-400 via-indigo-600 to-blue-900",
+    sizeRem: "w-14 h-14 sm:w-17 sm:h-17",
+    orbitRadius: 8,
+    tag: "Planet Terluar",
+    nickname: "Planet Biru Badai Terjauh",
+    funFact: "Neptunus memiliki angin tercepat di tata surya yang melesat melampaui kecepatan suara!",
+    voiceScript: "Ini adalah Neptunus, planet kedelapan yang paling jauh dari matahari! Di sini ada badai angin supersonik yang melesat melampaui kecepatan suara!",
+    temperature: "-214 °C (Membeku)",
+    moons: "14 Bulan",
   },
 ];
 
@@ -166,6 +208,16 @@ export default function SolarSystemModal({
   const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
   const [isSpinning, setIsSpinning] = useState(false);
   const [exploredPlanets, setExploredPlanets] = useState<string[]>(["earth"]);
+
+  // Preload semua gambar planet WebP ke memori browser
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      PLANETS.forEach((planet) => {
+        const img = new Image();
+        img.src = planet.image;
+      });
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -275,11 +327,15 @@ export default function SolarSystemModal({
                   }`}
                 >
                   <div
-                    className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-md transition-transform ${
-                      isSelected ? "animate-bounce" : ""
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center shadow-md transition-transform ${
+                      isSelected ? "animate-bounce ring-2 ring-yellow-400" : ""
                     }`}
                   >
-                    {planet.emoji}
+                    <img
+                      src={planet.image}
+                      alt={planet.name}
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover mx-auto"
+                    />
                   </div>
                   <span className="text-xs font-extrabold text-white mt-1.5 font-display truncate max-w-[70px]">
                     {planet.name}
@@ -302,28 +358,25 @@ export default function SolarSystemModal({
           {/* Visual Planet Celestial Graphic (Left) */}
           <div className="md:col-span-5 flex flex-col items-center justify-center py-2 sm:py-4 relative">
             {/* Orbital Rings Background */}
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+            <div className="relative w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center">
               {/* Outer Orbit Line */}
               <div className="absolute inset-0 rounded-full border border-dashed border-indigo-400/30 animate-spin" style={{ animationDuration: "35s" }} />
               {/* Middle Glow Ring */}
               <div className="absolute inset-4 rounded-full border border-indigo-500/20" />
 
-              {/* Planet Body */}
+              {/* Planet Body Realistic HD Image */}
               <div
-                className={`relative rounded-full bg-gradient-to-br ${activePlanet.gradient} shadow-[0_0_35px_rgba(255,255,255,0.25)] flex items-center justify-center cursor-pointer transition-transform duration-700 ${
-                  activePlanet.sizeRem
-                } ${isSpinning ? "rotate-180 scale-110" : "hover:scale-105"}`}
+                className={`relative rounded-full shadow-[0_0_50px_rgba(255,255,255,0.3)] flex items-center justify-center cursor-pointer transition-all duration-700 ${
+                  isSpinning ? "rotate-180 scale-110" : "hover:scale-105 active:scale-95"
+                }`}
                 onClick={handleSpeakPlanet}
                 title="Klik planet untuk mendengarkan narasi!"
               >
-                <span className="text-3xl sm:text-4xl select-none filter drop-shadow-md">
-                  {activePlanet.emoji}
-                </span>
-
-                {/* Saturn Ring Mockup */}
-                {activePlanet.id === "saturn" && (
-                  <div className="absolute w-28 sm:w-36 h-8 sm:h-10 rounded-full border-4 border-amber-200/70 -rotate-12 pointer-events-none" />
-                )}
+                <img
+                  src={activePlanet.image}
+                  alt={activePlanet.name}
+                  className="w-44 h-44 sm:w-56 sm:h-56 rounded-full object-cover select-none pointer-events-none drop-shadow-2xl"
+                />
               </div>
             </div>
           </div>
