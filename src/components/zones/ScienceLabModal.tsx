@@ -14,10 +14,7 @@ import {
   Star,
   Target,
   Trophy,
-  CheckCircle2,
-  Waves,
-  Trees,
-  Award
+  CheckCircle2
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -1081,52 +1078,35 @@ export default function ScienceLabModal({
               </button>
             </div>
 
-            {/* Nature Canvas Graphic */}
-            <div className="relative rounded-2xl h-56 sm:h-64 bg-gradient-to-b from-sky-300 via-sky-100 to-emerald-200 overflow-hidden border-2 border-sky-300 p-4 flex flex-col justify-between">
-              {/* Sun & Cloud Layer */}
-              <div className="flex justify-between items-start">
-                {/* Sun */}
-                <div className={`transition-all duration-500 ${waterStep === 1 ? "scale-125" : "scale-90 opacity-70"}`}>
-                  <div className="w-16 h-16 rounded-full bg-amber-400 border-4 border-amber-300 shadow-[0_0_25px_#f59e0b] flex items-center justify-center">
-                    <Sun className="w-10 h-10 text-amber-950 animate-spin" style={{ animationDuration: "14s" }} />
-                  </div>
-                </div>
+            {/* High-Resolution 2D Educational Illustration Container */}
+            <div className="relative rounded-3xl overflow-hidden border-4 border-sky-300 shadow-md aspect-[4/3] sm:aspect-[16/9] bg-sky-950 flex items-center justify-center transition-all duration-300">
+              <img
+                key={waterStep}
+                src={
+                  waterStep === 1
+                    ? "/images/evaporasi.jpg"
+                    : waterStep === 2
+                    ? "/images/kondensasi.jpg"
+                    : "/images/presipitasi.jpg"
+                }
+                alt={
+                  waterStep === 1
+                    ? "Tahap Evaporasi Air Laut"
+                    : waterStep === 2
+                    ? "Tahap Kondensasi Pembentukan Awan"
+                    : "Tahap Presipitasi Turunnya Hujan"
+                }
+                className="w-full h-full object-cover object-center transition-all duration-500"
+              />
 
-                {/* Cloud SVG */}
-                <div className={`transition-all duration-500 ${
-                  waterStep === 1 ? "opacity-30 scale-75" : waterStep === 2 ? "scale-110 opacity-100" : "scale-125 opacity-100"
-                }`}>
-                  <div className={`px-4 py-2 rounded-2xl text-white font-extrabold text-sm shadow-md flex items-center gap-2 ${
-                    waterStep === 3 ? "bg-slate-700 border border-slate-800" : "bg-white text-slate-700 border border-slate-200"
-                  }`}>
-                    <CloudRain className={`w-5 h-5 ${waterStep === 3 ? "text-blue-400" : "text-sky-500"}`} />
-                    <span>Awan {waterStep === 3 ? "Mendung Hujan" : "Kondensasi Uap"}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Rain Drops on Presipitasi */}
-              {waterStep === 3 && (
-                <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                  <div className="flex items-center space-x-6 text-sky-600 animate-bounce">
-                    <Droplets className="w-7 h-7" />
-                    <Droplets className="w-9 h-9" />
-                    <Droplets className="w-7 h-7" />
-                  </div>
-                </div>
-              )}
-
-              {/* Ocean and Land Base */}
-              <div className="flex justify-between items-end">
-                <div className="bg-sky-600 text-white text-xs font-bold px-3 py-1.5 rounded-t-xl border-t border-sky-400 flex items-center gap-1.5">
-                  <Waves className="w-4 h-4" />
-                  <span>Samudera Air Laut</span>
-                </div>
-
-                <div className="bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-t-xl border-t border-emerald-400 flex items-center gap-1.5">
-                  <Trees className="w-4 h-4" />
-                  <span>Daratan & Pepohonan</span>
-                </div>
+              {/* Step Title Badge Overlay */}
+              <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-2xl border-2 border-sky-200 shadow-md flex items-center gap-2">
+                <Droplets className="w-4 h-4 text-sky-600" />
+                <span className="text-xs sm:text-sm font-black text-slate-800 font-display">
+                  {waterStep === 1 && "Tahap 1: Evaporasi (Penguapan Air Laut)"}
+                  {waterStep === 2 && "Tahap 2: Kondensasi (Pembentukan Awan Tebal)"}
+                  {waterStep === 3 && "Tahap 3: Presipitasi (Turunnya Hujan ke Bumi)"}
+                </span>
               </div>
             </div>
 
