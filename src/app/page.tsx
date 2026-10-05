@@ -15,6 +15,7 @@ import ProfileModal from "@/components/ProfileModal";
 import ScienceLabModal from "@/components/zones/ScienceLabModal";
 import MathAdventureModal from "@/components/zones/MathAdventureModal";
 import CultureStoriesModal from "@/components/zones/CultureStoriesModal";
+import SolarSystemModal from "@/components/zones/SolarSystemModal";
 
 import { 
   StudentProfile, 
@@ -147,6 +148,7 @@ export default function KiddoQuestHomePage() {
         onEarnStars={handleEarnStars}
         audioEnabled={profile.audioEnabled}
         liteMode={profile.liteMode}
+        onOpenSolarSystem={() => setActiveZoneModal("tatasurya")}
       />
 
       {/* Zone 2: Petualangan Berhitung Ceria Modal */}
@@ -158,7 +160,16 @@ export default function KiddoQuestHomePage() {
         liteMode={profile.liteMode}
       />
 
-      {/* Zone 3: Tebak Kata & Cerita Nusantara Modal */}
+      {/* Zone 3: Penjelajah Tata Surya Cilik Modal (Baru) */}
+      <SolarSystemModal
+        isOpen={activeZoneModal === "tatasurya"}
+        onClose={() => setActiveZoneModal(null)}
+        onEarnStars={handleEarnStars}
+        audioEnabled={profile.audioEnabled}
+        liteMode={profile.liteMode}
+      />
+
+      {/* Zone 4: Tebak Kata & Cerita Nusantara Modal */}
       <CultureStoriesModal
         isOpen={activeZoneModal === "cerita"}
         onClose={() => setActiveZoneModal(null)}

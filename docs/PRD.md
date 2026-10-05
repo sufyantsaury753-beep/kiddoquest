@@ -79,24 +79,40 @@
 
 ## 5. Zona Pembelajaran Utama (Features)
 
-### 5.1. Lab Sains Cilik (Eksperimen Interaktif)
-- **Eksperimen 1: Pencampuran Warna Primer ke Sekunder:**
-  - Tabung reaksi interaktif: Anak memilih warna Merah, Kuning, atau Biru.
-  - Efek pencampuran dinamis: Merah + Kuning = Oranye, Biru + Kuning = Hijau, Merah + Biru = Ungu.
-  - Penjelasan sains sederhana dipandu suara Tobi si Robot.
+### 5.1. Lab Sains Cilik (Eksperimen Interaktif - Tahap 2 Enhanced)
+- **Eksperimen 1: Pencampuran 5 Warna Cairan & Misi Resep Ajaib:**
+  - Tabung reaksi interaktif: Merah, Kuning, Biru, ⚪ Putih (Pencerah), dan ⚫ Hitam (Penggelap).
+  - Kombinasi reaksi warna lengkap:
+    * Merah + Putih = Pink / Merah Muda (Bunga Mawar)
+    * Biru + Putih = Biru Langit / Cyan
+    * Kuning + Putih = Kuning Pastel / Krim
+    * Merah + Hitam = Merah Marun
+    * Kuning + Hitam = Cokelat / Zaitun Alami
+    * Biru + Hitam = Biru Dongker / Navy Malam
+    * Hitam + Putih = Abu-abu Awan Mendung
+    * Merah + Kuning = Oranye, Kuning + Biru = Hijau, Merah + Biru = Ungu.
+  - **Misi Resep Warna Ajaib:** Tobi memberi tantangan acak (contoh: "Tobi ingin mewarnai kelopak bunga mawar, bisakah kamu meracik warna Pink?"), berhadiah +40 Bintang ekstra saat berhasil.
 - **Eksperimen 2: Siklus Air & Hujan Ajaib:**
   - Slider interaktif suhu matahari & awan.
-  - Anak melihat proses Evaporasi (penguapan air laut) -> Kondensasi (pembentukan awan) -> Presipitasi (hujan turun menyirami pohon).
+  - Alur konkret: Evaporasi -> Kondensasi -> Presipitasi (hujan turun menyirami bumi).
 
-### 5.2. Petualangan Berhitung Ceria (Manipulatif Matematika)
-- Pohon Apel Ajaib: Memvisualisasikan soal penjumlahan & pengurangan.
-- Interaksi Sentuhan: Anak memetik apel dari pohon dan memasukkannya ke dalam keranjang (mendukung drag-and-drop mouse di laptop dan tap langsung di layar sentuh ponsel/tablet).
-- Tampilan representasi angka abstrak yang terhubung langsung dengan jumlah objek fisik konkret (metode CPA: *Concrete-Pictorial-Abstract*).
+### 5.2. Petualangan Berhitung Ceria (Manipulatif Matematika - Tahap 2 Enhanced)
+- **Mode 1: Target Apel Dinamis Diacak (1–10):**
+  - Target buah apel diacak otomatis setiap kali tombol "Acak Soal Baru" ditekan atau setelah misi berhasil.
+- **Mode 2: Soal Cerita Penjumlahan Visual (CPA Method):**
+  - Contoh: "Di keranjang sudah ada A apel awal. Petik B apel lagi dari pohon! Berapa total apel sekarang? (A + B = C)".
+  - Representasi konkret: Apel awal di keranjang + apel yang dipetik = total apel realtime dengan audio penjelasan Tobi.
 
 ### 5.3. Tebak Kata & Cerita Nusantara (Literasi Bergambar)
 - Mengenalkan kekayaan budaya Indonesia (Komodo dari NTT, Rumah Gadang dari Minangkabau, Candi Borobudur dari Jawa).
-- Fitur "Dengarkan Cerita" dengan teks bercahaya (*karaoke-style highlighting*) yang sinkron dengan suara Tobi.
-- Permainan susun huruf/kata untuk melatih kepekaan fonik dan kosa kata.
+- Fitur "Dengarkan Cerita" dengan sinkronisasi suara Tobi.
+- Permainan susun kata untuk melatih kepekaan fonik dan kosa kata.
+
+### 5.4. Penjelajah Tata Surya Cilik (IPA Astronomi SD - Modul Baru Tahap 2)
+- Miniatur orbit tata surya interaktif: Matahari (pusat) dan 6 planet utama (Merkurius, Venus, Bumi, Mars, Jupiter, Saturnus).
+- Touch-friendly planet selector dengan efek rotasi ceria.
+- Audio narasi fakta unik planet dalam bahasa Indonesia ramah anak.
+- Bintang penghargaan (+35 ⭐ per planet) dan lencana "Astronot Cilik".
 
 ---
 

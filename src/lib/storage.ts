@@ -71,6 +71,13 @@ export const AVAILABLE_BADGES = [
     icon: "🏝️",
     color: "bg-purple-100 text-purple-800 border-purple-300",
   },
+  {
+    id: "penjelajah-tatasurya",
+    title: "Astronot Cilik",
+    desc: "Menjelajahi matahari dan planet di Lab Tata Surya",
+    icon: "🪐",
+    color: "bg-indigo-100 text-indigo-800 border-indigo-300",
+  },
 ];
 
 export function getStudentProfile(): StudentProfile {
