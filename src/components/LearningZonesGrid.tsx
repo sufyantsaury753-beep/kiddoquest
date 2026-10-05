@@ -405,7 +405,7 @@ export const LEARNING_ZONES = [
   },
   {
     id: "cerita",
-    title: "Cerita Nusantara",
+    title: "Literasi Nusantara",
     IconComponent: StoryBookIcon,
     colorScheme: {
       bg: "bg-purple-50 hover:bg-purple-100/60",
