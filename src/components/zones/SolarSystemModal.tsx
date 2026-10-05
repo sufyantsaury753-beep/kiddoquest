@@ -281,7 +281,7 @@ export default function SolarSystemModal({
                 </span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black font-display text-white mt-0.5">
-                Penjelajah Tata Surya Cilik 🪐
+                Penjelajah Tata Surya Cilik
               </h3>
             </div>
           </div>
@@ -327,14 +327,14 @@ export default function SolarSystemModal({
                   }`}
                 >
                   <div
-                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center shadow-md transition-transform ${
-                      isSelected ? "animate-bounce ring-2 ring-yellow-400" : ""
+                    className={`w-10 h-10 flex items-center justify-center transition-transform ${
+                      isSelected ? "animate-bounce ring-2 ring-yellow-400 rounded-full" : ""
                     }`}
                   >
                     <img
                       src={planet.image}
                       alt={planet.name}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover mx-auto"
+                      className="w-9 h-9 object-contain mx-auto"
                     />
                   </div>
                   <span className="text-xs font-extrabold text-white mt-1.5 font-display truncate max-w-[70px]">
@@ -366,7 +366,7 @@ export default function SolarSystemModal({
 
               {/* Planet Body Realistic HD Image */}
               <div
-                className={`relative rounded-full shadow-[0_0_50px_rgba(255,255,255,0.3)] flex items-center justify-center cursor-pointer transition-all duration-700 ${
+                className={`relative flex items-center justify-center cursor-pointer transition-all duration-700 ${
                   isSpinning ? "rotate-180 scale-110" : "hover:scale-105 active:scale-95"
                 }`}
                 onClick={handleSpeakPlanet}
@@ -375,7 +375,7 @@ export default function SolarSystemModal({
                 <img
                   src={activePlanet.image}
                   alt={activePlanet.name}
-                  className="w-44 h-44 sm:w-56 sm:h-56 rounded-full object-cover select-none pointer-events-none drop-shadow-2xl"
+                  className="w-48 h-48 sm:w-60 sm:h-60 object-contain select-none pointer-events-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.7)]"
                 />
               </div>
             </div>
@@ -424,7 +424,7 @@ export default function SolarSystemModal({
                 className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black text-xs sm:text-sm border-2 border-sky-400 shadow-[0_3px_0_0_#1e1b4b] btn-chunky"
               >
                 <Volume2 className="w-4 h-4 text-yellow-300" />
-                <span>🔊 Dengarkan Penjelasan Tobi</span>
+                <span>Dengarkan Penjelasan Tobi</span>
               </button>
 
               <button
