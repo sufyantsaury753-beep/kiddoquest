@@ -2201,17 +2201,24 @@ export default function ScienceLabModal({
                         <>
                           <line x1="230" y1="50" x2="310" y2="50" stroke="#f59e0b" strokeWidth="6" strokeLinecap="round" />
                           <circle cx="310" cy="50" r="8" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
-                          <text x="270" y="30" fill="#22c55e" fontSize="10" fontWeight="900" textAnchor="middle">SAKLAR ON</text>
                         </>
                       ) : (
                         /* Saklar Terbuka (OFF) */
                         <>
                           <line x1="230" y1="50" x2="295" y2="18" stroke="#d97706" strokeWidth="6" strokeLinecap="round" />
                           <circle cx="295" cy="18" r="8" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
-                          <text x="270" y="30" fill="#f87171" fontSize="10" fontWeight="900" textAnchor="middle">SAKLAR OFF</text>
                         </>
                       )}
-                      <text x="270" y="78" fill="#94a3b8" fontSize="9" fontWeight="bold" textAnchor="middle">KLIK SAKLAR</text>
+                      <text 
+                        x="270" 
+                        y="74" 
+                        fill={basicSwitch ? "#4ade80" : "#f87171"} 
+                        fontSize="10" 
+                        fontWeight="900" 
+                        textAnchor="middle"
+                      >
+                        {basicSwitch ? "SAKLAR: ON (TERHUBUNG)" : "SAKLAR: OFF (TERBUKA)"}
+                      </text>
                     </g>
 
                     {/* Lampu Bohlam Pijar (Kanan) */}
@@ -2319,15 +2326,23 @@ export default function ScienceLabModal({
                               <>
                                 <line x1="195" y1="50" x2="275" y2="50" stroke="#f59e0b" strokeWidth="6" strokeLinecap="round" />
                                 <circle cx="275" cy="50" r="8" fill="#dc2626" />
-                                <text x="235" y="30" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR UTAMA ON</text>
                               </>
                             ) : (
                               <>
                                 <line x1="195" y1="50" x2="260" y2="18" stroke="#d97706" strokeWidth="6" strokeLinecap="round" />
                                 <circle cx="260" cy="18" r="8" fill="#dc2626" />
-                                <text x="235" y="30" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR UTAMA OFF</text>
                               </>
                             )}
+                            <text 
+                              x="235" 
+                              y="74" 
+                              fill={seriesSwitch ? "#4ade80" : "#f87171"} 
+                              fontSize="10" 
+                              fontWeight="900" 
+                              textAnchor="middle"
+                            >
+                              {seriesSwitch ? "SAKLAR UTAMA: ON" : "SAKLAR UTAMA: OFF"}
+                            </text>
                           </g>
 
                           {/* Lampu Seri 1 (Atas) */}
@@ -2483,15 +2498,23 @@ export default function ScienceLabModal({
                         <>
                           <line x1="225" y1="60" x2="285" y2="60" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
                           <circle cx="285" cy="60" r="7" fill="#dc2626" />
-                          <text x="255" y="40" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 1 ON</text>
                         </>
                       ) : (
                         <>
                           <line x1="225" y1="60" x2="275" y2="35" stroke="#d97706" strokeWidth="5" strokeLinecap="round" />
                           <circle cx="275" cy="35" r="7" fill="#dc2626" />
-                          <text x="255" y="40" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 1 OFF</text>
                         </>
                       )}
+                      <text 
+                        x="255" 
+                        y="84" 
+                        fill={parallelSwitchA ? "#4ade80" : "#f87171"} 
+                        fontSize="9" 
+                        fontWeight="900" 
+                        textAnchor="middle"
+                      >
+                        {parallelSwitchA ? "SAKLAR 1: ON" : "SAKLAR 1: OFF"}
+                      </text>
                     </g>
 
                     {/* Lampu Cabang 1 (Atas) */}
@@ -2518,15 +2541,23 @@ export default function ScienceLabModal({
                         <>
                           <line x1="225" y1="200" x2="285" y2="200" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round" />
                           <circle cx="285" cy="200" r="7" fill="#dc2626" />
-                          <text x="255" y="180" fill="#22c55e" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 2 ON</text>
                         </>
                       ) : (
                         <>
                           <line x1="225" y1="200" x2="275" y2="175" stroke="#d97706" strokeWidth="5" strokeLinecap="round" />
                           <circle cx="275" cy="175" r="7" fill="#dc2626" />
-                          <text x="255" y="180" fill="#f87171" fontSize="9" fontWeight="900" textAnchor="middle">SAKLAR 2 OFF</text>
                         </>
                       )}
+                      <text 
+                        x="255" 
+                        y="224" 
+                        fill={parallelSwitchB ? "#4ade80" : "#f87171"} 
+                        fontSize="9" 
+                        fontWeight="900" 
+                        textAnchor="middle"
+                      >
+                        {parallelSwitchB ? "SAKLAR 2: ON" : "SAKLAR 2: OFF"}
+                      </text>
                     </g>
 
                     {/* Lampu Cabang 2 (Bawah) */}
