@@ -80,11 +80,15 @@ export default function CultureStoriesModal({
     sound.stopSpeaking();
     setIsSpeaking(true);
 
-    let script = `Misi Detektif Daerah Cilik! ${currentSoal.title}. ${currentSoal.question}`;
-    if (isCorrect) {
+    let script = "";
+    if (selectedAnswer && isCorrect) {
       script = `Jawabanmu benar! ${currentSoal.title} berasal dari ${currentSoal.correctAnswer}, Provinsi ${currentSoal.province}. Fakta serunya: ${currentSoal.funFact}`;
-    } else if (isCorrect === false) {
+    } else if (selectedAnswer && isCorrect === false) {
       script = `Hampir tepat! Petunjuk dari Tobi: ${currentSoal.hint}. Coba tebak sekali lagi!`;
+    } else {
+      script = `Misi Detektif Daerah Cilik! Perhatikan foto ${currentSoal.title}. Tebak, dari daerah manakah ${
+        currentSoal.category === "makanan" ? "makanan khas" : "ikon budaya"
+      } pada foto di atas berasal?`;
     }
 
     sound.speak(
@@ -352,25 +356,58 @@ export default function CultureStoriesModal({
               </button>
             </div>
 
-            {/* Target Object Title & Question */}
-            <div className="mb-5">
-              <span className="text-xs font-extrabold text-purple-700 uppercase tracking-wider block mb-1">
-                Objek Eksplorasi:
-              </span>
-              <h4 className="text-xl sm:text-2xl font-black font-display text-slate-900 mb-2">
+            {/* Visual Photo Card Showcase (Posisi Utama & Judul Jelas) */}
+            <div className="mb-5 bg-white/95 rounded-3xl p-4 sm:p-6 border-3 border-purple-200 shadow-sm flex flex-col items-center text-center">
+              {/* Foto Objek Utama Proporsional */}
+              <div className="relative w-full max-w-sm sm:max-w-md h-52 sm:h-64 rounded-3xl bg-gradient-to-b from-purple-50/60 to-slate-50/80 border-2 border-purple-200/80 shadow-inner flex items-center justify-center p-3 overflow-hidden group">
+                <img
+                  src={`/images/nusantara/${currentSoal.id}.webp`}
+                  alt={currentSoal.title}
+                  loading="lazy"
+                  className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-300 group-hover:scale-105 select-none"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fb = target.nextElementSibling as HTMLElement;
+                    if (fb) fb.style.display = "flex";
+                  }}
+                  onLoad={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "block";
+                    const fb = target.nextElementSibling as HTMLElement;
+                    if (fb) fb.style.display = "none";
+                  }}
+                />
+                <div
+                  style={{ display: "none" }}
+                  className="w-full h-full flex-col items-center justify-center text-center p-4 text-purple-400 bg-purple-50/50 rounded-2xl"
+                >
+                  {currentSoal.category === "makanan" ? (
+                    <Utensils className="w-12 h-12 mb-2 opacity-50 text-purple-500" />
+                  ) : (
+                    <Landmark className="w-12 h-12 mb-2 opacity-50 text-purple-500" />
+                  )}
+                  <span className="text-xs font-black text-purple-700">Foto Segera Hadir</span>
+                </div>
+              </div>
+
+              {/* Judul Foto / Nama Objek Secara Tegas & Jelas */}
+              <h4 className="text-2xl sm:text-3xl font-black font-display text-slate-900 tracking-tight mt-4">
                 {currentSoal.title}
               </h4>
-              <div className="bg-white/90 rounded-2xl p-3.5 sm:p-4 border border-purple-200 shadow-inner">
-                <p className="text-sm sm:text-base font-bold text-slate-800 leading-relaxed">
-                  "{currentSoal.question}"
-                </p>
-              </div>
+
+              {/* Pertanyaan Singkat To-The-Point (Zero-Spoiler) */}
+              <p className="text-sm sm:text-base font-bold text-purple-900 bg-purple-50/90 py-2 px-5 sm:px-6 rounded-2xl border border-purple-200 mt-2.5 max-w-lg">
+                {currentSoal.category === "makanan"
+                  ? "Tebak, dari daerah manakah makanan khas pada foto di atas berasal?"
+                  : "Tebak, dari daerah manakah ikon budaya pada foto di atas berasal?"}
+              </p>
             </div>
 
-            {/* Options Grid (Mobile First Chunky Buttons) */}
+            {/* Options Grid (Pilihan Ganda Daerah A, B, C, D) */}
             <div className="space-y-2 mb-4">
-              <span className="text-xs font-black text-slate-500 uppercase tracking-wider block">
-                Pilih Jawaban yang Tepat:
+              <span className="text-xs font-black text-slate-500 uppercase tracking-wider block text-center sm:text-left">
+                Pilih Nama Daerah Asal:
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5">
                 {currentSoal.options.map((opt, idx) => {
@@ -416,29 +453,43 @@ export default function CultureStoriesModal({
               </div>
             </div>
 
-            {/* Feedback & Educational Fact Box */}
+            {/* Fakta Edukasi Di Pindah Ke Akhir (Hanya Muncul Setelah Pemain Memilih Jawaban) */}
             {selectedAnswer && (
               <div className="mt-4 pt-3 border-t border-purple-100">
                 {isCorrect ? (
-                  <div className="bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-4 text-emerald-950 space-y-2">
-                    <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="bg-emerald-50 border-2 border-emerald-400 rounded-3xl p-4 sm:p-5 text-emerald-950 space-y-3 shadow-sm">
+                    <div className="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-emerald-200">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        <span className="text-sm sm:text-base font-black text-emerald-900">
-                          Hebat! Jawabanmu Tepat Sekali!
-                        </span>
+                        <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+                        <div>
+                          <span className="text-base sm:text-lg font-black text-emerald-900 block leading-tight">
+                            Hebat! Jawabanmu Tepat Sekali!
+                          </span>
+                          <span className="text-xs font-bold text-emerald-700">
+                            {currentSoal.title} berasal dari {currentSoal.correctAnswer}, Provinsi {currentSoal.province}
+                          </span>
+                        </div>
                       </div>
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-200 text-emerald-900 border border-emerald-300">
-                        Provinsi: {currentSoal.province}
+                      <span className="px-3 py-1 rounded-full text-xs font-black bg-emerald-200 text-emerald-900 border border-emerald-300">
+                        {currentSoal.province}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm font-semibold text-emerald-900 leading-relaxed">
-                      {currentSoal.funFact}
-                    </p>
-                    <div className="pt-2 flex justify-end">
+
+                    {/* Fakta Edukasi & Penjelasan Sejarah / Rasa */}
+                    <div className="bg-white/85 rounded-2xl p-3.5 sm:p-4 border border-emerald-300 space-y-2">
+                      <div className="flex items-center gap-1.5 text-xs font-black text-emerald-800 uppercase tracking-wider">
+                        <Sparkles className="w-4 h-4 text-emerald-600" />
+                        <span>Fakta Edukasi Nusantara:</span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed">
+                        {currentSoal.funFact}
+                      </p>
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
                       <button
                         onClick={handleNext}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm border-2 border-emerald-700 shadow-[0_2px_0_0_#065f46] btn-chunky"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm border-2 border-emerald-700 shadow-[0_3px_0_0_#065f46] btn-chunky cursor-pointer"
                       >
                         <span>Tebak Soal Berikutnya</span>
                         <ArrowRight className="w-4 h-4" />
@@ -446,14 +497,14 @@ export default function CultureStoriesModal({
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-3.5 sm:p-4 text-amber-950 space-y-1.5">
+                  <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-950 space-y-2 shadow-sm">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
-                      <span className="text-sm font-black text-amber-900">
-                        Hampir Tepat! Yuk Pikirkan Lagi
+                      <span className="text-sm sm:text-base font-black text-amber-900">
+                        Hampir Tepat! Yuk Coba Tebak Lagi
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm font-bold text-amber-900">
+                    <p className="text-xs sm:text-sm font-bold text-amber-900 bg-white/70 p-2.5 rounded-xl border border-amber-200">
                       Petunjuk Tobi: {currentSoal.hint}
                     </p>
                   </div>
