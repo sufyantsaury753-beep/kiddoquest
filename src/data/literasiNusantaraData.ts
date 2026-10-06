@@ -12,7 +12,6 @@ export interface SoalNusantara {
 }
 
 export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
-  // --- KATEGORI 1: MAKANAN KHAS TRADISIONAL (36 SOAL) ---
   {
     id: "mkn-1",
     category: "makanan",
@@ -36,18 +35,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     province: "Jawa Barat",
     funFact: "Dodol Garut dibuat dari adonan tepung ketan, santan kelapa, dan gula merah yang diaduk selama berjam-jam!",
     hint: "Kota berhawa sejuk di Jawa Barat yang dijuluki Kota Intan."
-  },
-  {
-    id: "mkn-3",
-    category: "makanan",
-    island: "Sumatra",
-    title: "Pempek",
-    question: "Makanan olahan ikan tenggiri yang disajikan dengan kuah cuko pedas-manis ini berasal dari...",
-    options: ["Bandung", "Palembang", "Semarang", "Medan"],
-    correctAnswer: "Palembang",
-    province: "Sumatra Selatan",
-    funFact: "Pempek memiliki beragam jenis lezat seperti kapal selam, lenjer, keriting, dan adaan!",
-    hint: "Ibu kota Sumatra Selatan yang dibelah oleh Sungai Musi."
   },
   {
     id: "mkn-4",
@@ -290,54 +277,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     hint: "Ibu kota Sumatra Barat di tepi Samudra Hindia."
   },
   {
-    id: "mkn-24",
-    category: "makanan",
-    island: "Sumatra",
-    title: "Tekwan",
-    question: "Bulatan olahan daging ikan dan sagu dalam kuah kaldu udang gurih berpadu jamur kuping dan bengkuang berasal dari...",
-    options: ["Palembang", "Lampung", "Pangkalpinang", "Bengkulu"],
-    correctAnswer: "Palembang",
-    province: "Sumatra Selatan",
-    funFact: "Nama tekwan konon berasal dari singkatan bahasa Palembang 'Berkotek Samo Kawan' (ngobrol bersama kawan)!",
-    hint: "Kota pempek dan Jembatan Ampera."
-  },
-  {
-    id: "mkn-25",
-    category: "makanan",
-    island: "Sumatra",
-    title: "Lempah Kuning",
-    question: "Sup ikan kuah asam segar berwana kuning kunyit dengan potongan nanas manis adalah kuliner kebanggaan...",
-    options: ["Bangka Belitung", "Riau", "Sumatra Utara", "Aceh"],
-    correctAnswer: "Bangka Belitung",
-    province: "Kepulauan Bangka Belitung",
-    funFact: "Rasa asam segarnya berasal dari buah asam Jawa atau potongan nanas segar yang dimasak bersama ikan laut!",
-    hint: "Provinsi kepulauan penghasil timah dan keindahan pantai batu granit."
-  },
-  {
-    id: "mkn-26",
-    category: "makanan",
-    island: "Sumatra",
-    title: "Pendap",
-    question: "Olahan ikan bumbu kelapa parut rempah yang dibungkus rapat berlapis daun talas lalu direbus berjam-jam berasal dari...",
-    options: ["Bengkulu", "Jambi", "Sumatra Selatan", "Lampung"],
-    correctAnswer: "Bengkulu",
-    province: "Bengkulu",
-    funFact: "Pendap memiliki aroma khas dan daun talas pembungkusnya bisa langsung dimakan bersama ikannya!",
-    hint: "Provinsi tempat ditemukannya bunga raksasa Rafflesia arnoldii."
-  },
-  {
-    id: "mkn-27",
-    category: "makanan",
-    island: "Sulawesi",
-    title: "Kaledo",
-    question: "Sup tulang kaki lembu dengan kuah bening asam pedas segar menggunakan asam jawa mentah berasal dari...",
-    options: ["Palu", "Makassar", "Manado", "Gorontalo"],
-    correctAnswer: "Palu",
-    province: "Sulawesi Tengah",
-    funFact: "Kaledo singkatan dari 'Kaki Lembu Donggala', biasanya dinikmati dengan sedotan untuk menyeruput sumsum tulangnya!",
-    hint: "Ibu kota Sulawesi Tengah di Teluk Palu."
-  },
-  {
     id: "mkn-28",
     category: "makanan",
     island: "MalukuPapua",
@@ -362,18 +301,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     hint: "Kota Pahlawan di Jawa Timur."
   },
   {
-    id: "mkn-30",
-    category: "makanan",
-    island: "Jawa",
-    title: "Asinan Bogor",
-    question: "Campuran sayuran atau buah segar yang disiram kuah cuka asam-manis pedas bertabur kacang tanah goreng berasal dari...",
-    options: ["Bogor", "Cirebon", "Sukabumi", "Serang"],
-    correctAnswer: "Bogor",
-    province: "Jawa Barat",
-    funFact: "Asinan Bogor sangat segar disantap siang hari bersama kerupuk mi kuning yang gurih!",
-    hint: "Kota Hujan di Jawa Barat yang memiliki Kebun Raya luas."
-  },
-  {
     id: "mkn-31",
     category: "makanan",
     island: "Kalimantan",
@@ -384,18 +311,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     province: "Kalimantan Selatan",
     funFact: "Bingka merupakan kue tradisional kebanggaan dalam upacara adat dan menu buka puasa masyarakat Banjar!",
     hint: "Kota Seribu Sungai di Kalimantan Selatan."
-  },
-  {
-    id: "mkn-32",
-    category: "makanan",
-    island: "Sulawesi",
-    title: "Klappertaart",
-    question: "Kue puding panggang bertekstur lembut dengan kelapa muda, kismis, kenari, dan aroma kayu manis berasal dari...",
-    options: ["Manado", "Makassar", "Gorontalo", "Kendari"],
-    correctAnswer: "Manado",
-    province: "Sulawesi Utara",
-    funFact: "Klappertaart merupakan kuliner peninggalan era kolonial Belanda yang dipadukan dengan kelapa segar Minahasa!",
-    hint: "Kota di Sulawesi Utara tempat suku Minangkabau bukan, melainkan suku Minahasa berada."
   },
   {
     id: "mkn-33",
@@ -410,18 +325,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     hint: "Provinsi di pesisir timur Sumatra dengan ibu kota Pekanbaru."
   },
   {
-    id: "mkn-34",
-    category: "makanan",
-    island: "Sumatra",
-    title: "Otak-Otak Khas Riau",
-    question: "Olahan cincangan ikan tenggiri dan rempah yang dibungkus daun kelapa lalu dibakar harum di atas arang adalah kuliner khas...",
-    options: ["Kepulauan Riau", "Jambi", "Sumatra Selatan", "Bengkulu"],
-    correctAnswer: "Kepulauan Riau",
-    province: "Kepulauan Riau",
-    funFact: "Otak-otak dari Tanjungpinang dan Batam berwarna kemerahan karena menggunakan rempah cabai dan santan gurih!",
-    hint: "Provinsi maritim yang berdekatan dengan Singapura dan Selat Malaka."
-  },
-  {
     id: "mkn-35",
     category: "makanan",
     island: "BaliNusa",
@@ -432,32 +335,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     province: "Bali",
     funFact: "Pie Susu selalu menjadi buruan wisatawan saat berlibur menikmati pantai dan budaya Bali!",
     hint: "Pulau Dewata yang indah."
-  },
-  {
-    id: "mkn-36",
-    category: "makanan",
-    island: "MalukuPapua",
-    title: "Roti Abon Gulung",
-    question: "Roti lembut yang digulung dengan olesan mayones lezat dan taburan abon daging sapi sangat melimpah adalah oleh-oleh modern dari...",
-    options: ["Papua", "Maluku", "Nusa Tenggara Timur", "Sulawesi Tengah"],
-    correctAnswer: "Papua",
-    province: "Papua (Manokwari & Sorong)",
-    funFact: "Roti abon gulung menjadi ikon kuliner modern favorit para pelancong yang berkunjung ke tanah Papua!",
-    hint: "Provinsi di bagian paling timur Indonesia dengan burung Cenderawasih."
-  },
-
-  // --- KATEGORI 2: IKON DAERAH & LANDMARK PROVINSI (36 SOAL) ---
-  {
-    id: "ikn-1",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Jembatan Ampera",
-    question: "Jembatan merah megah sepanjang 1.177 meter yang membentang di atas Sungai Musi adalah ikon dari kota...",
-    options: ["Padang", "Palembang", "Pekanbaru", "Pontianak"],
-    correctAnswer: "Palembang",
-    province: "Sumatra Selatan",
-    funFact: "Jembatan Ampera selesai dibangun tahun 1965 dan menghubungkan wilayah Seberang Ulu dan Seberang Ilir!",
-    hint: "Kota tertua di Indonesia yang terkenal dengan pempek."
   },
   {
     id: "ikn-2",
@@ -482,18 +359,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     province: "Jawa Barat",
     funFact: "Enam ornamen jambu air yang menyerupai tusuk sate melambangkan biaya 6 juta gulden yang digunakan saat pembangunannya!",
     hint: "Kantor Gubernur Jawa Barat di Kota Bandung."
-  },
-  {
-    id: "ikn-4",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Jam Gadang",
-    question: "Menara jam setinggi 26 meter beratap khas gonjong tanduk kerbau adalah ikon wisata terkenal dari kota...",
-    options: ["Bengkulu", "Bukittinggi", "Banda Aceh", "Medan"],
-    correctAnswer: "Bukittinggi",
-    province: "Sumatra Barat",
-    funFact: "Mesin jam mekanik Jam Gadang hanya diproduksi dua buah di dunia: satu untuk Jam Gadang dan satu lagi untuk Big Ben di London!",
-    hint: "Kota berhawa sejuk di Dataran Tinggi Minangkabau, Sumatra Barat."
   },
   {
     id: "ikn-5",
@@ -544,126 +409,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     hint: "Provinsi di utara Sumatra dengan suku Batak yang ramah."
   },
   {
-    id: "ikn-9",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Istana Maimun",
-    question: "Istana megah berwarna kuning keemasan perpaduan arsitektur Melayu, Islam, Spanyol, dan Italia adalah ikon dari kota...",
-    options: ["Medan", "Palembang", "Banda Aceh", "Pekanbaru"],
-    correctAnswer: "Medan",
-    province: "Sumatra Utara",
-    funFact: "Istana Maimun merupakan peninggalan bersejarah Kesultanan Deli yang didirikan pada tahun 1888!",
-    hint: "Ibu kota Sumatra Utara yang kaya sejarah dan kuliner durian."
-  },
-  {
-    id: "ikn-10",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Masjid Raya Baiturrahman",
-    question: "Masjid agung dengan kubah hitam megah yang kokoh bertahan saat gelombang tsunami melanda adalah simbol keteguhan dari...",
-    options: ["Aceh", "Padang", "Bengkulu", "Lampung"],
-    correctAnswer: "Aceh",
-    province: "Aceh (Banda Aceh)",
-    funFact: "Masjid Raya Baiturrahman pertama kali didirikan pada era Kesultanan Aceh tahun 1612 oleh Sultan Iskandar Muda!",
-    hint: "Provinsi di ujung barat Indonesia dengan sebutan Serambi Mekkah."
-  },
-  {
-    id: "ikn-11",
-    category: "ikon",
-    island: "BaliNusa",
-    title: "Garuda Wisnu Kencana (GWK)",
-    question: "Patung tembaga raksasa megah setinggi 121 meter karya seniman I Nyoman Nuarta adalah ikon kebanggaan pulau...",
-    options: ["Bali", "Lombok", "Sumba", "Jawa"],
-    correctAnswer: "Bali",
-    province: "Bali",
-    funFact: "Patung GWK termasuk salah satu patung tertinggi di dunia, bahkan lebih tinggi daripada Patung Liberty di Amerika Serikat!",
-    hint: "Pulau Seribu Pura yang mendunia."
-  },
-  {
-    id: "ikn-12",
-    category: "ikon",
-    island: "BaliNusa",
-    title: "Danau Tiga Warna Kelimutu",
-    question: "Tiga kawah danau di puncak gunung yang bisa berubah warna secara alami adalah pesona alam menakjubkan dari pulau Flores di...",
-    options: ["Nusa Tenggara Timur", "Bali", "Nusa Tenggara Barat", "Maluku"],
-    correctAnswer: "Nusa Tenggara Timur",
-    province: "Nusa Tenggara Timur",
-    funFact: "Perubahan warna air danau terjadi akibat aktivitas gas dan mineral belerang alami dari dalam gunung berapi!",
-    hint: "Provinsi kepulauan tempat Labuan Bajo dan Komodo berada."
-  },
-  {
-    id: "ikn-13",
-    category: "ikon",
-    island: "Kalimantan",
-    title: "Tugu Khatulistiwa",
-    question: "Monumen yang tepat berada di garis lintang nol derajat yang membelah bumi utara dan selatan adalah ikon dari kota...",
-    options: ["Pontianak", "Balikpapan", "Samarinda", "Banjarmasin"],
-    correctAnswer: "Pontianak",
-    province: "Kalimantan Barat",
-    funFact: "Di tugu ini terjadi fenomena hari tanpa bayangan setiap tanggal 21-23 Maret dan 21-23 September!",
-    hint: "Kota yang dilintasi Sungai Kapuas terpanjang di Indonesia."
-  },
-  {
-    id: "ikn-14",
-    category: "ikon",
-    island: "Kalimantan",
-    title: "Pasar Terapung Lok Baintan",
-    question: "Pasar tradisional unik di mana para pedagang berjual beli di atas perahu jukung di atas aliran sungai adalah ikon dari...",
-    options: ["Banjarmasin", "Pontianak", "Palangka Raya", "Tenggarong"],
-    correctAnswer: "Banjarmasin",
-    province: "Kalimantan Selatan",
-    funFact: "Aktivitas pasar terapung ini sudah berlangsung sejak masa Kesultanan Banjar pada abad ke-16!",
-    hint: "Kota di Kalimantan Selatan yang dijuluki Kota Seribu Sungai."
-  },
-  {
-    id: "ikn-15",
-    category: "ikon",
-    island: "Sulawesi",
-    title: "Benteng Fort Rotterdam",
-    question: "Benteng pertahanan berbentuk menyerupai penyu yang merangkak ke laut peninggalan Kerajaan Gowa-Tallo adalah ikon kota...",
-    options: ["Makassar", "Manado", "Kendari", "Gorontalo"],
-    correctAnswer: "Makassar",
-    province: "Sulawesi Selatan",
-    funFact: "Bentuk penyu dipilih karena Kerajaan Gowa berjaya di darat dan lautan sebagaimana penyu hidup di dua alam!",
-    hint: "Kota di tepi Pantai Losari, Sulawesi Selatan."
-  },
-  {
-    id: "ikn-16",
-    category: "ikon",
-    island: "Sulawesi",
-    title: "Rumah Adat Tongkonan",
-    question: "Rumah panggung megah dengan atap melengkung menyerupai perahu leluhur dan hiasan tanduk kerbau adalah ikon budaya suku...",
-    options: ["Toraja", "Bugis", "Minahasa", "Dayak"],
-    correctAnswer: "Toraja",
-    province: "Sulawesi Selatan",
-    funFact: "Tongkonan selalu menghadap ke utara karena dipercaya sebagai arah mata angin tempat asal leluhur mereka!",
-    hint: "Suku di dataran tinggi pegunungan Sulawesi Selatan."
-  },
-  {
-    id: "ikn-17",
-    category: "ikon",
-    island: "MalukuPapua",
-    title: "Jembatan Youtefa",
-    question: "Jembatan pelengkung merah membentang indah di atas perairan Teluk Youtefa adalah landmark kebanggaan kota...",
-    options: ["Jayapura", "Merauke", "Ambon", "Manokwari"],
-    correctAnswer: "Jayapura",
-    province: "Papua",
-    funFact: "Jembatan Youtefa menghubungkan kawasan Kota Jayapura dengan distrik Muara Tami menuju perbatasan Papua Nugini!",
-    hint: "Ibu kota Provinsi Papua di tepi Samudra Pasifik."
-  },
-  {
-    id: "ikn-18",
-    category: "ikon",
-    island: "MalukuPapua",
-    title: "Rumah Adat Honai",
-    question: "Rumah tradisional bundar berdinding kayu dengan atap jerami ilalang mengerucut rapat untuk menahan hawa dingin pegunungan adalah ikon...",
-    options: ["Papua", "Maluku", "Nusa Tenggara Barat", "Sulawesi Tengah"],
-    correctAnswer: "Papua",
-    province: "Papua Pegunungan",
-    funFact: "Atap ilalang yang tebal dan tanpa jendela membuat bagian dalam rumah Honai tetap hangat dari tiupan angin gunung!",
-    hint: "Tanah paling timur di Indonesia tempat Lembah Baliem berada."
-  },
-  {
     id: "ikn-19",
     category: "ikon",
     island: "Jawa",
@@ -688,138 +433,6 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     hint: "Pulau penghasil garam dan balapan Karapan Sapi."
   },
   {
-    id: "ikn-21",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Jembatan Barelang",
-    question: "Rangkaian 6 jembatan megah berteknologi tinggi yang menghubungkan Pulau Batam, Rempang, dan Galang adalah ikon provinsi...",
-    options: ["Kepulauan Riau", "Bangka Belitung", "Riau", "Sumatra Utara"],
-    correctAnswer: "Kepulauan Riau",
-    province: "Kepulauan Riau (Batam)",
-    funFact: "Jembatan Barelang diprakarsai pembangunannya oleh B.J. Habibie pada era tahun 1990-an!",
-    hint: "Pulau industri modern yang berbatasan dengan Selat Singapura."
-  },
-  {
-    id: "ikn-22",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Tugu Nol Kilometer Indonesia",
-    question: "Tugu megah berbentuk angka nol dengan ornamen burung garuda yang menandai titik paling barat kepulauan Nusantara berada di...",
-    options: ["Sabang, Pulau Weh (Aceh)", "Banda Aceh", "Meulaboh", "Lhokseumawe"],
-    correctAnswer: "Sabang, Pulau Weh (Aceh)",
-    province: "Aceh",
-    funFact: "Setiap pengunjung yang datang ke tugu ini bisa mendapatkan sertifikat resmi bukti telah menginjakkan kaki di ujung barat Indonesia!",
-    hint: "Kota pulau di ujung paling barat Indonesia, awal lirik lagu 'Dari Sabang sampai Merauke'."
-  },
-  {
-    id: "ikn-23",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Benteng Marlborough",
-    question: "Benteng pertahanan kuno berbentuk kura-kura yang dibangun bangsa Inggris pada tahun 1714 adalah ikon wisata sejarah di kota...",
-    options: ["Bengkulu", "Jambi", "Palembang", "Padang"],
-    correctAnswer: "Bengkulu",
-    province: "Bengkulu",
-    funFact: "Benteng Marlborough adalah salah satu benteng peninggalan Inggris terkuat dan terbesar di kawasan Asia Tenggara!",
-    hint: "Kota pesisir barat Sumatra tempat pengasingan Bung Karno."
-  },
-  {
-    id: "ikn-24",
-    category: "ikon",
-    island: "Sulawesi",
-    title: "Taman Laut Bunaken",
-    question: "Surga bawah laut dengan keanekaragaman terumbu karang warna-warni dan ikan tropis yang mendunia adalah ikon bahari dari...",
-    options: ["Sulawesi Utara (Manado)", "Sulawesi Selatan", "Sulawesi Tengah", "Gorontalo"],
-    correctAnswer: "Sulawesi Utara (Manado)",
-    province: "Sulawesi Utara",
-    funFact: "Bunaken memiliki dinding karang vertikal sedalam puluhan meter yang menjadi rumah bagi penyu raksasa dan lumba-lumba!",
-    hint: "Dekat dengan Teluk Manado di utara Pulau Sulawesi."
-  },
-  {
-    id: "ikn-25",
-    category: "ikon",
-    island: "BaliNusa",
-    title: "Taman Nasional Komodo",
-    question: "Habitat alami satwa kadal purba raksasa komodo yang dinobatkan sebagai 7 Keajaiban Alam Dunia Baru terletak di provinsi...",
-    options: ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Maluku"],
-    correctAnswer: "Nusa Tenggara Timur",
-    province: "Nusa Tenggara Timur",
-    funFact: "Komodo adalah kadal terbesar di dunia yang hanya hidup alami di Kepulauan Komodo dan Flores, Indonesia!",
-    hint: "Kabupaten Manggarai Barat dengan pintu gerbang Labuan Bajo."
-  },
-  {
-    id: "ikn-26",
-    category: "ikon",
-    island: "BaliNusa",
-    title: "Pura Tanah Lot",
-    question: "Pura suci indah yang berdiri kokoh di atas bongkahan batu karang besar di tengah deburan ombak samudra adalah ikon dari...",
-    options: ["Bali", "Lombok", "Sumba", "Jawa Timur"],
-    correctAnswer: "Bali",
-    province: "Bali",
-    funFact: "Saat air laut pasang, pura ini terlihat seolah mengapung sendirian di tengah lautan luas!",
-    hint: "Destinasi wisata matahari terbenam paling terkenal di Tabanan, Bali."
-  },
-  {
-    id: "ikn-27",
-    category: "ikon",
-    island: "Kalimantan",
-    title: "Jembatan Mahakam",
-    question: "Jembatan panjang melintasi salah satu sungai terbesar di Kalimantan yang menjadi denyut nadi kota Samarinda adalah ikon...",
-    options: ["Kalimantan Timur", "Kalimantan Tengah", "Kalimantan Barat", "Kalimantan Selatan"],
-    correctAnswer: "Kalimantan Timur",
-    province: "Kalimantan Timur (Samarinda)",
-    funFact: "Sungai Mahakam adalah rumah bagi habitat lumba-lumba air tawar langka yang disebut Pesut Mahakam!",
-    hint: "Provinsi tempat ibu kota nusantara baru dibangun."
-  },
-  {
-    id: "ikn-28",
-    category: "ikon",
-    island: "Kalimantan",
-    title: "Rumah Betang",
-    question: "Rumah panggung kayu ulin raksasa sepanjang puluhan meter yang dihuni oleh puluhan keluarga suku Dayak secara rukun adalah ikon...",
-    options: ["Kalimantan Tengah", "Sulawesi Selatan", "Sumatra Utara", "Papua"],
-    correctAnswer: "Kalimantan Tengah",
-    province: "Kalimantan Tengah & Barat",
-    funFact: "Tinggi rumah Betang sengaja dibuat 3-5 meter untuk menghindari banjir dan menjaga keselamatan dari binatang liar hutan!",
-    hint: "Rumah adat suku Dayak di pedalaman Kalimantan."
-  },
-  {
-    id: "ikn-29",
-    category: "ikon",
-    island: "Sulawesi",
-    title: "Pantai Losari",
-    question: "Kawasan anjungan pesisir laut tempat berkumpulnya warga menikmati indahnya matahari terbenam dan pisang epe adalah ikon...",
-    options: ["Makassar", "Manado", "Palu", "Kendari"],
-    correctAnswer: "Makassar",
-    province: "Sulawesi Selatan",
-    funFact: "Di Pantai Losari terdapat deretan patung pahlawan dan anjungan berhuruf raksasa bertuliskan suku-suku di Sulawesi Selatan!",
-    hint: "Ibu kota Sulawesi Selatan di tepi Selat Makassar."
-  },
-  {
-    id: "ikn-30",
-    category: "ikon",
-    island: "Sulawesi",
-    title: "Benteng Keraton Buton (Wolio)",
-    question: "Benteng batu kapur mengitari bukit yang dinobatkan oleh Rekor Dunia Guinness sebagai benteng terluas di dunia berada di...",
-    options: ["Sulawesi Tenggara (Baubau)", "Sulawesi Tengah", "Gorontalo", "Sulawesi Utara"],
-    correctAnswer: "Sulawesi Tenggara (Baubau)",
-    province: "Sulawesi Tenggara",
-    funFact: "Benteng ini memiliki keliling hampir 3 kilometer dengan 12 pintu gerbang dan 16 meriam kuno pertahanan!",
-    hint: "Pulau Buton di Sulawesi Tenggara."
-  },
-  {
-    id: "ikn-31",
-    category: "ikon",
-    island: "Jawa",
-    title: "Candi Prambanan",
-    question: "Kompleks candi Hindu terindah di Asia Tenggara dengan menara utama Siwa setinggi 47 meter adalah ikon perbatasan...",
-    options: ["Yogyakarta & Jawa Tengah", "Jawa Barat & Banten", "Jawa Timur & Bali", "DKI Jakarta & Banten"],
-    correctAnswer: "Yogyakarta & Jawa Tengah",
-    province: "D.I. Yogyakarta & Jawa Tengah",
-    funFact: "Relief dinding Prambanan menceritakan kisah kepahlawanan Ramayana yang sangat mahsyur!",
-    hint: "Candi kembar Borobudur yang terkenal dengan legenda Roro Jonggrang."
-  },
-  {
     id: "ikn-32",
     category: "ikon",
     island: "Jawa",
@@ -830,53 +443,5 @@ export const DATA_LITERASI_NUSANTARA: SoalNusantara[] = [
     province: "Jawa Tengah",
     funFact: "Menara ini dibangun oleh Sunan Kudus pada tahun 1549 sebagai wujud toleransi dan penghormatan terhadap budaya setempat!",
     hint: "Kota santri di kaki Gunung Muria, Jawa Tengah."
-  },
-  {
-    id: "ikn-33",
-    category: "ikon",
-    island: "Sumatra",
-    title: "Rumah Gadang",
-    question: "Rumah adat kayu dengan atap melengkung runcing seperti tanduk kerbau yang tahan gempa adalah ikon budaya suku...",
-    options: ["Minangkabau (Sumatra Barat)", "Batak", "Melayu", "Aceh"],
-    correctAnswer: "Minangkabau (Sumatra Barat)",
-    province: "Sumatra Barat",
-    funFact: "Rumah Gadang dibangun tanpa paku besi, melainkan pasak kayu yang elastis saat terjadi goncangan gempa!",
-    hint: "Suku di Sumatra Barat yang terkenal dengan seni ukir dan masakan rendang."
-  },
-  {
-    id: "ikn-34",
-    category: "ikon",
-    island: "BaliNusa",
-    title: "Desa Penglipuran",
-    question: "Desa adat tradisional teratur dengan gerbang angkul-angkul yang dinobatkan sebagai salah satu desa terbersih di dunia terletak di...",
-    options: ["Bali", "Lombok", "Flores", "Sumba"],
-    correctAnswer: "Bali",
-    province: "Bali (Bangli)",
-    funFact: "Warga desa Penglipuran sangat disiplin menjaga kelestarian bambu dan melarang kendaraan bermotor masuk ke area desa!",
-    hint: "Desa asri di Kabupaten Bangli, Pulau Bali."
-  },
-  {
-    id: "ikn-35",
-    category: "ikon",
-    island: "MalukuPapua",
-    title: "Benteng Victoria",
-    question: "Benteng tertua peninggalan Portugis dan Belanda yang menjadi saksi perjuangan pahlawan nasional Pattimura adalah ikon dari kota...",
-    options: ["Ambon", "Ternate", "Tidore", "Banda Neira"],
-    correctAnswer: "Ambon",
-    province: "Maluku",
-    funFact: "Benteng Victoria didirikan tahun 1575 dan pernah menjadi pusat perdagangan rempah pala serta cengkih dunia!",
-    hint: "Kota Manise, ibu kota Provinsi Maluku."
-  },
-  {
-    id: "ikn-36",
-    category: "ikon",
-    island: "MalukuPapua",
-    title: "Tugu Titik Nol Kilometer Merauke",
-    question: "Tugu perbatasan di ujung paling timur Nusantara yang berbatasan langsung dengan negara Papua Nugini terletak di kota...",
-    options: ["Merauke", "Jayapura", "Sorong", "Timika"],
-    correctAnswer: "Merauke",
-    province: "Papua Selatan",
-    funFact: "Merauke adalah titik timur Indonesia, melengkapi lirik lagu kebangsaan 'Dari Sabang sampai Merauke'!",
-    hint: "Kota rusa di bagian paling selatan dan timur Papua."
   }
 ];
