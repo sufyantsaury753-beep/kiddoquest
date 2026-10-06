@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import MascotTobi from "@/components/MascotTobi";
 import LearningZonesGrid from "@/components/LearningZonesGrid";
@@ -14,7 +15,6 @@ import CertificateModal from "@/components/CertificateModal";
 import ProfileModal from "@/components/ProfileModal";
 import ScienceLabModal from "@/components/zones/ScienceLabModal";
 import MathAdventureModal from "@/components/zones/MathAdventureModal";
-import CultureStoriesModal from "@/components/zones/CultureStoriesModal";
 import SolarSystemModal from "@/components/zones/SolarSystemModal";
 import EvaluasiModal from "@/components/zones/EvaluasiModal";
 
@@ -27,6 +27,7 @@ import {
 import { sound } from "@/lib/sound";
 
 export default function TobiQuestHomePage() {
+  const router = useRouter();
   const [profile, setProfile] = useState<StudentProfile>(DEFAULT_PROFILE);
   const [mounted, setMounted] = useState(false);
 
@@ -93,7 +94,13 @@ export default function TobiQuestHomePage() {
 
         {/* 3. Core Learning Zones Grid */}
         <LearningZonesGrid
-          onSelectZone={(zoneId) => setActiveZoneModal(zoneId)}
+          onSelectZone={(zoneId) => {
+            if (zoneId === "cerita") {
+              router.push("/literasi-nusantara");
+            } else {
+              setActiveZoneModal(zoneId);
+            }
+          }}
           audioEnabled={profile.audioEnabled}
           liteMode={profile.liteMode}
         />
@@ -170,14 +177,7 @@ export default function TobiQuestHomePage() {
         liteMode={profile.liteMode}
       />
 
-      {/* Zone 4: Tebak Kata & Cerita Nusantara Modal */}
-      <CultureStoriesModal
-        isOpen={activeZoneModal === "cerita"}
-        onClose={() => setActiveZoneModal(null)}
-        onEarnStars={handleEarnStars}
-        audioEnabled={profile.audioEnabled}
-        liteMode={profile.liteMode}
-      />
+
 
       {/* Zone 5: Pusat Evaluasi Literasi SD Modal (10 Mapel Lengkap) */}
       <EvaluasiModal
