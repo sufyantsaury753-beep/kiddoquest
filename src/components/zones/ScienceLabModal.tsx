@@ -2238,7 +2238,9 @@ export default function ScienceLabModal({
                           <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#fef08a" stroke="#f59e0b" strokeWidth="2.5" />
                           {/* Filamen Pijar Membara */}
                           <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#ea580c" strokeWidth="2.5" strokeLinecap="round" />
-                          <text x="510" y="210" fill="#facc15" fontSize="11" fontWeight="900" textAnchor="middle">LAMPU MENYALA</text>
+                          <text x="555" y="145" fill="#facc15" fontSize="11" fontWeight="900" textAnchor="start">
+                            LAMPU MENYALA
+                          </text>
                         </>
                       ) : (
                         /* Lampu Padam */
@@ -2247,7 +2249,9 @@ export default function ScienceLabModal({
                           <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#1e293b" stroke="#64748b" strokeWidth="2" opacity="0.8" />
                           {/* Filamen Dingin */}
                           <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
-                          <text x="510" y="210" fill="#64748b" fontSize="11" fontWeight="bold" textAnchor="middle">LAMPU MATI</text>
+                          <text x="555" y="145" fill="#64748b" fontSize="11" fontWeight="bold" textAnchor="start">
+                            LAMPU MATI
+                          </text>
                         </>
                       )}
 
@@ -2527,7 +2531,14 @@ export default function ScienceLabModal({
                         strokeWidth="2"
                       />
                       <rect x="450" y="102" width="20" height="13" rx="2" fill="#94a3b8" />
-                      <text x="460" y="130" fill={parallelSwitchA ? "#facc15" : "#64748b"} fontSize="10" fontWeight="900" textAnchor="middle">
+                      <text 
+                        x="495" 
+                        y="85" 
+                        fill={parallelSwitchA ? "#facc15" : "#64748b"} 
+                        fontSize="10" 
+                        fontWeight="900" 
+                        textAnchor="start"
+                      >
                         LAMPU 1 {parallelSwitchA ? "(ON)" : "(OFF)"}
                       </text>
                     </g>
@@ -2570,7 +2581,14 @@ export default function ScienceLabModal({
                         strokeWidth="2"
                       />
                       <rect x="450" y="242" width="20" height="13" rx="2" fill="#94a3b8" />
-                      <text x="460" y="270" fill={parallelSwitchB ? "#facc15" : "#64748b"} fontSize="10" fontWeight="900" textAnchor="middle">
+                      <text 
+                        x="495" 
+                        y="225" 
+                        fill={parallelSwitchB ? "#facc15" : "#64748b"} 
+                        fontSize="10" 
+                        fontWeight="900" 
+                        textAnchor="start"
+                      >
                         LAMPU 2 {parallelSwitchB ? "(ON)" : "(OFF)"}
                       </text>
                     </g>
