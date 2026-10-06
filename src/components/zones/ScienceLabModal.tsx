@@ -1194,9 +1194,6 @@ export default function ScienceLabModal({
               <h3 className="text-xl sm:text-2xl font-black font-display text-slate-800">
                 Lab Sains Cilik
               </h3>
-              <p className="text-xs font-semibold text-emerald-700">
-                Eksperimen Kimia Warna, Siklus Air, Rantai Makanan & Rangkaian Listrik
-              </p>
             </div>
           </div>
 
@@ -1223,8 +1220,7 @@ export default function ScienceLabModal({
             }`}
           >
             <FlaskConical className="w-4 h-4 flex-shrink-0" />
-            <span className="hidden md:inline">Eksperimen 1: </span>
-            <span className="truncate">Lab Warna</span>
+            <span>Lab Warna</span>
           </button>
 
           <button
@@ -1239,8 +1235,7 @@ export default function ScienceLabModal({
             }`}
           >
             <CloudRain className="w-4 h-4 flex-shrink-0" />
-            <span className="hidden md:inline">Eksperimen 2: </span>
-            <span className="truncate">Siklus Air</span>
+            <span>Siklus Air</span>
           </button>
 
           <button
@@ -1255,8 +1250,7 @@ export default function ScienceLabModal({
             }`}
           >
             <Sprout className="w-4 h-4 flex-shrink-0 text-emerald-600" />
-            <span className="hidden md:inline">Eksperimen 3: </span>
-            <span className="truncate">Rantai Makanan</span>
+            <span>Rantai Makanan</span>
           </button>
 
           <button
@@ -1271,8 +1265,7 @@ export default function ScienceLabModal({
             }`}
           >
             <Zap className="w-4 h-4 flex-shrink-0 text-amber-600" />
-            <span className="hidden md:inline">Eksperimen 4: </span>
-            <span className="truncate">Rangkaian Listrik</span>
+            <span>Rangkaian Listrik</span>
           </button>
         </div>
 
@@ -1375,17 +1368,6 @@ export default function ScienceLabModal({
               </div>
             )}
 
-            {/* Instruction banner if not in quest mode */}
-            {!isQuestMode && (
-              <div className="bg-emerald-50/70 rounded-2xl p-3 border border-emerald-200 mb-4 flex items-center justify-between gap-2">
-                <p className="text-xs sm:text-sm font-bold text-emerald-900">
-                  Instruksi Laboratorium: Pilih 2 tabung dari rak kayu di bawah untuk dituangkan ke labu Erlenmeyer di tengah!
-                </p>
-                <div className="text-xs font-black text-emerald-700 bg-white px-2.5 py-1 rounded-xl border border-emerald-300 flex-shrink-0">
-                  {selectedTube1 && selectedTube2 ? "2/2 Tabung Siap" : selectedTube1 ? "1/2 Tabung Dipilih" : "0/2 Tabung"}
-                </div>
-              </div>
-            )}
 
             {/* CENTER ERLENMEYER MIXING FLASK (PURE SVG) */}
             <div className="bg-slate-900 rounded-3xl p-5 mb-5 border-4 border-slate-800 shadow-inner flex flex-col items-center justify-center text-center relative overflow-hidden">
@@ -1659,12 +1641,6 @@ export default function ScienceLabModal({
         {/* ========================================================================= */}
         {activeTab === "waterCycle" && (
           <div>
-            <div className="bg-sky-50/70 rounded-2xl p-4 border border-sky-200 mb-5">
-              <p className="text-xs sm:text-sm font-bold text-sky-900">
-                Instruksi Siklus Air: Tekan tahapan 1, 2, atau 3 untuk melihat perjalanan ilmiah perputaran air di bumi!
-              </p>
-            </div>
-
             {/* Stages Selector Buttons */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
               <button
@@ -1823,54 +1799,17 @@ export default function ScienceLabModal({
               </div>
             </div>
 
-            {/* Balon Panduan Tobi / Misi Langkah Rantai Makanan */}
-            <div className={`p-3.5 sm:p-4 rounded-2xl border-2 mb-4 transition-all ${
-              foodChainComplete
-                ? "bg-emerald-50 border-emerald-300"
-                : chainErrorFeedback
-                ? "bg-rose-50 border-rose-300 animate-pulse"
-                : "bg-amber-50 border-amber-300"
-            }`}>
-              <div className="flex items-start gap-2.5">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 border ${
-                  foodChainComplete
-                    ? "bg-emerald-500 text-white border-emerald-600"
-                    : chainErrorFeedback
-                    ? "bg-rose-500 text-white border-rose-600"
-                    : "bg-amber-400 text-amber-950 border-amber-500"
-                }`}>
-                  {foodChainComplete ? (
-                    <Trophy className="w-4 h-4" />
-                  ) : chainErrorFeedback ? (
-                    <RotateCcw className="w-4 h-4" />
-                  ) : (
-                    <Sparkles className="w-4 h-4" />
-                  )}
+            {/* Error Feedback jika anak salah memilih kartu */}
+            {chainErrorFeedback && (
+              <div className="p-3.5 rounded-2xl border-2 bg-rose-50 border-rose-300 text-rose-900 mb-4 flex items-center gap-2.5 animate-pulse">
+                <div className="w-8 h-8 rounded-xl bg-rose-500 text-white border border-rose-600 flex items-center justify-center flex-shrink-0">
+                  <RotateCcw className="w-4 h-4" />
                 </div>
-
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-500">
-                      {activeEcosystem.name} ({placedChainIds.length}/{activeEcosystem.chain.length} Tersusun)
-                    </span>
-                    <span className="text-[11px] font-black text-amber-700 flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                      <span>Hadiah: +35 Bintang</span>
-                    </span>
-                  </div>
-
-                  <p className="text-xs sm:text-sm font-black text-slate-800 mt-0.5 leading-snug">
-                    {foodChainComplete
-                      ? "Rantai makanan seimbang sempurna! Seluruh tingkat trofik ekosistem berhasil terhubung!"
-                      : chainErrorFeedback
-                      ? chainErrorFeedback
-                      : placedChainIds.length === 0
-                      ? "Langkah 1: Siapa produsen yang menghasilkan makanan sendiri dari bantuan cahaya matahari?"
-                      : `Langkah ${placedChainIds.length + 1}: Siapa yang memakan ${activeEcosystem.chain[placedChainIds.length - 1].name} untuk mendapatkan aliran energi?`}
-                  </p>
-                </div>
+                <p className="text-xs sm:text-sm font-black leading-snug">
+                  {chainErrorFeedback}
+                </p>
               </div>
-            </div>
+            )}
 
             {/* Papan Alur Rantai Makanan (Target Slots dengan Panah Energi) */}
             <div className="p-3.5 sm:p-5 rounded-3xl bg-slate-50 border-3 border-slate-200 mb-5 overflow-x-auto">
