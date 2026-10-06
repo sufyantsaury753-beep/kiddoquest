@@ -351,9 +351,6 @@ export default function EvaluasiModal({
                     <h3 className="text-base sm:text-lg font-black text-slate-800">
                       Asesmen Diagnostik & Ujian Mandiri SD
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                      Tersedia 30 soal terstandar per mata pelajaran, lengkap dengan pembahasan ramah anak dan kunci jawaban edukatif.
-                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-indigo-300 text-xs font-bold text-indigo-700 shadow-sm flex-shrink-0">
@@ -364,7 +361,7 @@ export default function EvaluasiModal({
 
               {/* Grid 10 Mapel */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3.5 sm:gap-4">
-                {DAFTAR_MAPEL.map((mapel, index) => {
+                {DAFTAR_MAPEL.map((mapel) => {
                   const Icon = getMapelIcon(mapel.ikonNama);
                   return (
                     <div
@@ -376,9 +373,9 @@ export default function EvaluasiModal({
                         liteMode ? "" : mapel.warnaTema.shadow
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-3 mb-2.5">
+                      <div className="flex items-center justify-between gap-3 mb-3">
                         <div className="flex items-center gap-3">
-                          <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md ${
+                          <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md flex-shrink-0 ${
                             mapel.id === "agama" ? "bg-emerald-600" :
                             mapel.id === "pancasila" ? "bg-red-600" :
                             mapel.id === "bahasaIndonesia" ? "bg-amber-600" :
@@ -392,26 +389,16 @@ export default function EvaluasiModal({
                           }`}>
                             <Icon className="w-6 h-6" />
                           </div>
-                          <div>
-                            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                              Mapel #{index + 1} • {mapel.kategori}
-                            </span>
-                            <h4 className="text-base sm:text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">
-                              {mapel.nama}
-                            </h4>
-                          </div>
+                          <h4 className="text-base sm:text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">
+                            {mapel.nama}
+                          </h4>
                         </div>
-                        <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border ${mapel.warnaTema.badge}`}>
+                        <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex-shrink-0 ${mapel.warnaTema.badge}`}>
                           30 Soal
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-500 font-medium line-clamp-2 mb-3">
-                        {mapel.deskripsi}
-                      </p>
-
-                      <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 text-xs font-bold text-slate-600">
-                        <span className="text-[11px] text-slate-400">Mudah • Sedang • HOTS</span>
+                      <div className="flex items-center justify-end pt-2.5 border-t border-slate-100 text-xs font-bold text-slate-600">
                         <div className="flex items-center gap-1 text-indigo-600 font-black group-hover:translate-x-1 transition-transform">
                           <span>Mulai Evaluasi</span>
                           <ChevronRight className="w-4 h-4" />

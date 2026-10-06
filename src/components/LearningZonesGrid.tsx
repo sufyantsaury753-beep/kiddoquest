@@ -487,9 +487,6 @@ export default function LearningZonesGrid({
             <h3 className="text-base sm:text-2xl font-black font-display tracking-tight text-white">
               Pusat Evaluasi Literasi SD (10 Mapel Lengkap)
             </h3>
-            <p className="text-xs sm:text-sm text-indigo-100 font-medium max-w-xl">
-              Uji pemahamanmu dengan 30 Soal Pilihan Ganda per mata pelajaran, lengkap dengan pembahasan ramah anak dan bintang prestasi!
-            </p>
           </div>
         </div>
 
