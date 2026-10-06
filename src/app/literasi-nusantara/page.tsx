@@ -280,12 +280,11 @@ export default function LiterasiNusantaraPage() {
           </div>
         </div>
 
-        {/* 3. Panggung Foto & Pilihan Ganda (Kahoot Style Pas 1 Layar) */}
-        <main className="p-3 sm:p-5 flex-1 flex flex-col justify-between overflow-y-auto">
-          {/* Bagian Atas: Foto Objek Proporsional & Nama Objek */}
-          <div className="flex flex-col items-center text-center">
-            {/* Foto Objek Tengah (Maksimal 140px HP, 170px Desktop) */}
-            <div className="relative w-36 h-28 sm:w-48 sm:h-36 max-h-[140px] sm:max-h-[170px] shrink-0 rounded-2xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2 overflow-hidden mx-auto">
+        {/* 3. Panggung Foto & Pilihan Ganda (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
+        <main className="p-3 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
+          <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-2 sm:space-y-3">
+            {/* Foto Objek */}
+            <div className="relative w-36 h-28 sm:w-44 sm:h-36 shrink-0 rounded-2xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2 overflow-hidden mx-auto">
               <img
                 src={`/images/nusantara/${currentSoal.id}.webp`}
                 alt={currentSoal.title}
@@ -317,21 +316,22 @@ export default function LiterasiNusantaraPage() {
               </div>
             </div>
 
-            {/* Nama Objek Gagah */}
-            <h2 className="text-lg sm:text-2xl font-black font-display text-slate-900 tracking-tight text-center mt-2 leading-tight">
-              {currentSoal.title}
-            </h2>
+            {/* Nama Objek */}
+            <div>
+              <h2 className="text-xl sm:text-2xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
+                {currentSoal.title}
+              </h2>
 
-            {/* Pertanyaan Singkat To-The-Point */}
-            <p className="text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center max-w-md mx-auto mt-1 leading-tight">
-              {currentSoal.category === "makanan"
-                ? "Dari daerah manakah makanan khas ini berasal?"
-                : "Dari daerah manakah ikon budaya ini berasal?"}
-            </p>
-          </div>
+              {/* Pertanyaan Singkat */}
+              <p className="text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-1 leading-tight">
+                {currentSoal.category === "makanan"
+                  ? "Dari daerah manakah makanan khas ini berasal?"
+                  : "Dari daerah manakah ikon budaya ini berasal?"}
+              </p>
+            </div>
 
-          {/* 4. Grid Pilihan Ganda 2x2 Langsung di Bawah Foto (Mudah Dijangkau Jempol) */}
-          <div className="my-2 grid grid-cols-2 gap-2 sm:gap-2.5">
+            {/* 4. Grid Pilihan Ganda Rapat & Nyaman di Jempol */}
+            <div className="w-full pt-1 grid grid-cols-2 gap-2 sm:gap-2.5">
             {currentSoal.options.map((opt, idx) => {
               const letter = ["A", "B", "C", "D"][idx];
               const isSelected = selectedAnswer === opt;
@@ -398,6 +398,7 @@ export default function LiterasiNusantaraPage() {
               Pilih salah satu jawaban di atas untuk melihat fakta edukasi
             </div>
           )}
+          </div>
         </main>
 
         {/* 6. Footer Navigasi */}

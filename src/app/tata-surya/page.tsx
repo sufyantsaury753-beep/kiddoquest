@@ -288,13 +288,13 @@ export default function TataSuryaPage() {
           </div>
         </div>
 
-        {/* 3. Main Stage: Panggung Planet & Lembar Fakta (Pas 1 Layar Penuh) */}
-        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-y-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6 items-center flex-1 my-auto">
+        {/* 3. Main Stage: Panggung Planet & Lembar Fakta (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
+        <main className="p-3.5 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
+          <div className="w-full max-w-3xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-6 items-center">
             
-            {/* Visual Planet Celestial Graphic (Kiri / Tengah) */}
-            <div className="md:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="relative w-40 h-40 sm:w-56 sm:h-56 flex items-center justify-center">
+            {/* Visual Planet Celestial Graphic (Kiri / Atas) */}
+            <div className="md:col-span-5 flex flex-col items-center justify-center relative shrink-0">
+              <div className="relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center">
                 {/* Outer Orbit Line */}
                 <div className="absolute inset-0 rounded-full border border-dashed border-indigo-400/30 animate-spin" style={{ animationDuration: "35s" }} />
                 {/* Middle Glow Ring */}

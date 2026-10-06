@@ -360,80 +360,81 @@ export default function HitungCeriaPage() {
           </button>
         </div>
 
-        {/* 3. Main Stage Game (Pas 1 Layar Penuh) */}
-        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-y-auto">
-          {activeTab === "kalkulasi" ? (
-            /* Mode 1: Kalkulasi Buah */
-            <div className="flex flex-col items-center justify-center flex-1 my-auto">
-              <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
-                Hitung Nilai Total Buah
-              </span>
+        {/* 3. Main Stage Game (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
+        <main className="p-3 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
+          <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-2 sm:gap-3">
+            {activeTab === "kalkulasi" ? (
+              /* Mode 1: Kalkulasi Buah */
+              <div className="flex flex-col items-center justify-center w-full">
+                <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
+                  Hitung Nilai Total Buah
+                </span>
 
-              {/* Persamaan Visual Buah */}
-              <div className="flex items-center justify-center gap-2 sm:gap-4 p-3 sm:p-5 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner max-w-lg w-full">
-                {calcTerms.map((t, idx) => (
-                  <React.Fragment key={idx}>
-                    {idx > 0 && (
-                      <span className="text-2xl sm:text-3xl font-black text-rose-700">+</span>
-                    )}
-                    <div className="flex items-center gap-1.5 bg-white p-2 sm:p-3 rounded-2xl border border-rose-200 shadow-sm">
-                      <t.fruit.SvgComponent className="w-8 h-8 sm:w-11 sm:h-11" />
-                      <div className="text-left">
-                        <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight">
-                          {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
-                        </span>
-                        <span className="text-[10px] font-extrabold text-rose-600 block leading-tight">
-                          (= {t.fruit.value})
-                        </span>
+                {/* Persamaan Visual Buah */}
+                <div className="flex items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
+                  {calcTerms.map((t, idx) => (
+                    <React.Fragment key={idx}>
+                      {idx > 0 && (
+                        <span className="text-xl sm:text-2xl font-black text-rose-700">+</span>
+                      )}
+                      <div className="flex items-center gap-1.5 bg-white p-2 sm:p-2.5 rounded-2xl border border-rose-200 shadow-sm">
+                        <t.fruit.SvgComponent className="w-7 h-7 sm:w-10 sm:h-10" />
+                        <div className="text-left">
+                          <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight">
+                            {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
+                          </span>
+                          <span className="text-[10px] font-extrabold text-rose-600 block leading-tight">
+                            (= {t.fruit.value})
+                          </span>
+                        </div>
                       </div>
+                    </React.Fragment>
+                  ))}
+                  <span className="text-xl sm:text-2xl font-black text-rose-700">=</span>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-rose-600 text-white text-lg sm:text-xl font-black flex items-center justify-center shadow-md">
+                    ?
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Mode 2: Detektif Misteri Buah */
+              <div className="flex flex-col items-center justify-center w-full">
+                <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
+                  Pecahkan Nilai Rahasia
+                </span>
+
+                <div className="p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-2">
+                  {/* Baris 1 */}
+                  <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                    <div className="flex items-center gap-2">
+                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                      <span>+</span>
+                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
                     </div>
-                  </React.Fragment>
-                ))}
-                <span className="text-2xl sm:text-3xl font-black text-rose-700">=</span>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-rose-600 text-white text-xl sm:text-2xl font-black flex items-center justify-center shadow-md">
-                  ?
+                    <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine1}</span>
+                  </div>
+                  {/* Baris 2 */}
+                  <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                    <div className="flex items-center gap-2">
+                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                      <span>+</span>
+                      <detFruitB.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                    </div>
+                    <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine2}</span>
+                  </div>
+                  {/* Baris Target Pertanyaan */}
+                  <div className="flex items-center justify-between p-2 rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
+                    <span>
+                      {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
+                    </span>
+                    <span className="text-base sm:text-lg font-display">= ?</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            /* Mode 2: Detektif Misteri Buah */
-            <div className="flex flex-col items-center justify-center flex-1 my-auto">
-              <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
-                Pecahkan Nilai Rahasia
-              </span>
+            )}
 
-              <div className="p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner max-w-lg w-full space-y-2">
-                {/* Baris 1 */}
-                <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                  <div className="flex items-center gap-2">
-                    <detFruitA.SvgComponent className="w-7 h-7 sm:w-9 sm:h-9" />
-                    <span>+</span>
-                    <detFruitA.SvgComponent className="w-7 h-7 sm:w-9 sm:h-9" />
-                  </div>
-                  <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine1}</span>
-                </div>
-                {/* Baris 2 */}
-                <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                  <div className="flex items-center gap-2">
-                    <detFruitA.SvgComponent className="w-7 h-7 sm:w-9 sm:h-9" />
-                    <span>+</span>
-                    <detFruitB.SvgComponent className="w-7 h-7 sm:w-9 sm:h-9" />
-                  </div>
-                  <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine2}</span>
-                </div>
-                {/* Baris Target Pertanyaan */}
-                <div className="flex items-center justify-between p-2.5 rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
-                  <span>
-                    {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
-                  </span>
-                  <span className="text-base sm:text-lg font-display">= ?</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 4. Grid Pilihan Jawaban 2x2 */}
-          <div className="my-2 grid grid-cols-2 gap-2 sm:gap-2.5 max-w-lg mx-auto w-full">
+            {/* 4. Grid Pilihan Jawaban 2x2 Rapat di Bawahnya */}
+            <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5">
             {(activeTab === "kalkulasi" ? calcOptions : detOptions).map((opt) => {
               const isSelected = selectedAnswer === opt;
               const target = activeTab === "kalkulasi" ? calcAnswer : detAnswer;
@@ -475,14 +476,15 @@ export default function HitungCeriaPage() {
                 onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
                 className="shrink-0 px-2.5 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] btn-chunky"
               >
-                Soal Lanjut
+                <span>Soal Lanjut</span>
               </button>
             </div>
-          ) : (
-            <div className="h-8 shrink-0 flex items-center justify-center text-[11px] font-bold text-slate-400">
-              Pilih angka yang tepat di atas untuk menguji logikamu!
-            </div>
-          )}
+            ) : (
+              <div className="h-8 shrink-0 flex items-center justify-center text-[11px] font-bold text-slate-400">
+                Pilih angka yang tepat di atas untuk menguji logikamu!
+              </div>
+            )}
+          </div>
         </main>
 
         {/* 5. Footer & Cheat Sheet Buah */}
