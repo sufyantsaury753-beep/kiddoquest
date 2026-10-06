@@ -281,7 +281,7 @@ export default function EvaluasiModal({
 
   return (
     <div className={isFullPage ? "min-h-screen w-full bg-indigo-50/50 text-slate-800 flex flex-col select-none no-print overflow-x-hidden" : "fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in no-print"}>
-      <div className={isFullPage ? "relative w-full max-w-4xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-400 sm:shadow-2xl my-0 sm:my-5 overflow-hidden" : "relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden"}>
+      <div className={isFullPage ? "relative w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-400 sm:shadow-2xl my-0 sm:my-3 lg:my-5 overflow-hidden" : "relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden"}>
         
         {/* ============================================================== */}
         {/* TOP HEADER MODAL                                              */}
@@ -560,7 +560,7 @@ export default function EvaluasiModal({
                 </p>
 
                 {/* 4 Chunky Touch Option Buttons */}
-                <div className="grid grid-cols-1 gap-2.5 sm:gap-3 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
                   {currentQuestion.pilihan.map((optionText, choiceIdx) => {
                     const letters = ["A", "B", "C", "D"];
                     const isSelected = userAnswers[currentQuestionIndex] === choiceIdx;

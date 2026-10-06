@@ -287,7 +287,7 @@ export default function HitungCeriaPage() {
   return (
     <div className={`min-h-screen w-full bg-rose-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-rose-400 sm:shadow-xl my-0 sm:my-5">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-rose-400 sm:shadow-xl my-0 sm:my-3 lg:my-5">
         
         {/* 1. Header Game */}
         <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-rose-50/90 border-b-2 border-rose-100 flex items-center justify-between gap-2 shrink-0">
@@ -360,130 +360,139 @@ export default function HitungCeriaPage() {
           </button>
         </div>
 
-        {/* 3. Main Stage Game (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
-        <main className="p-3 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
-          <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-2 sm:gap-3">
-            {activeTab === "kalkulasi" ? (
-              /* Mode 1: Kalkulasi Buah */
-              <div className="flex flex-col items-center justify-center w-full">
-                <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
-                  Hitung Nilai Total Buah
-                </span>
+        {/* 3. Main Stage Game (Adaptif: Vertikal di HP/Tablet, Berdampingan di Desktop) */}
+        <main className="p-3 sm:p-5 lg:p-6 flex-1 flex flex-col justify-center overflow-y-auto">
+          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+            {/* SISI KIRI: Persamaan Matematika / Teka-Teki Buah */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center w-full">
+              {activeTab === "kalkulasi" ? (
+                /* Mode 1: Kalkulasi Buah */
+                <div className="flex flex-col items-center justify-center w-full">
+                  <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
+                    Hitung Nilai Total Buah
+                  </span>
 
-                {/* Persamaan Visual Buah */}
-                <div className="flex items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
-                  {calcTerms.map((t, idx) => (
-                    <React.Fragment key={idx}>
-                      {idx > 0 && (
-                        <span className="text-xl sm:text-2xl font-black text-rose-700">+</span>
-                      )}
-                      <div className="flex items-center gap-1.5 bg-white p-2 sm:p-2.5 rounded-2xl border border-rose-200 shadow-sm">
-                        <t.fruit.SvgComponent className="w-7 h-7 sm:w-10 sm:h-10" />
-                        <div className="text-left">
-                          <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight">
-                            {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
-                          </span>
-                          <span className="text-[10px] font-extrabold text-rose-600 block leading-tight">
-                            (= {t.fruit.value})
-                          </span>
+                  {/* Persamaan Visual Buah */}
+                  <div className="flex items-center justify-center gap-2 sm:gap-4 p-3 sm:p-5 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
+                    {calcTerms.map((t, idx) => (
+                      <React.Fragment key={idx}>
+                        {idx > 0 && (
+                          <span className="text-xl sm:text-2xl font-black text-rose-700">+</span>
+                        )}
+                        <div className="flex items-center gap-1.5 bg-white p-2 sm:p-2.5 rounded-2xl border border-rose-200 shadow-sm">
+                          <t.fruit.SvgComponent className="w-7 h-7 sm:w-10 sm:h-10" />
+                          <div className="text-left">
+                            <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight">
+                              {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
+                            </span>
+                            <span className="text-[10px] font-extrabold text-rose-600 block leading-tight">
+                              (= {t.fruit.value})
+                            </span>
+                          </div>
                         </div>
+                      </React.Fragment>
+                    ))}
+                    <span className="text-xl sm:text-2xl font-black text-rose-700">=</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-rose-600 text-white text-lg sm:text-xl font-black flex items-center justify-center shadow-md">
+                      ?
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Mode 2: Detektif Misteri Buah */
+                <div className="flex flex-col items-center justify-center w-full">
+                  <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
+                    Pecahkan Nilai Rahasia
+                  </span>
+
+                  <div className="p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-2">
+                    {/* Baris 1 */}
+                    <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                      <div className="flex items-center gap-2">
+                        <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                        <span>+</span>
+                        <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
                       </div>
-                    </React.Fragment>
-                  ))}
-                  <span className="text-xl sm:text-2xl font-black text-rose-700">=</span>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-rose-600 text-white text-lg sm:text-xl font-black flex items-center justify-center shadow-md">
-                    ?
+                      <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine1}</span>
+                    </div>
+                    {/* Baris 2 */}
+                    <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                      <div className="flex items-center gap-2">
+                        <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                        <span>+</span>
+                        <detFruitB.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                      </div>
+                      <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine2}</span>
+                    </div>
+                    {/* Baris Target Pertanyaan */}
+                    <div className="flex items-center justify-between p-2 rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
+                      <span>
+                        {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
+                      </span>
+                      <span className="text-base sm:text-lg font-display">= ?</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              /* Mode 2: Detektif Misteri Buah */
-              <div className="flex flex-col items-center justify-center w-full">
-                <span className="text-[11px] font-black uppercase text-rose-700 bg-rose-100 px-3 py-0.5 rounded-full border border-rose-200 mb-2">
-                  Pecahkan Nilai Rahasia
-                </span>
-
-                <div className="p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-2">
-                  {/* Baris 1 */}
-                  <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                    <div className="flex items-center gap-2">
-                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                      <span>+</span>
-                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                    </div>
-                    <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine1}</span>
-                  </div>
-                  {/* Baris 2 */}
-                  <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                    <div className="flex items-center gap-2">
-                      <detFruitA.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                      <span>+</span>
-                      <detFruitB.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                    </div>
-                    <span className="text-base sm:text-lg text-rose-700 font-display">= {detLine2}</span>
-                  </div>
-                  {/* Baris Target Pertanyaan */}
-                  <div className="flex items-center justify-between p-2 rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
-                    <span>
-                      {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
-                    </span>
-                    <span className="text-base sm:text-lg font-display">= ?</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* 4. Grid Pilihan Jawaban 2x2 Rapat di Bawahnya */}
-            <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5">
-            {(activeTab === "kalkulasi" ? calcOptions : detOptions).map((opt) => {
-              const isSelected = selectedAnswer === opt;
-              const target = activeTab === "kalkulasi" ? calcAnswer : detAnswer;
-              const isThisCorrect = isCorrect && isSelected;
-              const isThisWrong = isCorrect === false && isSelected;
-
-              let btnStyle = "bg-white border-rose-200 text-slate-800 hover:bg-rose-50 shadow-[0_2px_0_0_#fecdd3]";
-              if (isThisCorrect) {
-                btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
-              } else if (isThisWrong) {
-                btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
-              }
-
-              return (
-                <button
-                  key={opt}
-                  onClick={() => handleSelectAnswer(opt)}
-                  className={`p-3 sm:p-4 rounded-2xl border-2 font-display font-black text-lg sm:text-xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
-                >
-                  <span>{opt}</span>
-                  {isThisCorrect && <CheckCircle2 className="w-5 h-5 ml-2 text-white shrink-0" />}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Feedback & Hint Banner */}
-          {selectedAnswer ? (
-            <div className={`p-2 sm:p-2.5 rounded-2xl border text-xs font-medium flex items-center justify-between gap-2 max-w-lg mx-auto w-full shrink-0 ${
-              isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
-            }`}>
-              <div className="flex items-center gap-1.5 overflow-hidden">
-                <Sparkles className="w-4 h-4 shrink-0 text-amber-600" />
-                <span className="truncate">
-                  {isCorrect ? "Luar biasa! Jawabanmu benar (+30 Bintang)" : "Hampir tepat! Periksa kembali nilai buahnya!"}
-                </span>
-              </div>
-              <button
-                onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
-                className="shrink-0 px-2.5 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] btn-chunky"
-              >
-                <span>Soal Lanjut</span>
-              </button>
+              )}
             </div>
-            ) : (
-              <div className="h-8 shrink-0 flex items-center justify-center text-[11px] font-bold text-slate-400">
-                Pilih angka yang tepat di atas untuk menguji logikamu!
+
+            {/* SISI KANAN: Grid Pilihan Jawaban 2x2 & Feedback */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-2.5 sm:space-y-3 mt-3 lg:mt-0 w-full">
+              <span className="hidden lg:block text-xs font-black text-rose-800 uppercase tracking-wider">
+                Pilih Jawaban yang Tepat:
+              </span>
+
+              {/* Grid Pilihan Jawaban 2x2 */}
+              <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5 lg:gap-3">
+                {(activeTab === "kalkulasi" ? calcOptions : detOptions).map((opt) => {
+                  const isSelected = selectedAnswer === opt;
+                  const isThisCorrect = isCorrect && isSelected;
+                  const isThisWrong = isCorrect === false && isSelected;
+
+                  let btnStyle = "bg-white border-rose-200 text-slate-800 hover:bg-rose-50 shadow-[0_2px_0_0_#fecdd3]";
+                  if (isThisCorrect) {
+                    btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
+                  } else if (isThisWrong) {
+                    btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
+                  }
+
+                  return (
+                    <button
+                      key={opt}
+                      onClick={() => handleSelectAnswer(opt)}
+                      className={`p-3 sm:p-4 rounded-2xl border-2 font-display font-black text-lg sm:text-xl lg:text-2xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
+                    >
+                      <span>{opt}</span>
+                      {isThisCorrect && <CheckCircle2 className="w-5 h-5 ml-2 text-white shrink-0" />}
+                    </button>
+                  );
+                })}
               </div>
-            )}
+
+              {/* Feedback & Hint Banner */}
+              {selectedAnswer ? (
+                <div className={`p-2.5 sm:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 w-full shrink-0 ${
+                  isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
+                }`}>
+                  <div className="flex items-center gap-1.5 overflow-hidden">
+                    <Sparkles className="w-4 h-4 shrink-0 text-amber-600" />
+                    <span className="truncate">
+                      {isCorrect ? "Luar biasa! Jawabanmu benar (+30 Bintang)" : "Hampir tepat! Periksa kembali nilai buahnya!"}
+                    </span>
+                  </div>
+                  <button
+                    onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
+                    className="shrink-0 px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs btn-chunky shadow-sm"
+                  >
+                    <span>Soal Lanjut</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="h-8 lg:h-9 shrink-0 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-400">
+                  Pilih angka yang tepat di atas untuk menguji logikamu!
+                </div>
+              )}
+            </div>
           </div>
         </main>
 

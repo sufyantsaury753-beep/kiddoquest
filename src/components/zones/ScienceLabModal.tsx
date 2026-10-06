@@ -1209,7 +1209,7 @@ export default function ScienceLabModal({
 
   return (
     <div className={isFullPage ? "min-h-screen w-full bg-emerald-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden" : "fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto"}>
-      <div className={isFullPage ? "w-full max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-emerald-400 sm:shadow-xl p-3 sm:p-7 my-0 sm:my-5" : "relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto"}>
+      <div className={isFullPage ? "w-full max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-emerald-400 sm:shadow-xl p-3 sm:p-6 lg:p-7 my-0 sm:my-3 lg:my-5" : "relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto"}>
         {/* Header */}
         <div className={`flex items-center justify-between pb-3 border-b-2 border-emerald-100 ${isFullPage ? "bg-emerald-50/90 rounded-2xl p-3 sm:p-4 mb-4" : "mb-4"}`}>
           <div className="flex items-center gap-2.5 sm:gap-3">

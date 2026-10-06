@@ -207,7 +207,7 @@ export default function TataSuryaPage() {
   return (
     <div className={`min-h-screen w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] my-0 sm:my-5">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] my-0 sm:my-3 lg:my-5">
         
         {/* 1. Header Game */}
         <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">

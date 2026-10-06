@@ -190,7 +190,7 @@ export default function LiterasiNusantaraPage() {
   return (
     <div className={`min-h-screen w-full bg-purple-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl my-0 sm:my-5">
+      <div className="w-full max-w-3xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl my-0 sm:my-3 lg:my-5">
         
         {/* 1. Header Bar Game */}
         <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-purple-50/90 border-b-2 border-purple-100 flex items-center justify-between gap-2 shrink-0">
@@ -280,124 +280,152 @@ export default function LiterasiNusantaraPage() {
           </div>
         </div>
 
-        {/* 3. Panggung Foto & Pilihan Ganda (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
-        <main className="p-3 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
-          <div className="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-2 sm:space-y-3">
-            {/* Foto Objek */}
-            <div className="relative w-36 h-28 sm:w-44 sm:h-36 shrink-0 rounded-2xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2 overflow-hidden mx-auto">
-              <img
-                src={`/images/nusantara/${currentSoal.id}.webp`}
-                alt={currentSoal.title}
-                loading="eager"
-                className="w-full h-full object-contain filter drop-shadow select-none hover:scale-105 transition-transform"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  target.style.display = "none";
-                  const fb = target.nextElementSibling as HTMLElement;
-                  if (fb) fb.style.display = "flex";
-                }}
-                onLoad={(e) => {
-                  const target = e.currentTarget;
-                  target.style.display = "block";
-                  const fb = target.nextElementSibling as HTMLElement;
-                  if (fb) fb.style.display = "none";
-                }}
-              />
-              <div
-                style={{ display: "none" }}
-                className="w-full h-full flex-col items-center justify-center text-center p-2 text-purple-400 bg-purple-50/50 rounded-xl"
-              >
-                {currentSoal.category === "makanan" ? (
-                  <Utensils className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
-                ) : (
-                  <Landmark className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
-                )}
-                <span className="text-[10px] font-extrabold text-purple-700">Foto Segera Hadir</span>
-              </div>
-            </div>
-
-            {/* Nama Objek */}
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
-                {currentSoal.title}
-              </h2>
-
-              {/* Pertanyaan Singkat */}
-              <p className="text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-1 leading-tight">
-                {currentSoal.category === "makanan"
-                  ? "Dari daerah manakah makanan khas ini berasal?"
-                  : "Dari daerah manakah ikon budaya ini berasal?"}
-              </p>
-            </div>
-
-            {/* 4. Grid Pilihan Ganda Rapat & Nyaman di Jempol */}
-            <div className="w-full pt-1 grid grid-cols-2 gap-2 sm:gap-2.5">
-            {currentSoal.options.map((opt, idx) => {
-              const letter = ["A", "B", "C", "D"][idx];
-              const isSelected = selectedAnswer === opt;
-              const isThisCorrect = isCorrect && isSelected;
-              const isThisWrong = isCorrect === false && isSelected;
-
-              let btnStyle = "bg-white border-purple-200 text-slate-800 hover:bg-purple-50 shadow-[0_2px_0_0_#e9d5ff]";
-              let badgeStyle = "bg-purple-100 text-purple-900 border-purple-300";
-
-              if (isThisCorrect) {
-                btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
-                badgeStyle = "bg-emerald-600 text-white border-emerald-400";
-              } else if (isThisWrong) {
-                btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
-                badgeStyle = "bg-rose-600 text-white border-rose-400";
-              }
-
-              return (
-                <button
-                  key={opt}
-                  onClick={() => handleSelectOption(opt)}
-                  className={`p-2.5 sm:p-3 rounded-2xl border-2 font-black text-xs sm:text-sm flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
+        {/* 3. Panggung Foto & Pilihan Ganda (Adaptif: Vertikal di Mobile/Tablet, Berdampingan di Desktop) */}
+        <main className="p-3 sm:p-5 lg:p-6 flex-1 flex flex-col justify-center overflow-y-auto">
+          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+            {/* SISI KIRI (Mobile: Atas, Desktop: Kolom Kiri 5-span) */}
+            <div className="lg:col-span-5 flex flex-col items-center text-center space-y-2 lg:space-y-3">
+              {/* Foto Objek */}
+              <div className="relative w-36 h-28 sm:w-52 sm:h-40 lg:w-64 lg:h-48 shrink-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2.5 sm:p-3 overflow-hidden mx-auto">
+                <img
+                  src={`/images/nusantara/${currentSoal.id}.webp`}
+                  alt={currentSoal.title}
+                  loading="eager"
+                  className="w-full h-full object-contain filter drop-shadow select-none hover:scale-105 transition-transform"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fb = target.nextElementSibling as HTMLElement;
+                    if (fb) fb.style.display = "flex";
+                  }}
+                  onLoad={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "block";
+                    const fb = target.nextElementSibling as HTMLElement;
+                    if (fb) fb.style.display = "none";
+                  }}
+                />
+                <div
+                  style={{ display: "none" }}
+                  className="w-full h-full flex-col items-center justify-center text-center p-2 text-purple-400 bg-purple-50/50 rounded-xl"
                 >
-                  <div className="flex items-center gap-2 overflow-hidden">
-                    <span className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg border flex items-center justify-center font-black text-xs shrink-0 ${badgeStyle}`}>
-                      {letter}
-                    </span>
-                    <span className="font-display tracking-wide truncate">{opt}</span>
-                  </div>
-                  {isThisCorrect && <CheckCircle2 className="w-4 h-4 text-white shrink-0 ml-1" />}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* 5. Fakta Edukasi di Akhir (Hanya Muncul Setelah Menjawab) */}
-          {selectedAnswer ? (
-            <div className={`p-2 sm:p-2.5 rounded-2xl border text-xs font-medium flex items-center justify-between gap-2 shrink-0 ${
-              isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
-            }`}>
-              <div className="flex items-center gap-2 overflow-hidden">
-                <Sparkles className="w-4 h-4 shrink-0 text-amber-600" />
-                <div className="truncate">
-                  <span className="font-black mr-1.5">
-                    {isCorrect ? `Tepat! Asal: ${currentSoal.correctAnswer} (${currentSoal.province})` : "Hampir Tepat!"}
-                  </span>
-                  <span className="text-[11px] opacity-90 hidden sm:inline">
-                    {isCorrect ? currentSoal.funFact : `Petunjuk Tobi: ${currentSoal.hint}`}
-                  </span>
+                  {currentSoal.category === "makanan" ? (
+                    <Utensils className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
+                  ) : (
+                    <Landmark className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
+                  )}
+                  <span className="text-[10px] font-extrabold text-purple-700">Foto Segera Hadir</span>
                 </div>
               </div>
-              {isCorrect && (
-                <button
-                  onClick={handleNext}
-                  className="shrink-0 px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] flex items-center gap-1 shadow-sm btn-chunky"
-                >
-                  <span>Lanjut</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+
+              {/* Nama Objek */}
+              <div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
+                  {currentSoal.title}
+                </h2>
+
+                {/* Badge Kategori & Wilayah (Desktop) */}
+                <div className="hidden lg:flex items-center justify-center gap-2 mt-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-purple-100 text-purple-900 border border-purple-200">
+                    {currentSoal.category === "makanan" ? "Makanan Khas" : "Ikon Budaya"}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                    {currentSoal.island}
+                  </span>
+                </div>
+
+                {/* Pertanyaan Singkat (Mobile / Tablet) */}
+                <p className="lg:hidden text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-1 leading-tight">
+                  {currentSoal.category === "makanan"
+                    ? "Dari daerah manakah makanan khas ini berasal?"
+                    : "Dari daerah manakah ikon budaya ini berasal?"}
+                </p>
+              </div>
+            </div>
+
+            {/* SISI KANAN (Mobile: Bawah, Desktop: Kolom Kanan 7-span) */}
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-2.5 sm:space-y-3.5 mt-2 lg:mt-0 w-full">
+              {/* Banner Pertanyaan Khusus Layar Desktop / Laptop */}
+              <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50/60 p-3.5 rounded-2xl border-2 border-purple-200 text-left">
+                <span className="text-[11px] font-black uppercase text-purple-700 tracking-wider block mb-0.5">
+                  Misi Detektif Daerah:
+                </span>
+                <p className="text-base font-extrabold text-slate-900">
+                  {currentSoal.category === "makanan"
+                    ? "Tebak, dari daerah manakah makanan khas pada foto di samping berasal?"
+                    : "Tebak, dari daerah manakah ikon budaya pada foto di samping berasal?"}
+                </p>
+              </div>
+
+              {/* Grid Pilihan Ganda 2x2 */}
+              <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5 lg:gap-3">
+                {currentSoal.options.map((opt, idx) => {
+                  const letter = ["A", "B", "C", "D"][idx];
+                  const isSelected = selectedAnswer === opt;
+                  const isThisCorrect = isCorrect && isSelected;
+                  const isThisWrong = isCorrect === false && isSelected;
+
+                  let btnStyle = "bg-white border-purple-200 text-slate-800 hover:bg-purple-50 shadow-[0_2px_0_0_#e9d5ff]";
+                  let badgeStyle = "bg-purple-100 text-purple-900 border-purple-300";
+
+                  if (isThisCorrect) {
+                    btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
+                    badgeStyle = "bg-emerald-600 text-white border-emerald-400";
+                  } else if (isThisWrong) {
+                    btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
+                    badgeStyle = "bg-rose-600 text-white border-rose-400";
+                  }
+
+                  return (
+                    <button
+                      key={opt}
+                      onClick={() => handleSelectOption(opt)}
+                      className={`p-2.5 sm:p-3.5 lg:p-4 rounded-2xl border-2 font-black text-xs sm:text-sm lg:text-base flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
+                    >
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <span className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-lg border flex items-center justify-center font-black text-xs lg:text-sm shrink-0 ${badgeStyle}`}>
+                          {letter}
+                        </span>
+                        <span className="font-display tracking-wide truncate">{opt}</span>
+                      </div>
+                      {isThisCorrect && <CheckCircle2 className="w-4 h-4 lg:w-5 lg:h-5 text-white shrink-0 ml-1" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Fakta Edukasi di Akhir (Muncul Setelah Menjawab) */}
+              {selectedAnswer ? (
+                <div className={`p-2.5 sm:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 shrink-0 ${
+                  isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
+                }`}>
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 text-amber-600" />
+                    <div className="truncate">
+                      <span className="font-black mr-1.5">
+                        {isCorrect ? `Tepat! Asal: ${currentSoal.correctAnswer} (${currentSoal.province})` : "Hampir Tepat!"}
+                      </span>
+                      <span className="text-[11px] sm:text-xs opacity-90 hidden sm:inline">
+                        {isCorrect ? currentSoal.funFact : `Petunjuk Tobi: ${currentSoal.hint}`}
+                      </span>
+                    </div>
+                  </div>
+                  {isCorrect && (
+                    <button
+                      onClick={handleNext}
+                      className="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs lg:text-sm flex items-center gap-1 shadow-sm btn-chunky"
+                    >
+                      <span>Lanjut</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="h-9 lg:h-10 shrink-0 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-400">
+                  Pilih salah satu jawaban di atas untuk melihat fakta edukasi
+                </div>
               )}
             </div>
-          ) : (
-            <div className="h-9 shrink-0 flex items-center justify-center text-[11px] font-bold text-slate-400">
-              Pilih salah satu jawaban di atas untuk melihat fakta edukasi
-            </div>
-          )}
           </div>
         </main>
 
