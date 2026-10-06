@@ -16,6 +16,7 @@ import ScienceLabModal from "@/components/zones/ScienceLabModal";
 import MathAdventureModal from "@/components/zones/MathAdventureModal";
 import CultureStoriesModal from "@/components/zones/CultureStoriesModal";
 import SolarSystemModal from "@/components/zones/SolarSystemModal";
+import EvaluasiModal from "@/components/zones/EvaluasiModal";
 
 import { 
   StudentProfile, 
@@ -78,6 +79,7 @@ export default function KiddoQuestHomePage() {
         onUpdateProfile={handleUpdateProfile}
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenEvaluasi={() => setActiveZoneModal("evaluasi")}
       />
 
       {/* Main Content Area */}
@@ -171,6 +173,15 @@ export default function KiddoQuestHomePage() {
       {/* Zone 4: Tebak Kata & Cerita Nusantara Modal */}
       <CultureStoriesModal
         isOpen={activeZoneModal === "cerita"}
+        onClose={() => setActiveZoneModal(null)}
+        onEarnStars={handleEarnStars}
+        audioEnabled={profile.audioEnabled}
+        liteMode={profile.liteMode}
+      />
+
+      {/* Zone 5: Pusat Evaluasi Literasi SD Modal (10 Mapel Lengkap) */}
+      <EvaluasiModal
+        isOpen={activeZoneModal === "evaluasi"}
         onClose={() => setActiveZoneModal(null)}
         onEarnStars={handleEarnStars}
         audioEnabled={profile.audioEnabled}

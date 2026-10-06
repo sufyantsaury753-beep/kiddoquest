@@ -120,6 +120,21 @@ class SoundEngine {
     });
   }
 
+  // Cheerful chime for correct answers
+  public playCorrect() {
+    this.playChime();
+  }
+
+  // Gentle tone for incorrect answers / hints
+  public playWrong() {
+    this.playSocraticHint();
+  }
+
+  // Celebration fanfare alias
+  public playTada() {
+    this.playCelebration();
+  }
+
   // Native Web Speech API for Tobi Text-To-Speech (Indonesian voice)
   public speak(text: string, onStart?: () => void, onEnd?: () => void) {
     if (!this.speechEnabled) return;

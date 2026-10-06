@@ -2,6 +2,7 @@
 
 import React from "react";
 import { sound } from "@/lib/sound";
+import { GraduationCap, ChevronRight } from "lucide-react";
 
 interface LearningZonesGridProps {
   onSelectZone: (zoneId: string) => void;
@@ -461,6 +462,41 @@ export default function LearningZonesGrid({
             </div>
           );
         })}
+      </div>
+
+      {/* Kartu Khusus: Pusat Evaluasi Literasi SD 10 Mapel */}
+      <div 
+        onClick={() => handleZoneClick("evaluasi")}
+        className={`mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-3 sm:border-4 border-indigo-700 shadow-[0_6px_0_0_#3730a3] sm:shadow-[0_8px_0_0_#3730a3] flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer select-none transition-all ${
+          liteMode ? "hover:opacity-95" : "hover:-translate-y-1 hover:brightness-105 active:translate-y-0.5 active:shadow-none"
+        }`}
+      >
+        <div className="flex items-center gap-3.5 sm:gap-5 text-center md:text-left">
+          <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center flex-shrink-0 shadow-inner">
+            <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300" />
+          </div>
+          <div>
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black bg-yellow-400 text-yellow-950 uppercase tracking-wider">
+                Simulasi Ujian & Asesmen Mandiri
+              </span>
+              <span className="hidden sm:inline text-xs text-indigo-200 font-bold">
+                Kurikulum Merdeka 2026
+              </span>
+            </div>
+            <h3 className="text-base sm:text-2xl font-black font-display tracking-tight text-white">
+              Pusat Evaluasi Literasi SD (10 Mapel Lengkap)
+            </h3>
+            <p className="text-xs sm:text-sm text-indigo-100 font-medium max-w-xl">
+              Uji pemahamanmu dengan 30 Soal Pilihan Ganda per mata pelajaran, lengkap dengan pembahasan ramah anak dan bintang prestasi!
+            </p>
+          </div>
+        </div>
+
+        <button className="flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-2xl bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black text-xs sm:text-sm shadow-[0_3px_0_0_#b45309] btn-chunky flex-shrink-0">
+          <span>Mulai Evaluasi</span>
+          <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
     </section>
   );

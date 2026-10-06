@@ -9,7 +9,8 @@ import {
   Wifi, 
   Zap, 
   User, 
-  Star 
+  Star,
+  GraduationCap
 } from "lucide-react";
 import { StudentProfile } from "@/lib/storage";
 import { sound } from "@/lib/sound";
@@ -19,6 +20,7 @@ interface NavbarProps {
   onUpdateProfile: (data: Partial<StudentProfile>) => void;
   onOpenCertificate: () => void;
   onOpenProfile: () => void;
+  onOpenEvaluasi?: () => void;
 }
 
 export default function Navbar({
@@ -26,6 +28,7 @@ export default function Navbar({
   onUpdateProfile,
   onOpenCertificate,
   onOpenProfile,
+  onOpenEvaluasi,
 }: NavbarProps) {
   const [logoBounce, setLogoBounce] = useState(false);
   const [starBounce, setStarBounce] = useState(false);
@@ -161,6 +164,19 @@ export default function Navbar({
             <Award className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Piagam Prestasi</span>
           </button>
+
+          {/* Pusat Evaluasi Literasi Button */}
+          {onOpenEvaluasi && (
+            <button
+              onClick={onOpenEvaluasi}
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold text-xs sm:text-sm border-2 border-indigo-700 shadow-[0_3px_0_0_#3730a3] btn-chunky hover:brightness-105"
+              title="Pusat Evaluasi Literasi SD: 30 Soal × 10 Mapel Kurikulum Merdeka"
+            >
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+              <span className="hidden sm:inline">Evaluasi SD</span>
+              <span className="sm:hidden">Ujian</span>
+            </button>
+          )}
 
           {/* Kid Profile Badge */}
           <button
