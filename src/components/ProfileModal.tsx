@@ -35,6 +35,8 @@ export default function ProfileModal({
   const [grade, setGrade] = useState(profile.grade);
   const [selectedAvatar, setSelectedAvatar] = useState(profile.avatar);
 
+  const activeChar = AVAILABLE_AVATARS.find((av) => av.emoji === selectedAvatar || av.id === selectedAvatar) || AVAILABLE_AVATARS[0];
+
   if (!isOpen) return null;
 
   const handleSave = () => {
@@ -44,52 +46,102 @@ export default function ProfileModal({
       grade,
       avatar: selectedAvatar,
     });
-    sound.speak(`Profil berhasil disimpan! Semangat belajar, ${name || "sahabat cilik"}!`);
+    sound.speak(`Profil berhasil disimpan! Semangat belajar bersama ${activeChar.name}, ${name || "sahabat cilik"}!`);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl border-4 border-purple-400 shadow-2xl p-6 sm:p-7 overflow-hidden my-auto">
+      <div className="relative w-full max-w-xl bg-white rounded-3xl border-4 border-purple-400 shadow-2xl p-5 sm:p-7 overflow-hidden my-auto">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-purple-100 mb-5">
+        <div className="flex items-center justify-between pb-3.5 border-b border-purple-100 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">{selectedAvatar}</span>
+            <span className="text-2xl select-none">{activeChar.emoji}</span>
             <h3 className="text-xl font-black font-display text-slate-800">
               Profil Petualang Cilik
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 btn-chunky"
+            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 btn-chunky cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Avatar Selection */}
-        <div className="mb-5">
-          <label className="block text-xs font-black text-slate-600 uppercase tracking-wider mb-2">
-            Pilih Karakter Favoritmu:
-          </label>
-          <div className="grid grid-cols-6 gap-2">
-            {AVAILABLE_AVATARS.map((av) => (
-              <button
-                key={av.id}
-                onClick={() => {
-                  setSelectedAvatar(av.emoji);
-                  sound.playChime();
-                }}
-                className={`w-full aspect-square text-2xl flex items-center justify-center rounded-2xl border-3 btn-chunky transition-transform ${
-                  selectedAvatar === av.emoji
-                    ? "bg-purple-100 border-purple-500 scale-105 shadow-[0_3px_0_0_#7e22ce]"
-                    : "bg-slate-50 border-slate-200 hover:bg-purple-50"
-                }`}
-                title={av.label}
-              >
-                {av.emoji}
-              </button>
-            ))}
+        {/* Pratinjau Karakter Terpilih ala Kahoot! Kids */}
+        <div className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-3xl ${activeChar.bgColor} border-2 ${activeChar.borderColor} mb-4 shadow-sm transition-all`}>
+          <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-white/90 border-2 ${activeChar.borderColor} shadow-sm flex items-center justify-center text-3xl sm:text-4xl flex-shrink-0`}>
+            <span className="select-none">{activeChar.emoji}</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <h4 className="text-lg sm:text-xl font-black font-display text-slate-900 leading-tight">
+                {activeChar.name}
+              </h4>
+              <span className={`text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full bg-white/95 ${activeChar.textColor} border ${activeChar.borderColor}`}>
+                {activeChar.role}
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 font-medium">
+              Karakter aktif untuk petualangan dan piagam prestasimu!
+            </p>
+          </div>
+        </div>
+
+        {/* Avatar Selection (20 Karakter Kahoot! Kids) */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-xs font-black text-slate-600 uppercase tracking-wider">
+              Pilih Karakter Favoritmu ({AVAILABLE_AVATARS.length} Pilihan):
+            </label>
+            <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200">
+              Sentuh untuk Memilih
+            </span>
+          </div>
+
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-56 sm:max-h-64 overflow-y-auto p-1.5 pr-2 rounded-2xl bg-slate-50/70 border border-slate-200">
+            {AVAILABLE_AVATARS.map((av) => {
+              const isSelected = selectedAvatar === av.emoji;
+              return (
+                <button
+                  key={av.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedAvatar(av.emoji);
+                    sound.playChime();
+                  }}
+                  className={`group relative flex flex-col items-center p-2 rounded-2xl border-2 transition-all btn-chunky cursor-pointer ${
+                    isSelected
+                      ? `${av.bgColor} ${av.borderColor} ring-2 ring-purple-500 shadow-[0_3px_0_0_rgba(0,0,0,0.12)] scale-105 z-10`
+                      : "bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                  }`}
+                  title={`${av.name} (${av.role})`}
+                >
+                  {/* Lingkaran Avatar Bulat */}
+                  <div
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full ${av.bgColor} border-2 ${av.borderColor} flex items-center justify-center text-xl sm:text-2xl shadow-sm group-hover:scale-110 transition-transform`}
+                  >
+                    <span className="select-none leading-none">{av.emoji}</span>
+                  </div>
+                  {/* Nama Karakter */}
+                  <span className="text-[11px] font-black text-slate-800 mt-1 truncate max-w-full leading-tight">
+                    {av.name}
+                  </span>
+                  {/* Julukan Karakter */}
+                  <span className="text-[9px] font-bold text-slate-500 truncate max-w-full leading-tight">
+                    {av.role}
+                  </span>
+
+                  {/* Badge Centang Terpilih */}
+                  {isSelected && (
+                    <div className="absolute -top-1.5 -right-1.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-md">
+                      <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 

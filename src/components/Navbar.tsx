@@ -11,7 +11,7 @@ import {
   Star,
   GraduationCap
 } from "lucide-react";
-import { StudentProfile } from "@/lib/storage";
+import { StudentProfile, AVAILABLE_AVATARS } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
 interface NavbarProps {
@@ -175,21 +175,34 @@ export default function Navbar({
           )}
 
           {/* Tombol Profil Avatar Bulat */}
-          <button
-            onClick={onOpenProfile}
-            className="flex flex-col items-center justify-center group cursor-pointer focus:outline-none"
-            title="Lihat & Ganti Profil Siswa"
-          >
-            {/* Lingkaran Avatar */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-purple-100 group-hover:bg-purple-200 border-2 border-purple-400 shadow-[0_3px_0_0_#7e22ce] flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95 overflow-hidden">
-              <span className="text-xl sm:text-2xl leading-none select-none">
-                {profile.avatar}
-              </span>
-            </div>
-            <span className="text-[10px] sm:text-xs font-black text-slate-800 max-w-[70px] sm:max-w-[85px] truncate mt-0.5 leading-tight">
-              {profile.name}
-            </span>
-          </button>
+          {(() => {
+            const activeChar = AVAILABLE_AVATARS.find(
+              (av) => av.emoji === profile.avatar || av.id === profile.avatar
+            );
+            return (
+              <button
+                onClick={onOpenProfile}
+                className="flex flex-col items-center justify-center group cursor-pointer focus:outline-none"
+                title={`Lihat & Ganti Profil Siswa (${activeChar ? activeChar.name + " - " + activeChar.role : profile.name})`}
+              >
+                {/* Lingkaran Avatar */}
+                <div
+                  className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full ${
+                    activeChar ? activeChar.bgColor : "bg-purple-100"
+                  } group-hover:brightness-95 border-2 ${
+                    activeChar ? activeChar.borderColor : "border-purple-400"
+                  } shadow-[0_3px_0_0_#7e22ce] flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95 overflow-hidden`}
+                >
+                  <span className="text-xl sm:text-2xl leading-none select-none">
+                    {profile.avatar}
+                  </span>
+                </div>
+                <span className="text-[10px] sm:text-xs font-black text-slate-800 max-w-[70px] sm:max-w-[85px] truncate mt-0.5 leading-tight">
+                  {profile.name}
+                </span>
+              </button>
+            );
+          })()}
         </div>
       </div>
     </header>
