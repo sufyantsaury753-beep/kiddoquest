@@ -21,10 +21,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "KiddoQuest - Petualangan Edukasi Interaktif Siswa SD",
+  title: "TobiQuest - Petualangan Edukasi Interaktif Siswa SD",
   description: "Platform pembelajaran cerdas, ceria, dan inklusif untuk siswa SD se-Indonesia. Inovasi pendidikan Telkomsel dengan audio narasi, manipulatif visual, dan AI Socratic Kids Mentor.",
-  keywords: ["KiddoQuest", "Telkomsel Coding Competition", "Edukasi SD", "Belajar Interaktif", "Sains Anak", "Matematika SD"],
-  authors: [{ name: "Tim KiddoQuest" }],
+  keywords: ["TobiQuest", "Telkomsel Coding Competition", "Edukasi SD", "Belajar Interaktif", "Sains Anak", "Matematika SD"],
+  authors: [{ name: "Tim TobiQuest" }],
 };
 
 export default function RootLayout({

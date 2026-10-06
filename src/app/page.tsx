@@ -26,7 +26,7 @@ import {
 } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
-export default function KiddoQuestHomePage() {
+export default function TobiQuestHomePage() {
   const [profile, setProfile] = useState<StudentProfile>(DEFAULT_PROFILE);
   const [mounted, setMounted] = useState(false);
 

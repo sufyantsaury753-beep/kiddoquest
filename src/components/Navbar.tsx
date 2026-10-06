@@ -79,17 +79,14 @@ export default function Navbar({
             className={`cursor-pointer flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_4px_0_0_#c2410c] active:translate-y-1 active:shadow-none transition-all ${
               logoBounce ? "scale-110 -rotate-6" : "hover:scale-105"
             }`}
-            title="KiddoQuest - Petualangan Edukasi Cilik"
+            title="TobiQuest - Petualangan Edukasi Cilik"
           >
             <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-amber-50" strokeWidth={2.5} />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-2xl sm:text-3xl font-extrabold tracking-tight font-display bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 bg-clip-text text-transparent">
-                KiddoQuest
-              </span>
-              <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-black bg-rose-100 text-rose-700 border border-rose-300">
-                SD Merdeka Belajar
+                TobiQuest
               </span>
             </div>
           </div>

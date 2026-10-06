@@ -15,7 +15,7 @@ export default function Footer({
 }: FooterProps) {
   const handleTestAudio = () => {
     sound.playChime();
-    sound.speak("Halo! Sistem suara dan audio KiddoQuest berfungsi dengan sangat baik!");
+    sound.speak("Halo! Sistem suara dan audio TobiQuest berfungsi dengan sangat baik!");
   };
 
   return (
@@ -29,7 +29,7 @@ export default function Footer({
                 <Sparkles className="w-5 h-5" />
               </div>
               <span className="text-2xl font-black font-display bg-gradient-to-r from-amber-500 via-rose-500 to-sky-600 bg-clip-text text-transparent">
-                KiddoQuest
+                TobiQuest
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-md mb-4">

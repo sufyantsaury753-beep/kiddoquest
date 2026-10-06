@@ -50,7 +50,7 @@ export default function CertificateModal({
           <div className="flex items-center gap-2">
             <Award className="w-6 h-6 text-yellow-100" />
             <h3 className="text-lg font-black font-display text-white">
-              Piagam Penghargaan Resmi KiddoQuest
+              Piagam Penghargaan Resmi TobiQuest
             </h3>
           </div>
 
@@ -133,7 +133,7 @@ export default function CertificateModal({
 
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-400 text-amber-900 text-xs font-black">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>KiddoQuest EdTech</span>
+                <span>TobiQuest EdTech</span>
               </div>
 
               <div className="text-right">

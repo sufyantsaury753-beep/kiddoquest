@@ -21,7 +21,7 @@ const TOBI_DIALOGUES = [
   },
   {
     question: "Tobi, bagaimana jika aku salah menjawab? 💡",
-    speech: "Tenang saja sahabat cilik! Di KiddoQuest, salah itu tanda otakmu sedang berkembang! Tobi akan selalu mendampingi dan memberi petunjuk ramah sampai kamu paham.",
+    speech: "Tenang saja sahabat cilik! Di TobiQuest, salah itu tanda otakmu sedang berkembang! Tobi akan selalu mendampingi dan memberi petunjuk ramah sampai kamu paham.",
   },
   {
     question: "Tobi, apa itu Telkomsel Lite Mode? ⚡",

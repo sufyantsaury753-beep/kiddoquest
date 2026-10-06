@@ -39,7 +39,7 @@ export const AVAILABLE_BADGES = [
   {
     id: "penjelajah-pemula",
     title: "Penjelajah Cilik",
-    desc: "Mulai petualangan belajar di KiddoQuest",
+    desc: "Mulai petualangan belajar di TobiQuest",
     icon: "🌟",
     color: "bg-amber-100 text-amber-800 border-amber-300",
   },
