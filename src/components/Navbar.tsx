@@ -8,7 +8,6 @@ import {
   Award, 
   Wifi, 
   Zap, 
-  User, 
   Star,
   GraduationCap
 } from "lucide-react";
@@ -101,7 +100,7 @@ export default function Navbar({
           {/* Audio TTS Toggle */}
           <button
             onClick={toggleSpeech}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 transition-all btn-chunky ${
+            className={`h-10 sm:h-11 flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 rounded-2xl font-bold text-xs sm:text-sm border-2 transition-all btn-chunky whitespace-nowrap ${
               profile.audioEnabled
                 ? "bg-sky-100 text-sky-800 border-sky-300 shadow-[0_3px_0_0_#0284c7]"
                 : "bg-slate-100 text-slate-500 border-slate-300 shadow-[0_3px_0_0_#94a3b8]"
@@ -124,7 +123,7 @@ export default function Navbar({
           {/* Telkomsel Lite Mode Toggle */}
           <button
             onClick={toggleLiteMode}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 transition-all btn-chunky ${
+            className={`h-10 sm:h-11 flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 rounded-2xl font-bold text-xs sm:text-sm border-2 transition-all btn-chunky whitespace-nowrap ${
               profile.liteMode
                 ? "bg-red-600 text-white border-red-700 shadow-[0_3px_0_0_#991b1b]"
                 : "bg-amber-100 text-amber-900 border-amber-300 shadow-[0_3px_0_0_#d97706]"
@@ -148,7 +147,7 @@ export default function Navbar({
           {/* Stars Counter */}
           <div 
             onClick={handleStarClick}
-            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-amber-400 text-amber-950 font-extrabold text-xs sm:text-sm border-2 border-amber-500 shadow-[0_3px_0_0_#b45309] cursor-pointer hover:bg-amber-300 transition-colors"
+            className="h-10 sm:h-11 flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 rounded-2xl bg-amber-400 text-amber-950 font-extrabold text-xs sm:text-sm border-2 border-amber-500 shadow-[0_3px_0_0_#b45309] cursor-pointer hover:bg-amber-300 transition-colors whitespace-nowrap"
             title="Koleksi Bintang Prestasimu!"
           >
             <Star className={`w-4 h-4 sm:w-5 sm:h-5 fill-amber-900 text-amber-900 ${starBounce ? "animate-bounce" : ""}`} />
@@ -158,7 +157,7 @@ export default function Navbar({
           {/* Certificate Button */}
           <button
             onClick={onOpenCertificate}
-            className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-extrabold text-xs sm:text-sm border-2 border-emerald-600 shadow-[0_3px_0_0_#065f46] btn-chunky hover:brightness-105"
+            className="hidden md:flex h-10 sm:h-11 items-center justify-center gap-1.5 px-2.5 sm:px-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-extrabold text-xs sm:text-sm border-2 border-emerald-600 shadow-[0_3px_0_0_#065f46] btn-chunky hover:brightness-105 whitespace-nowrap"
             title="Cetak Piagam Penghargaan Resmi"
           >
             <Award className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -169,7 +168,7 @@ export default function Navbar({
           {onOpenEvaluasi && (
             <button
               onClick={onOpenEvaluasi}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold text-xs sm:text-sm border-2 border-indigo-700 shadow-[0_3px_0_0_#3730a3] btn-chunky hover:brightness-105"
+              className="h-10 sm:h-11 flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold text-xs sm:text-sm border-2 border-indigo-700 shadow-[0_3px_0_0_#3730a3] btn-chunky hover:brightness-105 whitespace-nowrap"
               title="Pusat Evaluasi Literasi SD: 30 Soal × 10 Mapel Kurikulum Merdeka"
             >
               <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
@@ -178,15 +177,21 @@ export default function Navbar({
             </button>
           )}
 
-          {/* Kid Profile Badge */}
+          {/* Tombol Profil Avatar Bulat */}
           <button
             onClick={onOpenProfile}
-            className="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl bg-purple-100 hover:bg-purple-200 border-2 border-purple-300 text-purple-900 font-bold text-xs sm:text-sm shadow-[0_3px_0_0_#7e22ce] btn-chunky"
+            className="flex flex-col items-center justify-center group cursor-pointer focus:outline-none"
             title="Lihat & Ganti Profil Siswa"
           >
-            <span className="text-lg sm:text-xl leading-none">{profile.avatar}</span>
-            <span className="hidden lg:inline max-w-[90px] truncate">{profile.name}</span>
-            <User className="w-3.5 h-3.5 text-purple-600 hidden sm:inline" />
+            {/* Lingkaran Avatar */}
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-purple-100 group-hover:bg-purple-200 border-2 border-purple-400 shadow-[0_3px_0_0_#7e22ce] flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95 overflow-hidden">
+              <span className="text-xl sm:text-2xl leading-none select-none">
+                {profile.avatar}
+              </span>
+            </div>
+            <span className="text-[10px] sm:text-xs font-black text-slate-800 max-w-[70px] sm:max-w-[85px] truncate mt-0.5 leading-tight">
+              {profile.name}
+            </span>
           </button>
         </div>
       </div>
