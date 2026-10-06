@@ -90,10 +90,6 @@ export default function Navbar({
                 SD Merdeka Belajar
               </span>
             </div>
-            <p className="text-[10px] sm:text-xs font-semibold text-slate-500 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block" />
-              <span>M-ONE Telkomsel Coding Competition</span>
-            </p>
           </div>
         </div>
 
