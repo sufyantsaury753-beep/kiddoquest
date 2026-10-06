@@ -280,8 +280,8 @@ export default function EvaluasiModal({
   const stats = calculateStats();
 
   return (
-    <div className={isFullPage ? "h-screen max-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-950 to-slate-950 text-slate-800 flex flex-col justify-center p-2 sm:p-4 select-none no-print" : "fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in no-print"}>
-      <div className={isFullPage ? "relative w-full max-w-4xl mx-auto h-full max-h-full bg-white rounded-3xl border-3 sm:border-4 border-indigo-400 shadow-2xl flex flex-col overflow-hidden my-auto" : "relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden"}>
+    <div className={isFullPage ? "min-h-screen w-full bg-indigo-50/50 text-slate-800 flex flex-col select-none no-print overflow-x-hidden" : "fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in no-print"}>
+      <div className={isFullPage ? "relative w-full max-w-4xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-400 sm:shadow-2xl my-0 sm:my-5 overflow-hidden" : "relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden"}>
         
         {/* ============================================================== */}
         {/* TOP HEADER MODAL                                              */}

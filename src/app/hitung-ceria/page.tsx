@@ -285,9 +285,9 @@ export default function HitungCeriaPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`h-screen max-h-screen overflow-hidden bg-gradient-to-br from-rose-950 via-slate-900 to-amber-950 text-slate-800 flex flex-col justify-center p-2 sm:p-4 select-none ${profile.liteMode ? "lite-high-contrast" : ""}`}>
-      {/* Container Utama 1 Layar Penuh (Zero-Scroll Viewport) */}
-      <div className="w-full max-w-4xl mx-auto h-full max-h-full bg-white rounded-3xl border-3 sm:border-4 border-rose-400 shadow-2xl flex flex-col overflow-hidden my-auto">
+    <div className={`min-h-screen w-full bg-rose-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+      {/* Container Utama Layar Penuh Edge-to-Edge */}
+      <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-rose-400 sm:shadow-xl my-0 sm:my-5">
         
         {/* 1. Header Game */}
         <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-rose-50/90 border-b-2 border-rose-100 flex items-center justify-between gap-2 shrink-0">
@@ -361,7 +361,7 @@ export default function HitungCeriaPage() {
         </div>
 
         {/* 3. Main Stage Game (Pas 1 Layar Penuh) */}
-        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-hidden">
+        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-y-auto">
           {activeTab === "kalkulasi" ? (
             /* Mode 1: Kalkulasi Buah */
             <div className="flex flex-col items-center justify-center flex-1 my-auto">

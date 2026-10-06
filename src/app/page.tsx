@@ -68,7 +68,7 @@ export default function TobiQuestHomePage() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col bg-amber-50/40 text-slate-800 ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`min-h-screen w-full flex flex-col bg-amber-50/40 text-slate-800 overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* 1. Interactive Navbar */}
       <Navbar
         profile={profile}
@@ -79,7 +79,7 @@ export default function TobiQuestHomePage() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8">
         {/* 2. Mascot Tobi Hero Section */}
         <MascotTobi
           studentName={profile.name}

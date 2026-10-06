@@ -1208,10 +1208,10 @@ export default function ScienceLabModal({
   };
 
   return (
-    <div className={isFullPage ? "h-screen max-h-screen overflow-hidden bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-slate-800 flex flex-col justify-center p-2 sm:p-4 select-none" : "fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto"}>
-      <div className={isFullPage ? "w-full max-w-5xl mx-auto h-full max-h-full bg-white rounded-3xl border-3 sm:border-4 border-emerald-400 shadow-2xl flex flex-col overflow-hidden my-auto" : "relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto"}>
+    <div className={isFullPage ? "min-h-screen w-full bg-emerald-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden" : "fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto"}>
+      <div className={isFullPage ? "w-full max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-emerald-400 sm:shadow-xl p-3 sm:p-7 my-0 sm:my-5" : "relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto"}>
         {/* Header */}
-        <div className={`flex items-center justify-between pb-3 border-b-2 border-emerald-100 ${isFullPage ? "px-4 py-2.5 sm:px-6 sm:py-3 bg-emerald-50/90 shrink-0 mb-3" : "mb-4"}`}>
+        <div className={`flex items-center justify-between pb-3 border-b-2 border-emerald-100 ${isFullPage ? "bg-emerald-50/90 rounded-2xl p-3 sm:p-4 mb-4" : "mb-4"}`}>
           <div className="flex items-center gap-2.5 sm:gap-3">
             {isFullPage && (
               <Link

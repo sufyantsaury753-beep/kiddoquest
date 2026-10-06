@@ -87,22 +87,23 @@ h1, h2, h3, h4, h5, h6, .font-display {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Custom scrollbar for friendly UI */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+/* Clean Native App Scroll (Smooth scroll without visible scrollbar, zero horizontal overflow) */
+* {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
 }
-::-webkit-scrollbar-track {
-  background: #fef3c7;
-  border-radius: 9999px;
+
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
-::-webkit-scrollbar-thumb {
-  background: #fcd34d;
-  border-radius: 9999px;
-  border: 2px solid #fef3c7;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #f59e0b;
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Telkomsel Lite Mode Overrides */

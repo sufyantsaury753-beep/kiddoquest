@@ -205,9 +205,9 @@ export default function TataSuryaPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`h-screen max-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col justify-center p-2 sm:p-4 select-none ${profile.liteMode ? "lite-high-contrast" : ""}`}>
-      {/* Container Utama 1 Layar Penuh (Zero-Scroll Viewport) */}
-      <div className="w-full max-w-4xl mx-auto h-full max-h-full bg-slate-900/95 rounded-3xl border-3 sm:border-4 border-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.25)] flex flex-col overflow-hidden my-auto">
+    <div className={`min-h-screen w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+      {/* Container Utama Layar Penuh Edge-to-Edge */}
+      <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] my-0 sm:my-5">
         
         {/* 1. Header Game */}
         <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">
@@ -289,7 +289,7 @@ export default function TataSuryaPage() {
         </div>
 
         {/* 3. Main Stage: Panggung Planet & Lembar Fakta (Pas 1 Layar Penuh) */}
-        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-hidden">
+        <main className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between overflow-y-auto">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6 items-center flex-1 my-auto">
             
             {/* Visual Planet Celestial Graphic (Kiri / Tengah) */}
