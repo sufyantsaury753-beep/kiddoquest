@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import confetti from "canvas-confetti";
 import { 
   X, 
@@ -17,6 +18,7 @@ import {
   CheckCircle2,
   Sprout,
   ArrowRight,
+  ArrowLeft,
   Shuffle,
   Zap,
   Power,
@@ -31,6 +33,8 @@ interface ScienceLabModalProps {
   onEarnStars: (amount: number) => void;
   audioEnabled: boolean;
   liteMode: boolean;
+  isFullPage?: boolean;
+  stars?: number;
 }
 
 export interface LabTube {
@@ -787,6 +791,8 @@ export default function ScienceLabModal({
   onEarnStars,
   audioEnabled,
   liteMode,
+  isFullPage = false,
+  stars = 0,
 }: ScienceLabModalProps) {
   const [activeTab, setActiveTab] = useState<"colors" | "waterCycle" | "foodChain" | "circuits">("colors");
 
@@ -1202,28 +1208,54 @@ export default function ScienceLabModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto">
+    <div className={isFullPage ? "h-screen max-h-screen overflow-hidden bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-slate-800 flex flex-col justify-center p-2 sm:p-4 select-none" : "fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/65 backdrop-blur-sm overflow-y-auto"}>
+      <div className={isFullPage ? "w-full max-w-5xl mx-auto h-full max-h-full bg-white rounded-3xl border-3 sm:border-4 border-emerald-400 shadow-2xl flex flex-col overflow-hidden my-auto" : "relative w-full max-w-5xl bg-white rounded-3xl border-4 border-emerald-400 shadow-2xl p-4 sm:p-7 overflow-hidden my-auto"}>
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b-2 border-emerald-100 mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center border border-emerald-300">
+        <div className={`flex items-center justify-between pb-3 border-b-2 border-emerald-100 ${isFullPage ? "px-4 py-2.5 sm:px-6 sm:py-3 bg-emerald-50/90 shrink-0 mb-3" : "mb-4"}`}>
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {isFullPage && (
+              <Link
+                href="/"
+                onClick={() => sound.stopSpeaking()}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-black text-xs sm:text-sm border-2 border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"
+                title="Kembali ke Beranda"
+              >
+                <ArrowLeft className="w-4 h-4 text-emerald-700" />
+                <span className="hidden sm:inline">Beranda</span>
+              </Link>
+            )}
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center border border-emerald-300 shrink-0">
               <FlaskConical className="w-6 h-6 text-emerald-600" />
             </div>
             <div>
-              <h3 className="text-xl sm:text-2xl font-black font-display text-slate-800">
+              <h3 className="text-lg sm:text-2xl font-black font-display text-slate-800 leading-tight">
                 Lab Sains Cilik
               </h3>
+              {isFullPage && (
+                <span className="text-[10px] sm:text-xs font-bold text-emerald-700 block leading-none">
+                  Eksperimen Virtual Kimia, Fisika & Ekosistem
+                </span>
+              )}
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 btn-chunky"
-            title="Tutup Lab Sains"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {isFullPage && (
+              <div className="flex items-center gap-1 bg-amber-100 px-2.5 py-1 rounded-xl border border-amber-300 text-amber-900 font-black text-xs">
+                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                <span>{stars}</span>
+              </div>
+            )}
+            {!isFullPage && (
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 btn-chunky"
+                title="Tutup Lab Sains"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Tab Switcher (4 Tabs Responsif) */}

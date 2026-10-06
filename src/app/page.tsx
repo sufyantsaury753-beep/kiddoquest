@@ -13,10 +13,6 @@ import Footer from "@/components/Footer";
 // Modals
 import CertificateModal from "@/components/CertificateModal";
 import ProfileModal from "@/components/ProfileModal";
-import ScienceLabModal from "@/components/zones/ScienceLabModal";
-import MathAdventureModal from "@/components/zones/MathAdventureModal";
-import SolarSystemModal from "@/components/zones/SolarSystemModal";
-import EvaluasiModal from "@/components/zones/EvaluasiModal";
 
 import { 
   StudentProfile, 
@@ -34,7 +30,6 @@ export default function TobiQuestHomePage() {
   // Modal States
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [activeZoneModal, setActiveZoneModal] = useState<string | null>(null);
 
   useEffect(() => {
     // Hydrate state from localStorage
@@ -80,7 +75,7 @@ export default function TobiQuestHomePage() {
         onUpdateProfile={handleUpdateProfile}
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
-        onOpenEvaluasi={() => setActiveZoneModal("evaluasi")}
+        onOpenEvaluasi={() => router.push("/evaluasi")}
       />
 
       {/* Main Content Area */}
@@ -95,11 +90,11 @@ export default function TobiQuestHomePage() {
         {/* 3. Core Learning Zones Grid */}
         <LearningZonesGrid
           onSelectZone={(zoneId) => {
-            if (zoneId === "cerita") {
-              router.push("/literasi-nusantara");
-            } else {
-              setActiveZoneModal(zoneId);
-            }
+            if (zoneId === "sains") router.push("/lab-sains");
+            else if (zoneId === "berhitung") router.push("/hitung-ceria");
+            else if (zoneId === "tatasurya") router.push("/tata-surya");
+            else if (zoneId === "cerita") router.push("/literasi-nusantara");
+            else if (zoneId === "evaluasi") router.push("/evaluasi");
           }}
           audioEnabled={profile.audioEnabled}
           liteMode={profile.liteMode}
@@ -148,44 +143,6 @@ export default function TobiQuestHomePage() {
         onClose={() => setIsProfileOpen(false)}
         profile={profile}
         onUpdateProfile={handleUpdateProfile}
-      />
-
-      {/* Zone 1: Lab Sains Cilik Modal */}
-      <ScienceLabModal
-        isOpen={activeZoneModal === "sains"}
-        onClose={() => setActiveZoneModal(null)}
-        onEarnStars={handleEarnStars}
-        audioEnabled={profile.audioEnabled}
-        liteMode={profile.liteMode}
-      />
-
-      {/* Zone 2: Petualangan Berhitung Ceria Modal */}
-      <MathAdventureModal
-        isOpen={activeZoneModal === "berhitung"}
-        onClose={() => setActiveZoneModal(null)}
-        onEarnStars={handleEarnStars}
-        audioEnabled={profile.audioEnabled}
-        liteMode={profile.liteMode}
-      />
-
-      {/* Zone 3: Penjelajah Tata Surya Cilik Modal (Baru) */}
-      <SolarSystemModal
-        isOpen={activeZoneModal === "tatasurya"}
-        onClose={() => setActiveZoneModal(null)}
-        onEarnStars={handleEarnStars}
-        audioEnabled={profile.audioEnabled}
-        liteMode={profile.liteMode}
-      />
-
-
-
-      {/* Zone 5: Pusat Evaluasi Literasi SD Modal (10 Mapel Lengkap) */}
-      <EvaluasiModal
-        isOpen={activeZoneModal === "evaluasi"}
-        onClose={() => setActiveZoneModal(null)}
-        onEarnStars={handleEarnStars}
-        audioEnabled={profile.audioEnabled}
-        liteMode={profile.liteMode}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { 
   X, 
   BookOpen, 
@@ -46,6 +47,8 @@ interface EvaluasiModalProps {
   onEarnStars: (amount: number) => void;
   audioEnabled: boolean;
   liteMode: boolean;
+  isFullPage?: boolean;
+  stars?: number;
 }
 
 // Icon mapper for the 10 subjects
@@ -82,6 +85,8 @@ export default function EvaluasiModal({
   onEarnStars,
   audioEnabled,
   liteMode,
+  isFullPage = false,
+  stars = 0,
 }: EvaluasiModalProps) {
   // Modal Navigation State: 'select-mapel' | 'select-agama' | 'quiz' | 'result'
   const [viewState, setViewState] = useState<"select-mapel" | "select-agama" | "quiz" | "result">("select-mapel");
@@ -275,60 +280,80 @@ export default function EvaluasiModal({
   const stats = calculateStats();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in no-print">
-      <div className="relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden">
+    <div className={isFullPage ? "h-screen max-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-950 to-slate-950 text-slate-800 flex flex-col justify-center p-2 sm:p-4 select-none no-print" : "fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-fade-in no-print"}>
+      <div className={isFullPage ? "relative w-full max-w-4xl mx-auto h-full max-h-full bg-white rounded-3xl border-3 sm:border-4 border-indigo-400 shadow-2xl flex flex-col overflow-hidden my-auto" : "relative w-full max-w-4xl max-h-[94vh] bg-white rounded-3xl border-4 border-indigo-400 shadow-[0_12px_0_0_#4338ca] flex flex-col overflow-hidden"}>
         
         {/* ============================================================== */}
         {/* TOP HEADER MODAL                                              */}
         {/* ============================================================== */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white border-b-4 border-indigo-800">
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center shadow-inner">
-              <GraduationCap className="w-6 h-6 text-yellow-300" />
+        <div className="flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 text-white border-b-4 border-indigo-800 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {isFullPage && (
+              <Link
+                href="/"
+                onClick={() => sound.stopSpeaking()}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-black text-xs sm:text-sm border-2 border-white/40 shadow-sm transition-all"
+                title="Kembali ke Beranda"
+              >
+                <ArrowLeft className="w-4 h-4 text-yellow-300" />
+                <span className="hidden sm:inline">Beranda</span>
+              </Link>
+            )}
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center shadow-inner shrink-0">
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-300" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-xl font-black font-display tracking-tight">
-                  Pusat Evaluasi Literasi SD
+                <h2 className="text-sm sm:text-xl font-black font-display tracking-tight leading-tight">
+                  Pusat Evaluasi SD
                 </h2>
-                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black bg-yellow-400 text-yellow-950">
-                  Kurikulum Merdeka 2026
+                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black bg-yellow-400 text-yellow-950">
+                  Kurikulum Merdeka
                 </span>
               </div>
-              <p className="text-[11px] sm:text-xs text-indigo-100 font-bold">
-                {viewState === "select-mapel" && "Pilih 1 dari 10 Mata Pelajaran Lengkap SD"}
-                {viewState === "select-agama" && "Pilih 1 dari 6 Agama Resmi di Indonesia"}
-                {viewState === "quiz" && `${currentPaket?.namaMapel} • Soal ${currentQuestionIndex + 1} dari ${currentPaket?.totalSoal}`}
-                {viewState === "result" && `Hasil Evaluasi: ${currentPaket?.namaMapel}`}
+              <p className="text-[10px] sm:text-xs text-indigo-100 font-bold block leading-none">
+                {viewState === "select-mapel" && "10 Mapel Lengkap"}
+                {viewState === "select-agama" && "Pilih 1 dari 6 Agama"}
+                {viewState === "quiz" && `${currentPaket?.namaMapel} • Soal ${currentQuestionIndex + 1}/${currentPaket?.totalSoal}`}
+                {viewState === "result" && `Hasil: ${currentPaket?.namaMapel}`}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {isFullPage && (
+              <div className="flex items-center gap-1 bg-amber-400 text-amber-950 px-2 sm:px-2.5 py-1 rounded-xl font-black text-xs border border-amber-300 shadow-sm">
+                <Star className="w-3.5 h-3.5 fill-amber-900 text-amber-900" />
+                <span>{stars}</span>
+              </div>
+            )}
+
             {viewState === "quiz" && (
               <button
                 onClick={handleSpeakQuestion}
-                className={`p-2 rounded-xl border-2 transition-all ${
+                className={`p-1.5 sm:p-2 rounded-xl border-2 transition-all ${
                   isSpeaking
                     ? "bg-yellow-400 text-yellow-950 border-yellow-500 animate-pulse"
                     : "bg-white/20 hover:bg-white/30 text-white border-white/40"
                 }`}
                 title="Dengarkan Soal & Pilihan dari Tobi"
               >
-                {isSpeaking ? <Volume2 className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
               </button>
             )}
 
-            <button
-              onClick={() => {
-                sound.stopSpeaking();
-                onClose();
-              }}
-              className="p-2 rounded-xl bg-white/20 hover:bg-red-500 hover:text-white border-2 border-white/40 transition-colors"
-              title="Tutup Modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {!isFullPage && (
+              <button
+                onClick={() => {
+                  sound.stopSpeaking();
+                  onClose();
+                }}
+                className="p-2 rounded-xl bg-white/20 hover:bg-red-500 hover:text-white border-2 border-white/40 transition-colors"
+                title="Tutup Modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
           </div>
         </div>
 
