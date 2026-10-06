@@ -765,6 +765,22 @@ export const ECOSYSTEMS: Ecosystem[] = [
   },
 ];
 
+export const FOODCHAIN_COORDINATES: Record<"sawah" | "laut", Array<{ left: string; top: string }>> = {
+  sawah: [
+    { left: "14.2%", top: "56.0%" },
+    { left: "32.1%", top: "69.2%" },
+    { left: "50.0%", top: "55.2%" },
+    { left: "68.4%", top: "70.1%" },
+    { left: "85.8%", top: "55.5%" },
+  ],
+  laut: [
+    { left: "14.5%", top: "48.7%" },
+    { left: "38.2%", top: "50.8%" },
+    { left: "61.8%", top: "48.2%" },
+    { left: "85.5%", top: "48.0%" },
+  ],
+};
+
 export default function ScienceLabModal({
   isOpen,
   onClose,
@@ -834,7 +850,7 @@ export default function ScienceLabModal({
     setChainErrorFeedback(null);
   }, [selectedEcosystemId]);
 
-  // Preload gambar WebP siklus air untuk instan zero-latency switching
+  // Preload gambar WebP siklus air & rantai makanan untuk instan zero-latency switching
   useEffect(() => {
     if (typeof window !== "undefined") {
       const img1 = new Image();
@@ -843,6 +859,10 @@ export default function ScienceLabModal({
       img2.src = "/images/kondensasi.webp";
       const img3 = new Image();
       img3.src = "/images/presipitasi.webp";
+      const img4 = new Image();
+      img4.src = "/images/foodchain/sawah.webp";
+      const img5 = new Image();
+      img5.src = "/images/foodchain/laut.webp";
     }
   }, [isOpen, activeTab]);
 
@@ -1811,82 +1831,68 @@ export default function ScienceLabModal({
               </div>
             )}
 
-            {/* Papan Alur Rantai Makanan (Target Slots dengan Panah Energi) */}
-            <div className="p-3.5 sm:p-5 rounded-3xl bg-slate-50 border-3 border-slate-200 mb-5 overflow-x-auto">
-              <div className="flex items-center justify-between min-w-[580px] sm:min-w-0 gap-1.5 sm:gap-2">
-                {activeEcosystem.chain.map((item, idx) => {
-                  const isPlaced = idx < placedChainIds.length;
-                  const isNextTarget = idx === placedChainIds.length;
-                  const placedItem = isPlaced
-                    ? activeEcosystem.chain.find((c) => c.id === placedChainIds[idx]) || item
-                    : null;
-                  const PlacedSvg = placedItem ? placedItem.SvgComponent : null;
+            {/* Papan Alur Rantai Makanan (Background Ilustrasi WebP dengan Lingkaran Interaktif) */}
+            <div className="relative w-full aspect-[1024/571] rounded-3xl overflow-hidden border-2 border-slate-200 shadow-lg mb-5 select-none bg-slate-900">
+              {/* Latar Belakang Gambar WebP Sesuai Ekosistem */}
+              <img
+                src={selectedEcosystemId === "sawah" ? "/images/foodchain/sawah.webp" : "/images/foodchain/laut.webp"}
+                alt={`Papan Rantai Makanan ${activeEcosystem.name}`}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
 
-                  return (
-                    <React.Fragment key={item.id}>
-                      {/* Slot Kartu Organisme */}
+              {/* Slot Lingkaran Interaktif Berbasis Koordinat Persentase */}
+              {activeEcosystem.chain.map((item, idx) => {
+                const isPlaced = idx < placedChainIds.length;
+                const isNextTarget = idx === placedChainIds.length;
+                const placedItem = isPlaced
+                  ? activeEcosystem.chain.find((c) => c.id === placedChainIds[idx]) || item
+                  : null;
+                const PlacedSvg = placedItem ? placedItem.SvgComponent : null;
+                const coords = FOODCHAIN_COORDINATES[selectedEcosystemId][idx] || { left: "50%", top: "50%" };
+
+                return (
+                  <div
+                    key={item.id}
+                    style={{ left: coords.left, top: coords.top }}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-10"
+                  >
+                    {isPlaced && PlacedSvg && placedItem ? (
+                      /* Slot Terisi (Organisme Muncul dengan Animasi Pop-in) */
                       <div
-                        className={`flex-1 flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-3 sm:border-4 transition-all text-center min-h-[110px] sm:min-h-[130px] ${
-                          isPlaced && placedItem
-                            ? `${placedItem.bgColor} ${placedItem.borderColor} shadow-sm`
-                            : isNextTarget
-                            ? "bg-amber-50 border-amber-400 border-dashed animate-pulse"
-                            : "bg-white/80 border-slate-200 border-dashed opacity-60"
+                        className={`relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white/95 border-2 sm:border-3 ${placedItem.borderColor} shadow-xl flex items-center justify-center p-1 sm:p-2 transition-transform duration-300 transform scale-100 ${
+                          foodChainComplete ? "animate-bounce ring-4 ring-emerald-400 ring-offset-2 ring-offset-black/50" : ""
                         }`}
                       >
-                        {isPlaced && PlacedSvg && placedItem ? (
-                          <>
-                            <div className="mb-1">
-                              <PlacedSvg />
-                            </div>
-                            <span className="font-black text-xs sm:text-sm text-slate-800 leading-tight">
-                              {placedItem.name}
-                            </span>
-                            <span className={`mt-1 text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 rounded-full border ${placedItem.badgeBg}`}>
-                              {placedItem.role}
-                            </span>
-                          </>
-                        ) : isNextTarget ? (
-                          <div className="flex flex-col items-center justify-center py-2 text-amber-700">
-                            <span className="text-xl sm:text-2xl font-black mb-1">?</span>
-                            <span className="text-[10px] font-black leading-tight">
-                              Siapa Berikutnya?
-                            </span>
-                            <span className="text-[8px] font-bold text-amber-600 mt-0.5">
-                              {item.role}
-                            </span>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center py-2 text-slate-400">
-                            <span className="text-xs font-black mb-0.5">{idx + 1}</span>
-                            <span className="text-[9px] font-semibold">Terkunci</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Panah Aliran Energi Antara 2 Tingkat */}
-                      {idx < activeEcosystem.chain.length - 1 && (
-                        <div className="flex flex-col items-center justify-center px-0.5 sm:px-1 flex-shrink-0">
-                          <ArrowRight
-                            className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
-                              idx < placedChainIds.length - 1
-                                ? "text-amber-500 animate-pulse"
-                                : "text-slate-300"
-                            }`}
-                          />
-                          <span
-                            className={`text-[8px] font-black tracking-tighter ${
-                              idx < placedChainIds.length - 1 ? "text-amber-600" : "text-slate-300"
-                            }`}
-                          >
-                            Energi
-                          </span>
+                        <div className="w-full h-full flex items-center justify-center">
+                          <PlacedSvg />
                         </div>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </div>
+
+                        {/* Label Nama Hewan / Tumbuhan */}
+                        <span className="absolute -bottom-4 sm:-bottom-5 px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] font-black bg-slate-900/90 text-white whitespace-nowrap shadow-md pointer-events-none border border-white/20">
+                          {placedItem.name}
+                        </span>
+                      </div>
+                    ) : isNextTarget ? (
+                      /* Slot Target Aktif (Cincin Kuning Berdenyut) */
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-amber-400/25 border-2 border-amber-300 ring-4 ring-amber-400 ring-offset-2 ring-offset-black/40 animate-pulse flex flex-col items-center justify-center shadow-lg">
+                        <span className="text-white font-black text-sm sm:text-xl drop-shadow-md animate-bounce">
+                          ?
+                        </span>
+                        <span className="absolute -bottom-4 sm:-bottom-5 px-1.5 py-0.5 rounded-full text-[7px] sm:text-[9px] font-black bg-amber-500 text-slate-950 whitespace-nowrap shadow border border-amber-300">
+                          Target {idx + 1}
+                        </span>
+                      </div>
+                    ) : (
+                      /* Slot Terkunci (Belum Terisi) */
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-slate-950/40 border border-white/30 backdrop-blur-[1px] flex items-center justify-center shadow-inner">
+                        <span className="text-white/50 text-[10px] sm:text-xs font-black">
+                          {idx + 1}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Kolam Kartu Pilihan Makhluk Hidup (Tap-to-Order) */}
