@@ -55,6 +55,15 @@ export default function CultureStoriesModal({
   const [solvedIds, setSolvedIds] = useState<string[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  const makananCount = useMemo(
+    () => DATA_LITERASI_NUSANTARA.filter((d) => d.category === "makanan").length,
+    []
+  );
+  const ikonCount = useMemo(
+    () => DATA_LITERASI_NUSANTARA.filter((d) => d.category === "ikon").length,
+    []
+  );
+
   // Filter bank soal berdasarkan kategori dan kepulauan
   const filteredQuestions = useMemo(() => {
     return DATA_LITERASI_NUSANTARA.filter((item) => {
@@ -264,7 +273,7 @@ export default function CultureStoriesModal({
                   }`}
                 >
                   <Utensils className="w-3.5 h-3.5" />
-                  <span>Makanan Khas (36)</span>
+                  <span>Makanan Khas ({makananCount})</span>
                 </button>
                 <button
                   onClick={() => handleChangeCategory("ikon")}
@@ -275,7 +284,7 @@ export default function CultureStoriesModal({
                   }`}
                 >
                   <Landmark className="w-3.5 h-3.5" />
-                  <span>Ikon & Landmark (36)</span>
+                  <span>Ikon & Landmark ({ikonCount})</span>
                 </button>
               </div>
 

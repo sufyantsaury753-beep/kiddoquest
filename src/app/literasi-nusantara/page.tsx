@@ -52,6 +52,15 @@ export default function LiterasiNusantaraPage() {
     setProfile(updated);
   };
 
+  const makananCount = useMemo(
+    () => DATA_LITERASI_NUSANTARA.filter((d) => d.category === "makanan").length,
+    []
+  );
+  const ikonCount = useMemo(
+    () => DATA_LITERASI_NUSANTARA.filter((d) => d.category === "ikon").length,
+    []
+  );
+
   // Filter bank soal
   const filteredQuestions = useMemo(() => {
     return DATA_LITERASI_NUSANTARA.filter((item) => {
@@ -251,7 +260,7 @@ export default function LiterasiNusantaraPage() {
                 selectedCategory === "makanan" ? "bg-purple-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
-              Makanan
+              Makanan ({makananCount})
             </button>
             <button
               onClick={() => handleChangeCategory("ikon")}
@@ -259,7 +268,7 @@ export default function LiterasiNusantaraPage() {
                 selectedCategory === "ikon" ? "bg-purple-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
-              Ikon
+              Ikon ({ikonCount})
             </button>
           </div>
 
