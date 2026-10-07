@@ -197,12 +197,12 @@ export default function LiterasiNusantaraPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`min-h-screen w-full bg-purple-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`h-[100dvh] max-h-[100dvh] w-full bg-purple-50/40 text-slate-800 flex flex-col select-none overflow-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-3xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl my-0 sm:my-3 lg:my-5">
+      <div className="w-full max-w-3xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl sm:my-2 lg:my-3 overflow-hidden">
         
         {/* 1. Header Bar Game */}
-        <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-purple-50/90 border-b-2 border-purple-100 flex items-center justify-between gap-2 shrink-0">
+        <header className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-purple-50/90 border-b-2 border-purple-100 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
@@ -290,12 +290,12 @@ export default function LiterasiNusantaraPage() {
         </div>
 
         {/* 3. Panggung Foto & Pilihan Ganda (Adaptif: Vertikal di Mobile/Tablet, Berdampingan di Desktop) */}
-        <main className="p-3 sm:p-5 lg:p-6 flex-1 flex flex-col justify-center overflow-y-auto">
-          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+        <main className="flex-1 min-h-0 flex flex-col justify-between py-2 sm:py-3 px-3 sm:px-5 overflow-hidden">
+          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto flex-1 min-h-0 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
             {/* SISI KIRI (Mobile: Atas, Desktop: Kolom Kiri 5-span) */}
-            <div className="lg:col-span-5 flex flex-col items-center text-center space-y-2 lg:space-y-3">
+            <div className="lg:col-span-5 flex flex-col items-center text-center space-y-1 sm:space-y-2 lg:space-y-3 shrink-0">
               {/* Foto Objek */}
-              <div className="relative w-36 h-28 sm:w-52 sm:h-40 lg:w-64 lg:h-48 shrink-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2.5 sm:p-3 overflow-hidden mx-auto">
+              <div className="relative w-44 h-36 sm:w-56 sm:h-44 lg:w-72 lg:h-52 max-h-[22vh] lg:max-h-[30vh] shrink-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2 sm:p-3 overflow-hidden mx-auto">
                 <img
                   src={`/images/nusantara/${currentSoal.id}.webp`}
                   alt={currentSoal.title}
@@ -327,9 +327,9 @@ export default function LiterasiNusantaraPage() {
                 </div>
               </div>
 
-              {/* Nama Objek */}
-              <div>
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
+              {/* Nama Objek & Pertanyaan */}
+              <div className="shrink-0">
+                <h2 className="text-lg sm:text-2xl lg:text-3xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
                   {currentSoal.title}
                 </h2>
 
@@ -344,7 +344,7 @@ export default function LiterasiNusantaraPage() {
                 </div>
 
                 {/* Pertanyaan Singkat (Mobile / Tablet) */}
-                <p className="lg:hidden text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-1 leading-tight">
+                <p className="lg:hidden text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-0.5 sm:mt-1 leading-tight">
                   {currentSoal.category === "makanan"
                     ? "Dari daerah manakah makanan khas ini berasal?"
                     : "Dari daerah manakah ikon budaya ini berasal?"}
@@ -353,9 +353,9 @@ export default function LiterasiNusantaraPage() {
             </div>
 
             {/* SISI KANAN (Mobile: Bawah, Desktop: Kolom Kanan 7-span) */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-2.5 sm:space-y-3.5 mt-2 lg:mt-0 w-full">
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-2 sm:space-y-2.5 lg:space-y-3.5 w-full shrink-0">
               {/* Banner Pertanyaan Khusus Layar Desktop / Laptop */}
-              <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50/60 p-3.5 rounded-2xl border-2 border-purple-200 text-left">
+              <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50/60 p-3 sm:p-3.5 rounded-2xl border-2 border-purple-200 text-left">
                 <span className="text-[11px] font-black uppercase text-purple-700 tracking-wider block mb-0.5">
                   Misi Detektif Daerah:
                 </span>
@@ -389,9 +389,9 @@ export default function LiterasiNusantaraPage() {
                     <button
                       key={opt}
                       onClick={() => handleSelectOption(opt)}
-                      className={`p-2.5 sm:p-3.5 lg:p-4 rounded-2xl border-2 font-black text-xs sm:text-sm lg:text-base flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
+                      className={`py-2.5 sm:py-3.5 px-2.5 sm:px-3.5 lg:p-4 rounded-2xl border-2 font-black text-xs sm:text-sm lg:text-base flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
                     >
-                      <div className="flex items-center gap-2 overflow-hidden">
+                      <div className="flex items-center gap-1.5 sm:gap-2 overflow-hidden">
                         <span className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-lg border flex items-center justify-center font-black text-xs lg:text-sm shrink-0 ${badgeStyle}`}>
                           {letter}
                         </span>
@@ -405,7 +405,7 @@ export default function LiterasiNusantaraPage() {
 
               {/* Fakta Edukasi di Akhir (Muncul Setelah Menjawab) */}
               {selectedAnswer ? (
-                <div className={`p-2.5 sm:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 shrink-0 ${
+                <div className={`p-2 sm:p-2.5 lg:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 shrink-0 ${
                   isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
                 }`}>
                   <div className="flex items-center gap-2 overflow-hidden">
@@ -430,7 +430,7 @@ export default function LiterasiNusantaraPage() {
                   )}
                 </div>
               ) : (
-                <div className="h-9 lg:h-10 shrink-0 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-400">
+                <div className="h-8 lg:h-10 shrink-0 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-400">
                   Pilih salah satu jawaban di atas untuk melihat fakta edukasi
                 </div>
               )}
@@ -439,7 +439,7 @@ export default function LiterasiNusantaraPage() {
         </main>
 
         {/* 6. Footer Navigasi */}
-        <footer className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-purple-50/80 border-t border-purple-100 flex items-center justify-between gap-2 shrink-0">
+        <footer className="px-3.5 py-1.5 sm:px-5 sm:py-2.5 bg-purple-50/80 border-t border-purple-100 flex items-center justify-between gap-2 shrink-0">
           <button
             onClick={handlePrev}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-extrabold text-xs border border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"

@@ -285,12 +285,12 @@ export default function HitungCeriaPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`min-h-screen w-full bg-rose-50/40 text-slate-800 flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`h-[100dvh] max-h-[100dvh] w-full bg-rose-50/40 text-slate-800 flex flex-col select-none overflow-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-rose-400 sm:shadow-xl my-0 sm:my-3 lg:my-5">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-rose-400 sm:shadow-xl sm:my-2 lg:my-3 overflow-hidden">
         
         {/* 1. Header Game */}
-        <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-rose-50/90 border-b-2 border-rose-100 flex items-center justify-between gap-2 shrink-0">
+        <header className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-rose-50/90 border-b-2 border-rose-100 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
@@ -328,7 +328,7 @@ export default function HitungCeriaPage() {
         </header>
 
         {/* 2. Mode Switcher (1 Baris Rapi) */}
-        <div className="px-3 py-1.5 sm:px-5 sm:py-2 bg-slate-50 border-b border-rose-100 flex items-center justify-between gap-2 text-xs shrink-0">
+        <div className="px-3 py-1 sm:px-5 sm:py-1.5 bg-slate-50 border-b border-rose-100 flex items-center justify-between gap-2 text-xs shrink-0">
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => { setActiveTab("kalkulasi"); setSelectedAnswer(null); }}
@@ -361,10 +361,10 @@ export default function HitungCeriaPage() {
         </div>
 
         {/* 3. Main Stage Game (Adaptif: Vertikal di HP/Tablet, Berdampingan di Desktop) */}
-        <main className="p-3 sm:p-5 lg:p-6 flex-1 flex flex-col justify-center overflow-y-auto">
-          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+        <main className="p-2.5 sm:p-4 lg:p-5 flex-1 min-h-0 flex flex-col justify-between overflow-hidden">
+          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto flex-1 min-h-0 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
             {/* SISI KIRI: Persamaan Matematika / Teka-Teki Buah */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center w-full">
+            <div className="lg:col-span-6 flex flex-col items-center justify-center w-full shrink-0">
               {activeTab === "kalkulasi" ? (
                 /* Mode 1: Kalkulasi Buah */
                 <div className="flex flex-col items-center justify-center w-full">
@@ -373,7 +373,7 @@ export default function HitungCeriaPage() {
                   </span>
 
                   {/* Persamaan Visual Buah */}
-                  <div className="flex items-center justify-center gap-2 sm:gap-4 p-3 sm:p-5 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-3 p-2.5 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
                     {calcTerms.map((t, idx) => (
                       <React.Fragment key={idx}>
                         {idx > 0 && (
@@ -405,7 +405,7 @@ export default function HitungCeriaPage() {
                     Pecahkan Nilai Rahasia
                   </span>
 
-                  <div className="p-3 sm:p-4 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-2">
+                  <div className="p-2 sm:p-3.5 rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-1.5 sm:space-y-2">
                     {/* Baris 1 */}
                     <div className="flex items-center justify-between p-2 rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
                       <div className="flex items-center gap-2">
@@ -437,7 +437,7 @@ export default function HitungCeriaPage() {
             </div>
 
             {/* SISI KANAN: Grid Pilihan Jawaban 2x2 & Feedback */}
-            <div className="lg:col-span-6 flex flex-col justify-center space-y-2.5 sm:space-y-3 mt-3 lg:mt-0 w-full">
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-2 sm:space-y-2.5 mt-2 lg:mt-0 w-full shrink-0">
               <span className="hidden lg:block text-xs font-black text-rose-800 uppercase tracking-wider">
                 Pilih Jawaban yang Tepat:
               </span>
@@ -460,7 +460,7 @@ export default function HitungCeriaPage() {
                     <button
                       key={opt}
                       onClick={() => handleSelectAnswer(opt)}
-                      className={`p-3 sm:p-4 rounded-2xl border-2 font-display font-black text-lg sm:text-xl lg:text-2xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
+                      className={`py-2.5 sm:py-3.5 lg:py-4 px-2 rounded-2xl border-2 font-display font-black text-lg sm:text-xl lg:text-2xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
                     >
                       <span>{opt}</span>
                       {isThisCorrect && <CheckCircle2 className="w-5 h-5 ml-2 text-white shrink-0" />}
@@ -471,7 +471,7 @@ export default function HitungCeriaPage() {
 
               {/* Feedback & Hint Banner */}
               {selectedAnswer ? (
-                <div className={`p-2.5 sm:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 w-full shrink-0 ${
+                <div className={`p-2 sm:p-2.5 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 w-full shrink-0 ${
                   isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
                 }`}>
                   <div className="flex items-center gap-1.5 overflow-hidden">
@@ -518,7 +518,7 @@ export default function HitungCeriaPage() {
 
         {/* Popover Bantuan */}
         {showHint && (
-          <div className="px-4 py-2 bg-amber-50 border-t border-amber-200 text-xs font-semibold text-amber-900">
+          <div className="px-4 py-2 bg-amber-50 border-t border-amber-200 text-xs font-semibold text-amber-900 shrink-0">
             {activeTab === "kalkulasi" ? calcHint : detHint}
           </div>
         )}

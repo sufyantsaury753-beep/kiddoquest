@@ -205,12 +205,12 @@ export default function TataSuryaPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`min-h-screen w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col select-none overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`h-[100dvh] max-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col select-none overflow-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] my-0 sm:my-3 lg:my-5">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] sm:my-2 lg:my-3 overflow-hidden">
         
         {/* 1. Header Game */}
-        <header className="px-3.5 py-2.5 sm:px-5 sm:py-3 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">
+        <header className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
@@ -251,7 +251,7 @@ export default function TataSuryaPage() {
         </header>
 
         {/* 2. Mini Orbit Belt / Planet Selector (1 Baris Geser Horisontal) */}
-        <div className="px-3 py-1.5 sm:px-5 sm:py-2 bg-slate-950/90 border-b border-indigo-900/80 flex items-center gap-2 overflow-x-auto scrollbar-thin shrink-0">
+        <div className="px-3 py-1 sm:px-5 sm:py-1.5 bg-slate-950/90 border-b border-indigo-900/80 flex items-center gap-2 overflow-x-auto scrollbar-thin shrink-0">
           <span className="text-[10px] font-black text-indigo-300 uppercase tracking-wider shrink-0 flex items-center gap-1">
             <Sparkles className="w-3 h-3 text-yellow-400" />
             Pilih Objek:
@@ -289,12 +289,12 @@ export default function TataSuryaPage() {
         </div>
 
         {/* 3. Main Stage: Panggung Planet & Lembar Fakta (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
-        <main className="p-3.5 sm:p-5 flex-1 flex flex-col items-center justify-center overflow-y-auto">
-          <div className="w-full max-w-3xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-6 items-center">
+        <main className="p-3 sm:p-4 lg:p-5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
+          <div className="w-full max-w-3xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-6 items-center my-auto">
             
             {/* Visual Planet Celestial Graphic (Kiri / Atas) */}
             <div className="md:col-span-5 flex flex-col items-center justify-center relative shrink-0">
-              <div className="relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center">
+              <div className="relative w-28 h-28 sm:w-40 sm:h-40 lg:w-48 lg:h-48 flex items-center justify-center">
                 {/* Outer Orbit Line */}
                 <div className="absolute inset-0 rounded-full border border-dashed border-indigo-400/30 animate-spin" style={{ animationDuration: "35s" }} />
                 {/* Middle Glow Ring */}
@@ -311,14 +311,14 @@ export default function TataSuryaPage() {
                   <img
                     src={activePlanet.image}
                     alt={activePlanet.name}
-                    className="w-36 h-36 sm:w-48 sm:h-48 object-contain select-none pointer-events-none drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
+                    className="w-28 h-28 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain select-none pointer-events-none drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Planet Details & Fact Sheet (Kanan) */}
-            <div className="md:col-span-7 space-y-2.5 sm:space-y-3.5 text-center sm:text-left">
+            <div className="md:col-span-7 space-y-2 sm:space-y-3 text-center sm:text-left">
               <div>
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 mb-1">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black bg-indigo-500 text-white border border-indigo-400">
@@ -329,20 +329,20 @@ export default function TataSuryaPage() {
                   </span>
                 </div>
 
-                <h2 className="text-xl sm:text-3xl font-black font-display text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-display text-white tracking-tight leading-tight">
                   {activePlanet.name} ({activePlanet.order})
                 </h2>
               </div>
 
               {/* Fact Box */}
-              <div className="bg-slate-950/70 rounded-2xl p-3 sm:p-3.5 border border-indigo-900/90 text-left">
+              <div className="bg-slate-950/70 rounded-2xl p-2.5 sm:p-3 border border-indigo-900/90 text-left">
                 <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-sans">
                   {activePlanet.funFact}
                 </p>
               </div>
 
               {/* Quick Metrics */}
-              <div className="grid grid-cols-2 gap-2 text-left">
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-left">
                 <div className="p-2 sm:p-2.5 rounded-xl bg-slate-900/80 border border-slate-700">
                   <span className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block">Suhu Perkiraan:</span>
                   <span className="text-xs font-extrabold text-amber-300 truncate block">{activePlanet.temperature}</span>
@@ -354,7 +354,7 @@ export default function TataSuryaPage() {
               </div>
 
               {/* Actions */}
-              <div className="pt-1 flex items-center justify-center sm:justify-start gap-2.5">
+              <div className="pt-1 flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5">
                 <button
                   onClick={handleSpeakPlanet}
                   className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black text-xs border border-sky-400 shadow-[0_2px_0_0_#1e1b4b] btn-chunky"
@@ -376,7 +376,7 @@ export default function TataSuryaPage() {
         </main>
 
         {/* 4. Footer */}
-        <footer className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 shrink-0">
+        <footer className="px-3.5 py-1.5 sm:px-5 sm:py-2 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 shrink-0">
           <span className="flex items-center gap-1 text-[11px] text-emerald-400 font-bold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             +35 Bintang Tiap Planet Baru
