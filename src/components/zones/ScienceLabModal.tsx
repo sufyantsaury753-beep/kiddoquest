@@ -23,7 +23,9 @@ import {
   Zap,
   Power,
   Lightbulb,
-  Info
+  Info,
+  Magnet,
+  Check
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -785,6 +787,245 @@ export const FOODCHAIN_COORDINATES: Record<"sawah" | "laut", Array<{ left: strin
   ],
 };
 
+/* =========================================================================
+   MAGNET HUNTER: 8 OBJEK EKSPLORASI SIFAT KEMAGNETAN
+   ========================================================================= */
+
+export const PakuBesiSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <ellipse cx="24" cy="8" rx="10" ry="3.5" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+    <path d="M21 10 L21 14 L27 14 L27 10 Z" fill="#64748b" />
+    <path d="M21 14 L21 34 L24 44 L27 34 L27 14 Z" fill="#cbd5e1" stroke="#475569" strokeWidth="1.5" />
+    <line x1="23" y1="14" x2="23" y2="34" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+    <line x1="25" y1="14" x2="25" y2="34" stroke="#64748b" strokeWidth="1" strokeLinecap="round" />
+  </svg>
+);
+
+export const PenitiLogamSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <path d="M14 6 C14 6 22 4 28 6 C32 7.5 33 13 29 16 C25 18 16 18 14 14 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+    <circle cx="27" cy="11" r="2" fill="#475569" />
+    <circle cx="16" cy="38" r="4.5" fill="none" stroke="#64748b" strokeWidth="2.5" />
+    <path d="M15 14 L12 37" stroke="#cbd5e1" strokeWidth="3" strokeLinecap="round" />
+    <path d="M15 14 L12 37" stroke="#475569" strokeWidth="1" strokeLinecap="round" />
+    <path d="M20 38 L25 13" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M20 38 L25 13" stroke="#ffffff" strokeWidth="1" strokeLinecap="round" />
+  </svg>
+);
+
+export const KlipKertasSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <path
+      d="M17 18 L17 34 C17 38.5 21 41 24.5 41 C28 41 32 38.5 32 34 L32 13 C32 8.5 28 6 24 6 C20 6 16 8.5 16 13 L16 32 C16 34.5 18 36 21 36 C24 36 26 34.5 26 32 L26 18"
+      stroke="#94a3b8"
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+    <path
+      d="M17 18 L17 34 C17 38.5 21 41 24.5 41 C28 41 32 38.5 32 34 L32 13 C32 8.5 28 6 24 6 C20 6 16 8.5 16 13 L16 32 C16 34.5 18 36 21 36 C24 36 26 34.5 26 32 L26 18"
+      stroke="#f8fafc"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+export const PensilKayuSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <path d="M10 38 L14 42 L18 38 L14 34 Z" fill="#f472b6" stroke="#db2777" strokeWidth="1" />
+    <path d="M13 35 L17 39 L20 36 L16 32 Z" fill="#cbd5e1" stroke="#64748b" strokeWidth="1" />
+    <path d="M16 32 L34 14 L38 18 L20 36 Z" fill="#facc15" stroke="#d97706" strokeWidth="1.5" />
+    <line x1="18" y1="34" x2="36" y2="16" stroke="#eab308" strokeWidth="2" />
+    <path d="M34 14 L42 6 L38 18 Z" fill="#fed7aa" stroke="#c2410c" strokeWidth="1" />
+    <path d="M39 9 L42 6 L40 12 Z" fill="#1e293b" />
+  </svg>
+);
+
+export const PenghapusKaretSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <path d="M8 26 L22 12 L30 18 L16 32 Z" fill="#38bdf8" stroke="#0284c7" strokeWidth="1.5" />
+    <path d="M16 32 L30 18 L38 24 L24 38 Z" fill="#f472b6" stroke="#db2777" strokeWidth="1.5" />
+    <path d="M8 26 L10 30 L18 36 L16 32 Z" fill="#0284c7" />
+    <path d="M18 36 L26 42 L24 38 Z" fill="#db2777" />
+    <line x1="22" y1="12" x2="24" y2="14" stroke="#ffffff" strokeWidth="1" />
+  </svg>
+);
+
+export const KertasOrigamiSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <polygon points="6,30 24,10 42,30" fill="#06b6d4" stroke="#0891b2" strokeWidth="1.5" />
+    <polygon points="12,30 24,18 36,30" fill="#22d3ee" stroke="#0891b2" strokeWidth="1.5" />
+    <polygon points="6,30 24,38 42,30" fill="#3b82f6" stroke="#1d4ed8" strokeWidth="1.5" />
+    <polygon points="18,30 24,24 30,30" fill="#f43f5e" stroke="#e11d48" strokeWidth="1.5" />
+    <line x1="24" y1="10" x2="24" y2="38" stroke="#0e7490" strokeWidth="1.5" strokeDasharray="2 2" />
+  </svg>
+);
+
+export const KoinEmasSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <circle cx="24" cy="24" r="18" fill="#eab308" stroke="#ca8a04" strokeWidth="2.5" />
+    <circle cx="24" cy="24" r="14" fill="#facc15" stroke="#ca8a04" strokeWidth="1.5" />
+    <polygon
+      points="24,15 26.5,21 33,21.5 28,25.5 29.8,32 24,28 18.2,32 20,25.5 15,21.5 21.5,21"
+      fill="#fef08a"
+      stroke="#b45309"
+      strokeWidth="1"
+    />
+    <path d="M12 16 A 16 16 0 0 1 28 9" stroke="#fef08a" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+export const DaunKeringSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    <path
+      d="M8 38 C8 38 10 24 22 14 C28 9 38 6 42 6 C42 6 39 16 34 22 C24 34 8 38 8 38 Z"
+      fill="#d97706"
+      stroke="#92400e"
+      strokeWidth="2"
+    />
+    <path
+      d="M14 34 C18 26 28 18 38 10"
+      stroke="#78350f"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <line x1="22" y1="26" x2="28" y2="22" stroke="#92400e" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="26" y1="21" x2="33" y2="18" stroke="#92400e" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="18" y1="30" x2="22" y2="33" stroke="#92400e" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 38 L4 44" stroke="#78350f" strokeWidth="2.5" strokeLinecap="round" />
+  </svg>
+);
+
+export interface MagnetObject {
+  id: string;
+  name: string;
+  material: string;
+  isMagnetic: boolean;
+  category: "Magnetik (Feromagnetik)" | "Non-Magnetik";
+  desc: string;
+  speechSuccess: string;
+  speechFail: string;
+  badgeBg: string;
+  borderColor: string;
+  bgColor: string;
+  SvgComponent: React.FC;
+}
+
+export const MAGNET_OBJECTS: MagnetObject[] = [
+  {
+    id: "paku_besi",
+    name: "Paku Besi",
+    material: "Logam Besi (Fe)",
+    isMagnetic: true,
+    category: "Magnetik (Feromagnetik)",
+    desc: "Paku pertukangan dari besi pejal berkekuatan magnetik tinggi.",
+    speechSuccess: "Hebat! Paku besi terbuat dari besi feromagnetik yang ditarik kuat oleh kutub magnet!",
+    speechFail: "",
+    badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    borderColor: "border-emerald-400",
+    bgColor: "bg-emerald-50",
+    SvgComponent: PakuBesiSvg,
+  },
+  {
+    id: "peniti_logam",
+    name: "Peniti Logam",
+    material: "Baja & Nikel",
+    isMagnetic: true,
+    category: "Magnetik (Feromagnetik)",
+    desc: "Peniti pakaian berbahan kawat baja tahan karat berlapis nikel.",
+    speechSuccess: "Bagus sekali! Peniti logam terbuat dari kawat baja berkandungan besi sehingga langsung menempel ke magnet!",
+    speechFail: "",
+    badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    borderColor: "border-emerald-400",
+    bgColor: "bg-emerald-50",
+    SvgComponent: PenitiLogamSvg,
+  },
+  {
+    id: "klip_kertas",
+    name: "Klip Kertas",
+    material: "Kawat Besi Baja",
+    isMagnetic: true,
+    category: "Magnetik (Feromagnetik)",
+    desc: "Penjepit kertas berpegas lentur dari kawat besi berlapis seng.",
+    speechSuccess: "Tepat sekali! Klip kertas terbuat dari kawat besi yang langsung ditarik oleh gaya magnet!",
+    speechFail: "",
+    badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    borderColor: "border-emerald-400",
+    bgColor: "bg-emerald-50",
+    SvgComponent: KlipKertasSvg,
+  },
+  {
+    id: "pensil_kayu",
+    name: "Pensil Kayu",
+    material: "Kayu & Grafit",
+    isMagnetic: false,
+    category: "Non-Magnetik",
+    desc: "Alat tulis berbahan batang kayu pinus dan inti karbon grafit.",
+    speechSuccess: "",
+    speechFail: "Wah, pensil ini terbuat dari kayu! Kayu bukan benda feromagnetik, jadi tidak dapat ditarik magnet.",
+    badgeBg: "bg-slate-100 text-slate-700 border-slate-300",
+    borderColor: "border-slate-300",
+    bgColor: "bg-slate-50",
+    SvgComponent: PensilKayuSvg,
+  },
+  {
+    id: "penghapus_karet",
+    name: "Penghapus Karet",
+    material: "Karet Sintetis",
+    isMagnetic: false,
+    category: "Non-Magnetik",
+    desc: "Pembersih goresan pensil dari karet elastis non-logam.",
+    speechSuccess: "",
+    speechFail: "Penghapus terbuat dari karet elastis! Karet adalah benda non-magnetik dan tidak memiliki sifat kemagnetan.",
+    badgeBg: "bg-slate-100 text-slate-700 border-slate-300",
+    borderColor: "border-slate-300",
+    bgColor: "bg-slate-50",
+    SvgComponent: PenghapusKaretSvg,
+  },
+  {
+    id: "kertas_origami",
+    name: "Kertas Origami",
+    material: "Serat Selulosa",
+    isMagnetic: false,
+    category: "Non-Magnetik",
+    desc: "Lembaran kertas lipat dari bubur serat kayu pohon.",
+    speechSuccess: "",
+    speechFail: "Kertas terbuat dari serat selulosa tumbuhan! Benda ini non-magnetik sehingga magnet tidak bereaksi.",
+    badgeBg: "bg-slate-100 text-slate-700 border-slate-300",
+    borderColor: "border-slate-300",
+    bgColor: "bg-slate-50",
+    SvgComponent: KertasOrigamiSvg,
+  },
+  {
+    id: "koin_emas",
+    name: "Koin Emas",
+    material: "Logam Mulia (Au)",
+    isMagnetic: false,
+    category: "Non-Magnetik",
+    desc: "Uang logam berharga murni emas, logam mulia non-feromagnetik.",
+    speechSuccess: "",
+    speechFail: "Emas adalah logam mulia! Meskipun termasuk logam, emas bukan feromagnetik seperti besi, sehingga tidak tertarik magnet.",
+    badgeBg: "bg-amber-100 text-amber-800 border-amber-300",
+    borderColor: "border-amber-300",
+    bgColor: "bg-amber-50",
+    SvgComponent: KoinEmasSvg,
+  },
+  {
+    id: "daun_kering",
+    name: "Daun Kering",
+    material: "Organik Alami",
+    isMagnetic: false,
+    category: "Non-Magnetik",
+    desc: "Guguran daun tanaman dari bahan nabati alami.",
+    speechSuccess: "",
+    speechFail: "Daun adalah bahan organik alam! Magnet hanya menarik logam-logam tertentu seperti besi, nikel, dan kobalt.",
+    badgeBg: "bg-orange-100 text-orange-800 border-orange-300",
+    borderColor: "border-orange-300",
+    bgColor: "bg-orange-50",
+    SvgComponent: DaunKeringSvg,
+  },
+];
+
 export default function ScienceLabModal({
   isOpen,
   onClose,
@@ -794,10 +1035,10 @@ export default function ScienceLabModal({
   isFullPage = false,
   stars = 0,
 }: ScienceLabModalProps) {
-  const [activeTab, setActiveTab] = useState<"colors" | "waterCycle" | "foodChain" | "circuits">("colors");
+  const [activeTab, setActiveTab] = useState<"colors" | "waterCycle" | "foodChain" | "circuits" | "magnet">("colors");
 
   // Tab 4: Laboratorium Listrik Cilik State
-  const [circuitMode, setCircuitMode] = useState<"basic" | "series" | "parallel">("basic");
+  const [circuitMode, setCircuitMode] = useState<"assembly" | "basic" | "series" | "parallel">("assembly");
   const [basicSwitch, setBasicSwitch] = useState<boolean>(false);
   const [seriesSwitch, setSeriesSwitch] = useState<boolean>(false);
   const [bulbAAttached, setBulbAAttached] = useState<boolean>(true);
@@ -805,6 +1046,28 @@ export default function ScienceLabModal({
   const [parallelSwitchA, setParallelSwitchA] = useState<boolean>(false);
   const [parallelSwitchB, setParallelSwitchB] = useState<boolean>(false);
   const [completedCircuitModes, setCompletedCircuitModes] = useState<string[]>([]);
+
+  // Fitur 1: Rakit Sirkuit Mandiri (Assembly Puzzle) State
+  const [assemblySlots, setAssemblySlots] = useState<{
+    battery: boolean;
+    switch: boolean;
+    bulb: boolean;
+    wires: boolean;
+  }>({
+    battery: false,
+    switch: false,
+    bulb: false,
+    wires: false,
+  });
+  const [assemblySwitchClosed, setAssemblySwitchClosed] = useState<boolean>(false);
+  const [assemblyTestItem, setAssemblyTestItem] = useState<"wire" | "paperclip" | "eraser">("wire");
+  const [hasEarnedAssemblyStars, setHasEarnedAssemblyStars] = useState<boolean>(false);
+
+  // Fitur 2: Wahana Magnet Hunter State
+  const [stuckMagnetIds, setStuckMagnetIds] = useState<string[]>([]);
+  const [lastTestedMagnetId, setLastTestedMagnetId] = useState<string | null>(null);
+  const [isMagnetShaking, setIsMagnetShaking] = useState<boolean>(false);
+  const [hasEarnedMagnetStars, setHasEarnedMagnetStars] = useState<boolean>(false);
 
   // Color selection state (tube IDs)
   const [selectedTube1, setSelectedTube1] = useState<string | null>(null);
@@ -1184,11 +1447,208 @@ export default function ScienceLabModal({
     }
   };
 
+  // Handlers for Circuit Assembly Puzzle
+  const isAssemblyComplete =
+    assemblySlots.battery && assemblySlots.switch && assemblySlots.bulb && assemblySlots.wires;
+  const isAssemblyConducting = assemblyTestItem === "wire" || assemblyTestItem === "paperclip";
+  const isAssemblyLit = isAssemblyComplete && assemblySwitchClosed && isAssemblyConducting;
+
+  const triggerAssemblyCelebration = () => {
+    setHasEarnedAssemblyStars(true);
+    onEarnStars(45);
+    sound.playCelebration();
+    if (!liteMode) {
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    }
+  };
+
+  const handleToggleAssemblySlot = (slot: "battery" | "switch" | "bulb" | "wires") => {
+    sound.playChime();
+    setAssemblySlots((prev) => {
+      const nextVal = !prev[slot];
+      const updated = { ...prev, [slot]: nextVal };
+      const complete = updated.battery && updated.switch && updated.bulb && updated.wires;
+
+      if (nextVal && audioEnabled) {
+        const names: Record<string, string> = {
+          battery: "Baterai DC 1.5V dipasang!",
+          switch: "Saklar pisau dipasang!",
+          bulb: "Bohlam pijar dipasang!",
+          wires: "Kabel merah dan biru dipasang!",
+        };
+        sound.speak(names[slot] || "Komponen terpasang.");
+      }
+
+      if (complete && assemblySwitchClosed && isAssemblyConducting && !hasEarnedAssemblyStars) {
+        triggerAssemblyCelebration();
+      }
+      return updated;
+    });
+  };
+
+  const handleToggleAssemblySwitch = () => {
+    const nextSwitch = !assemblySwitchClosed;
+    setAssemblySwitchClosed(nextSwitch);
+    sound.playChime();
+
+    if (nextSwitch) {
+      if (isAssemblyComplete) {
+        if (isAssemblyConducting) {
+          if (!hasEarnedAssemblyStars) {
+            triggerAssemblyCelebration();
+          } else {
+            sound.playCelebration();
+          }
+          if (audioEnabled) {
+            sound.speak(
+              assemblyTestItem === "paperclip"
+                ? "Saklar ditutup! Klip kertas berbahan logam mengalirkan elektron, sehingga lampu menyala terang!"
+                : "Sirkuit tertutup aktif! Aliran elektron mengalir sempurna menyalakan bohlam pijar!"
+            );
+          }
+        } else {
+          sound.playSocraticHint();
+          if (audioEnabled) {
+            sound.speak(
+              "Saklar ditutup, tapi penghapus karet adalah isolator listrik! Elektron terhambat dan lampu tetap padam."
+            );
+          }
+        }
+      } else {
+        sound.playSocraticHint();
+        if (audioEnabled) {
+          sound.speak("Saklar ditutup, tetapi komponen sirkuit belum lengkap terpasang.");
+        }
+      }
+    } else {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak("Saklar dibuka! Sirkuit terputus dan lampu padam.");
+      }
+    }
+  };
+
+  const handleSelectAssemblyTestItem = (item: "wire" | "paperclip" | "eraser") => {
+    setAssemblyTestItem(item);
+    sound.playChime();
+
+    const conducting = item === "wire" || item === "paperclip";
+    if (isAssemblyComplete && assemblySwitchClosed && conducting) {
+      if (!hasEarnedAssemblyStars) {
+        triggerAssemblyCelebration();
+      } else {
+        sound.playCelebration();
+      }
+      if (audioEnabled) {
+        sound.speak(
+          item === "paperclip"
+            ? "Klip kertas logam dipasang di celah sirkuit! Karena logam adalah konduktor listrik, arus mengalir dan lampu menyala!"
+            : "Kabel tembaga dipasang! Tembaga menghantarkan arus listrik dengan lancar."
+        );
+      }
+    } else if (item === "eraser") {
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak(
+          "Penghapus karet dipasang! Karet adalah bahan isolator yang tidak dapat mengalirkan listrik, sehingga lampu padam."
+        );
+      }
+    }
+  };
+
+  const handleResetAssembly = () => {
+    setAssemblySlots({ battery: false, switch: false, bulb: false, wires: false });
+    setAssemblySwitchClosed(false);
+    setAssemblyTestItem("wire");
+    sound.playChime();
+    if (audioEnabled) {
+      sound.speak("Papan sirkuit dirakit ulang dari awal. Pasang komponen dari kotak perkakas!");
+    }
+  };
+
+  // Handlers for Magnet Hunter
+  const handleTestMagnetObject = (obj: MagnetObject) => {
+    setLastTestedMagnetId(obj.id);
+
+    if (obj.isMagnetic) {
+      if (!stuckMagnetIds.includes(obj.id)) {
+        const nextStuck = [...stuckMagnetIds, obj.id];
+        setStuckMagnetIds(nextStuck);
+        sound.playCelebration();
+
+        if (nextStuck.length === 3 && !hasEarnedMagnetStars) {
+          setHasEarnedMagnetStars(true);
+          onEarnStars(45);
+          sound.playCelebration();
+          if (!liteMode) {
+            confetti({
+              particleCount: 60,
+              spread: 80,
+              origin: { y: 0.6 },
+            });
+          }
+          if (audioEnabled) {
+            sound.speak(
+              "Luar biasa, Detektif Cilik! Kamu berhasil menemukan seluruh 3 benda feromagnetik yang menempel kuat pada kutub magnet!"
+            );
+          }
+        } else {
+          if (audioEnabled) {
+            sound.speak(obj.speechSuccess);
+          }
+        }
+      } else {
+        sound.playChime();
+        if (audioEnabled) {
+          sound.speak(`${obj.name} sudah menempel di kutub magnet!`);
+        }
+      }
+    } else {
+      setIsMagnetShaking(true);
+      setTimeout(() => setIsMagnetShaking(false), 600);
+      sound.playSocraticHint();
+      if (audioEnabled) {
+        sound.speak(obj.speechFail);
+      }
+    }
+  };
+
+  const handleResetMagnetHunter = () => {
+    setStuckMagnetIds([]);
+    setLastTestedMagnetId(null);
+    sound.playChime();
+    if (audioEnabled) {
+      sound.speak("Semua benda telah dilepaskan dari magnet. Silakan uji coba kembali!");
+    }
+  };
+
+  const handleSpeakMagnetExplanation = () => {
+    sound.playChime();
+    if (!audioEnabled) return;
+    sound.speak(
+      "Magnet memiliki dua kutub: Kutub Utara berwarna merah dan Kutub Selatan berwarna biru. Magnet hanya menarik benda feromagnetik seperti besi dan baja, sedangkan kayu, karet, kertas, dan emas tidak ditarik magnet!"
+    );
+  };
+
   const handleSpeakCircuitExplanation = () => {
     sound.playChime();
     if (!audioEnabled) return;
 
-    if (circuitMode === "basic") {
+    if (circuitMode === "assembly") {
+      sound.speak(
+        isAssemblyLit
+          ? "Sirkuit tertutup dan aktif! Elektron mengalir dari baterai melewati saklar, konduktor, dan filamen bohlam."
+          : isAssemblyComplete
+          ? assemblySwitchClosed
+            ? "Bahan di celah sirkuit adalah isolator penghapus karet. Isolator memblokir aliran elektron sehingga lampu padam!"
+            : "Sirkuit terbuka karena saklar pisau terangkat. Tutup saklar untuk menyalakan lampu!"
+          : "Papan sirkuit belum lengkap! Pasang baterai, saklar, bohlam, dan kabel dari kotak perkakas."
+      );
+    } else if (circuitMode === "basic") {
       sound.speak(
         basicSwitch
           ? "Rangkaian Dasar sedang tertutup dan aktif! Arus listrik mengalir dari kutub baterai melewati saklar pisau dan filamen lampu, menghasilkan energi panas dan cahaya terang berpendar."
@@ -1258,8 +1718,8 @@ export default function ScienceLabModal({
           </div>
         </div>
 
-        {/* Tab Switcher (4 Tabs Responsif) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4 sm:mb-5">
+        {/* Tab Switcher (5 Tabs Responsif) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-4 sm:mb-5">
           <button
             onClick={() => {
               setActiveTab("colors");
@@ -1317,7 +1777,22 @@ export default function ScienceLabModal({
             }`}
           >
             <Zap className="w-4 h-4 flex-shrink-0 text-amber-600" />
-            <span>Rangkaian Listrik</span>
+            <span>Rakit Listrik</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("magnet");
+              sound.playChime();
+            }}
+            className={`py-2 sm:py-2.5 px-2 sm:px-3 rounded-2xl font-black text-xs sm:text-sm border-2 btn-chunky flex items-center justify-center gap-1.5 transition-all ${
+              activeTab === "magnet"
+                ? "bg-rose-500 text-white border-rose-600 shadow-[0_3px_0_0_#9f1239]"
+                : "bg-slate-100 text-slate-700 border-slate-200 hover:bg-rose-50"
+            }`}
+          >
+            <Magnet className="w-4 h-4 flex-shrink-0 text-rose-500" />
+            <span>Magnet Hunter</span>
           </button>
         </div>
 
@@ -2032,6 +2507,21 @@ export default function ScienceLabModal({
               <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <button
                   onClick={() => {
+                    setCircuitMode("assembly");
+                    sound.playChime();
+                  }}
+                  className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky flex items-center gap-1.5 ${
+                    circuitMode === "assembly"
+                      ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+                  }`}
+                >
+                  <Zap className="w-3.5 h-3.5 text-amber-950" />
+                  <span>Rakit Sirkuit (Puzzle)</span>
+                </button>
+
+                <button
+                  onClick={() => {
                     setCircuitMode("basic");
                     sound.playChime();
                   }}
@@ -2041,7 +2531,7 @@ export default function ScienceLabModal({
                       : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
                   }`}
                 >
-                  Mode 1: Rangkaian Dasar
+                  Rangkaian Dasar
                 </button>
 
                 <button
@@ -2055,7 +2545,7 @@ export default function ScienceLabModal({
                       : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
                   }`}
                 >
-                  Mode 2: Rangkaian Seri
+                  Rangkaian Seri
                 </button>
 
                 <button
@@ -2069,7 +2559,7 @@ export default function ScienceLabModal({
                       : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
                   }`}
                 >
-                  Mode 3: Rangkaian Paralel
+                  Rangkaian Paralel
                 </button>
               </div>
 
@@ -2104,6 +2594,28 @@ export default function ScienceLabModal({
 
                 {/* Status Rangkaian */}
                 <div>
+                  {circuitMode === "assembly" && (
+                    <span
+                      className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                        isAssemblyLit
+                          ? "bg-emerald-950 text-emerald-300 border-emerald-500 animate-pulse"
+                          : !isAssemblyComplete
+                          ? "bg-amber-950/90 text-amber-300 border-amber-600"
+                          : assemblySwitchClosed && !isAssemblyConducting
+                          ? "bg-rose-950/90 text-rose-300 border-rose-600"
+                          : "bg-slate-900 text-slate-400 border-slate-700"
+                      }`}
+                    >
+                      <CheckCircle2 className="w-3 h-3" />
+                      {isAssemblyLit
+                        ? "Sirkuit Tertutup Aktif (Elektron Mengalir)"
+                        : !isAssemblyComplete
+                        ? "Rangkaian Belum Lengkap"
+                        : assemblySwitchClosed && !isAssemblyConducting
+                        ? "Arus Terputus (Isolator Karet)"
+                        : "Sirkuit Terbuka (Lampu Padam)"}
+                    </span>
+                  )}
                   {circuitMode === "basic" && (
                     <span
                       className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
@@ -2152,6 +2664,241 @@ export default function ScienceLabModal({
                   )}
                 </div>
               </div>
+
+              {/* ============================================================== */}
+              {/* SVG DIAGRAM WAHANA RAKIT SIRKUIT (CIRCUIT ASSEMBLY PUZZLE)    */}
+              {/* ============================================================== */}
+              {circuitMode === "assembly" && (
+                <div className="w-full flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 600 320"
+                    className="w-full h-auto max-h-[300px] sm:max-h-[340px] select-none"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <radialGradient id="assemblyBulbGlowGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#fef08a" stopOpacity="0.95" />
+                        <stop offset="45%" stopColor="#facc15" stopOpacity="0.6" />
+                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                      </radialGradient>
+                      <linearGradient id="assemblyBattGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#1e3a8a" />
+                        <stop offset="50%" stopColor="#2563eb" />
+                        <stop offset="100%" stopColor="#1d4ed8" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Canvas Background */}
+                    <rect width="600" height="320" rx="20" fill="#0f172a" />
+                    <circle cx="20" cy="20" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                    <circle cx="580" cy="20" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                    <circle cx="20" cy="300" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                    <circle cx="580" cy="300" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+
+                    {/* Wire Base / Electron Flow */}
+                    {assemblySlots.wires ? (
+                      <>
+                        <path
+                          d="M 215 260 L 90 260 L 90 200"
+                          stroke={isAssemblyLit ? "#60a5fa" : "#3b82f6"}
+                          strokeWidth="6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M 90 120 L 90 55 L 210 55"
+                          stroke={isAssemblyLit ? "#facc15" : "#eab308"}
+                          strokeWidth="6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M 390 55 L 510 55 L 510 120"
+                          stroke={isAssemblyLit ? "#facc15" : "#f97316"}
+                          strokeWidth="6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M 510 200 L 510 260 L 385 260"
+                          stroke={isAssemblyLit ? "#f87171" : "#ef4444"}
+                          strokeWidth="6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+
+                        {isAssemblyLit && (
+                          <>
+                            <path
+                              d="M 215 260 L 90 260 L 90 200 M 90 120 L 90 55 L 210 55 M 390 55 L 510 55 L 510 120 M 510 200 L 510 260 L 385 260"
+                              stroke="#fef08a"
+                              strokeWidth="3.5"
+                              fill="none"
+                              className="animate-electron-stream"
+                            />
+                            {assemblyTestItem === "wire" && (
+                              <line x1="210" y1="55" x2="390" y2="55" stroke="#fef08a" strokeWidth="3" className="animate-electron-stream" />
+                            )}
+                            {assemblyTestItem === "paperclip" && (
+                              <path d="M 210 55 L 390 55" stroke="#fef08a" strokeWidth="3" className="animate-electron-stream" />
+                            )}
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <path
+                        d="M 215 260 L 90 260 L 90 200 M 90 120 L 90 55 L 210 55 M 390 55 L 510 55 L 510 120 M 510 200 L 510 260 L 385 260"
+                        stroke="#334155"
+                        strokeWidth="3"
+                        strokeDasharray="6 6"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                    )}
+
+                    {/* 1. SLOT BATERAI DC 1.5V */}
+                    {assemblySlots.battery ? (
+                      <g onClick={() => handleToggleAssemblySlot("battery")} className="cursor-pointer group">
+                        <rect x="210" y="247" width="10" height="26" rx="2" fill="#94a3b8" />
+                        <text x="200" y="264" fill="#94a3b8" fontSize="14" fontWeight="bold" textAnchor="middle">-</text>
+                        <rect x="220" y="238" width="150" height="44" rx="8" fill="url(#assemblyBattGrad)" stroke="#38bdf8" strokeWidth="2" />
+                        <text x="295" y="261" fill="#ffffff" fontSize="13" fontWeight="900" textAnchor="middle" letterSpacing="1">1.5V DC</text>
+                        <text x="295" y="274" fill="#93c5fd" fontSize="8" fontWeight="bold" textAnchor="middle">BATERAI PRIMER</text>
+                        <rect x="370" y="246" width="15" height="28" rx="3" fill="#facc15" stroke="#b45309" strokeWidth="1.5" />
+                        <text x="398" y="264" fill="#facc15" fontSize="14" fontWeight="bold" textAnchor="middle">+</text>
+                      </g>
+                    ) : (
+                      <g onClick={() => handleToggleAssemblySlot("battery")} className="cursor-pointer group">
+                        <rect x="210" y="235" width="180" height="50" rx="10" fill="#1e293b" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" opacity="0.7" className="group-hover:opacity-100 transition-opacity" />
+                        <text x="300" y="265" fill="#38bdf8" fontSize="11" fontWeight="900" textAnchor="middle">
+                          + PASANG BATERAI 1.5V
+                        </text>
+                      </g>
+                    )}
+
+                    {/* 2. SLOT SAKLAR PISAU */}
+                    {assemblySlots.switch ? (
+                      <g onClick={handleToggleAssemblySwitch} className="cursor-pointer group">
+                        <rect x="65" y="110" width="50" height="100" rx="6" fill="#78350f" stroke="#451a03" strokeWidth="2" />
+                        <circle cx="90" cy="125" r="7" fill="#d97706" stroke="#92400e" strokeWidth="1.5" />
+                        <circle cx="90" cy="195" r="7" fill="#d97706" stroke="#92400e" strokeWidth="1.5" />
+
+                        {assemblySwitchClosed ? (
+                          <>
+                            <line x1="90" y1="195" x2="90" y2="125" stroke="#4ade80" strokeWidth="7" strokeLinecap="round" />
+                            <circle cx="90" cy="125" r="8" fill="#16a34a" stroke="#14532d" strokeWidth="1.5" />
+                            <text x="40" y="160" fill="#4ade80" fontSize="10" fontWeight="900" textAnchor="middle">ON</text>
+                          </>
+                        ) : (
+                          <>
+                            <line x1="90" y1="195" x2="60" y2="135" stroke="#f59e0b" strokeWidth="7" strokeLinecap="round" />
+                            <circle cx="60" cy="135" r="8" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
+                            <text x="40" y="160" fill="#f87171" fontSize="10" fontWeight="900" textAnchor="middle">OFF</text>
+                          </>
+                        )}
+                        <text x="90" y="222" fill="#cbd5e1" fontSize="9" fontWeight="bold" textAnchor="middle">SAKLAR PISAU</text>
+                      </g>
+                    ) : (
+                      <g onClick={() => handleToggleAssemblySlot("switch")} className="cursor-pointer group">
+                        <rect x="60" y="110" width="60" height="100" rx="10" fill="#1e293b" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" opacity="0.7" className="group-hover:opacity-100 transition-opacity" />
+                        <text x="90" y="155" fill="#38bdf8" fontSize="10" fontWeight="900" textAnchor="middle">+ PASANG</text>
+                        <text x="90" y="170" fill="#38bdf8" fontSize="10" fontWeight="900" textAnchor="middle">SAKLAR</text>
+                      </g>
+                    )}
+
+                    {/* 3. CELAH UJI MATERIAL KONDUKTOR/ISOLATOR */}
+                    <g className="cursor-pointer">
+                      <circle cx="210" cy="55" r="8" fill="#d97706" stroke="#92400e" strokeWidth="2" />
+                      <circle cx="390" cy="55" r="8" fill="#d97706" stroke="#92400e" strokeWidth="2" />
+
+                      {assemblyTestItem === "wire" && (
+                        <>
+                          <line x1="210" y1="55" x2="390" y2="55" stroke="#f59e0b" strokeWidth="8" strokeLinecap="round" />
+                          <line x1="210" y1="55" x2="390" y2="55" stroke="#fde047" strokeWidth="2" strokeLinecap="round" />
+                          <text x="300" y="38" fill="#facc15" fontSize="10" fontWeight="900" textAnchor="middle">
+                            KAWAT TEMBAGA (KONDUKTOR)
+                          </text>
+                        </>
+                      )}
+
+                      {assemblyTestItem === "paperclip" && (
+                        <>
+                          <path
+                            d="M 220 55 L 380 55"
+                            stroke="#cbd5e1"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                          />
+                          <path
+                            d="M 230 48 L 370 48 C 385 48 385 62 370 62 L 240 62 C 225 62 225 50 240 50 L 360 50"
+                            stroke="#94a3b8"
+                            strokeWidth="3.5"
+                            fill="none"
+                            strokeLinecap="round"
+                          />
+                          <text x="300" y="38" fill="#93c5fd" fontSize="10" fontWeight="900" textAnchor="middle">
+                            KLIP KERTAS LOGAM (KONDUKTOR)
+                          </text>
+                        </>
+                      )}
+
+                      {assemblyTestItem === "eraser" && (
+                        <>
+                          <rect x="260" y="40" width="80" height="30" rx="4" fill="#f472b6" stroke="#db2777" strokeWidth="2" />
+                          <rect x="260" y="40" width="40" height="30" rx="2" fill="#38bdf8" stroke="#0284c7" strokeWidth="1" />
+                          <line x1="218" y1="55" x2="255" y2="55" stroke="#475569" strokeWidth="2" strokeDasharray="3 3" />
+                          <line x1="345" y1="55" x2="382" y2="55" stroke="#475569" strokeWidth="2" strokeDasharray="3 3" />
+                          <text x="300" y="32" fill="#f87171" fontSize="10" fontWeight="900" textAnchor="middle">
+                            PENGHAPUS KARET (ISOLATOR)
+                          </text>
+                          <text x="300" y="86" fill="#fca5a5" fontSize="8" fontWeight="bold" textAnchor="middle">
+                            CELAH TERPUTUS (TIDAK MENGHANTAR LISTRIK)
+                          </text>
+                        </>
+                      )}
+                    </g>
+
+                    {/* 4. SLOT BOHLAM PIJAR */}
+                    {assemblySlots.bulb ? (
+                      <g onClick={() => handleToggleAssemblySlot("bulb")} className="cursor-pointer group">
+                        {isAssemblyLit ? (
+                          <>
+                            <circle cx="510" cy="140" r="54" fill="url(#assemblyBulbGlowGrad)" opacity="0.9" />
+                            <line x1="470" y1="100" x2="458" y2="88" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="550" y1="100" x2="562" y2="88" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="510" y1="85" x2="510" y2="70" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="455" y1="140" x2="440" y2="140" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                            <line x1="565" y1="140" x2="580" y2="140" stroke="#fde047" strokeWidth="2.5" strokeLinecap="round" />
+                            <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#fef08a" stroke="#f59e0b" strokeWidth="2.5" />
+                            <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#ea580c" strokeWidth="2.5" strokeLinecap="round" />
+                            <text x="510" y="215" fill="#facc15" fontSize="9" fontWeight="900" textAnchor="middle">
+                              LAMPU MENYALA
+                            </text>
+                          </>
+                        ) : (
+                          <>
+                            <path d="M 496 160 C 490 152 486 142 486 132 C 486 118 497 108 510 108 C 523 108 534 118 534 132 C 534 142 530 152 524 160 Z" fill="#1e293b" stroke="#64748b" strokeWidth="2" opacity="0.8" />
+                            <path d="M 503 158 L 507 132 L 513 132 L 517 158" fill="none" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+                            <text x="510" y="215" fill="#64748b" fontSize="9" fontWeight="bold" textAnchor="middle">
+                              LAMPU PADAM
+                            </text>
+                          </>
+                        )}
+                        <rect x="498" y="160" width="24" height="20" rx="2" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+                        <line x1="498" y1="167" x2="522" y2="167" stroke="#475569" strokeWidth="1.5" />
+                        <line x1="498" y1="174" x2="522" y2="174" stroke="#475569" strokeWidth="1.5" />
+                      </g>
+                    ) : (
+                      <g onClick={() => handleToggleAssemblySlot("bulb")} className="cursor-pointer group">
+                        <circle cx="510" cy="140" r="38" fill="#1e293b" stroke="#38bdf8" strokeWidth="2" strokeDasharray="5 5" opacity="0.7" className="group-hover:opacity-100 transition-opacity" />
+                        <text x="510" y="137" fill="#38bdf8" fontSize="10" fontWeight="900" textAnchor="middle">+ PASANG</text>
+                        <text x="510" y="152" fill="#38bdf8" fontSize="10" fontWeight="900" textAnchor="middle">BOHLAM</text>
+                      </g>
+                    )}
+                  </svg>
+                </div>
+              )}
 
               {/* ============================================================== */}
               {/* SVG DIAGRAM MODE 1: RANGKAIAN DASAR (SEDERHANA)               */}
@@ -2640,6 +3387,286 @@ export default function ScienceLabModal({
                 </span>
               </div>
 
+              {/* Controls Mode Assembly (Wahana Rakit Sirkuit) */}
+              {circuitMode === "assembly" && (
+                <div className="space-y-4">
+                  {/* Status Guidance Banner */}
+                  {!isAssemblyComplete && (
+                    <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <Info className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                        <p className="text-xs font-bold text-amber-900">
+                          Rangkaian Belum Lengkap! Pasang semua komponen dari Kotak Perkakas di bawah ini untuk menyalakan lampu.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {isAssemblyComplete && !assemblySwitchClosed && (
+                    <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <Power className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                        <p className="text-xs font-bold text-slate-800">
+                          Sirkuit Terbuka (Arus Terputus) - Lampu Padam. Tekan tombol saklar untuk menutup sirkuit!
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleToggleAssemblySwitch}
+                        className="px-3 py-1.5 rounded-xl bg-emerald-500 text-white font-black text-xs border border-emerald-600 shadow-sm btn-chunky flex items-center gap-1 shrink-0"
+                      >
+                        <Power className="w-3.5 h-3.5" />
+                        <span>Tutup Saklar</span>
+                      </button>
+                    </div>
+                  )}
+
+                  {isAssemblyComplete && assemblySwitchClosed && !isAssemblyLit && (
+                    <div className="bg-rose-50 border-2 border-rose-300 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+                      <div className="flex items-center gap-2">
+                        <Info className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                        <p className="text-xs font-bold text-rose-900">
+                          Arus Terputus oleh Penghapus Karet (Isolator)! Karet menghambat elektron. Ganti dengan bahan konduktor agar lampu menyala.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {isAssemblyLit && (
+                    <div className="bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-3 flex items-center justify-between gap-2.5 animate-pulse">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                        <p className="text-xs font-black text-emerald-950">
+                          Sirkuit Tertutup Aktif! Elektron Mengalir Sempurna menyalakan bohlam pijar!
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleToggleAssemblySwitch}
+                        className="px-3 py-1.5 rounded-xl bg-rose-500 text-white font-black text-xs border border-rose-600 shadow-sm btn-chunky flex items-center gap-1 shrink-0"
+                      >
+                        <Power className="w-3.5 h-3.5" />
+                        <span>Buka Saklar</span>
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Kotak Perkakas (Tap to Slot) */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-amber-600" />
+                        <span className="text-xs font-black text-slate-800 uppercase tracking-wide">
+                          Kotak Perkakas Komponen (Sentuh untuk Memasang):
+                        </span>
+                      </div>
+                      <button
+                        onClick={handleResetAssembly}
+                        className="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] border border-slate-300 flex items-center gap-1 btn-chunky"
+                      >
+                        <RotateCcw className="w-3 h-3 text-slate-600" />
+                        <span>Reset Rakitan</span>
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+                      {/* Komponen 1: Baterai DC */}
+                      <div
+                        onClick={() => handleToggleAssemblySlot("battery")}
+                        className={`p-2.5 rounded-2xl border-2 cursor-pointer transition-all btn-chunky flex flex-col justify-between ${
+                          assemblySlots.battery
+                            ? "bg-emerald-50 border-emerald-400 shadow-[0_2px_0_0_#059669]"
+                            : "bg-slate-50 border-slate-300 hover:border-slate-400"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <Zap className="w-4 h-4 text-amber-500" />
+                          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                            assemblySlots.battery ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"
+                          }`}>
+                            {assemblySlots.battery ? "Terpasang" : "Perkakas"}
+                          </span>
+                        </div>
+                        <p className="text-xs font-black text-slate-800 leading-tight">Baterai DC (1.5V)</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Sumber energi listrik</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleAssemblySlot("battery");
+                          }}
+                          className={`mt-2 py-1 px-2 rounded-xl text-[11px] font-black border flex items-center justify-center gap-1 btn-chunky ${
+                            assemblySlots.battery
+                              ? "bg-white text-rose-700 border-rose-300 hover:bg-rose-50"
+                              : "bg-amber-400 text-amber-950 border-amber-500 shadow-sm"
+                          }`}
+                        >
+                          {assemblySlots.battery ? "Lepas" : "Pasang"}
+                        </button>
+                      </div>
+
+                      {/* Komponen 2: Saklar Pisau */}
+                      <div
+                        onClick={() => handleToggleAssemblySlot("switch")}
+                        className={`p-2.5 rounded-2xl border-2 cursor-pointer transition-all btn-chunky flex flex-col justify-between ${
+                          assemblySlots.switch
+                            ? "bg-emerald-50 border-emerald-400 shadow-[0_2px_0_0_#059669]"
+                            : "bg-slate-50 border-slate-300 hover:border-slate-400"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <Power className="w-4 h-4 text-emerald-600" />
+                          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                            assemblySlots.switch ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"
+                          }`}>
+                            {assemblySlots.switch ? "Terpasang" : "Perkakas"}
+                          </span>
+                        </div>
+                        <p className="text-xs font-black text-slate-800 leading-tight">Saklar Pisau</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Pemutus & penyambung</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleAssemblySlot("switch");
+                          }}
+                          className={`mt-2 py-1 px-2 rounded-xl text-[11px] font-black border flex items-center justify-center gap-1 btn-chunky ${
+                            assemblySlots.switch
+                              ? "bg-white text-rose-700 border-rose-300 hover:bg-rose-50"
+                              : "bg-amber-400 text-amber-950 border-amber-500 shadow-sm"
+                          }`}
+                        >
+                          {assemblySlots.switch ? "Lepas" : "Pasang"}
+                        </button>
+                      </div>
+
+                      {/* Komponen 3: Bohlam Pijar */}
+                      <div
+                        onClick={() => handleToggleAssemblySlot("bulb")}
+                        className={`p-2.5 rounded-2xl border-2 cursor-pointer transition-all btn-chunky flex flex-col justify-between ${
+                          assemblySlots.bulb
+                            ? "bg-emerald-50 border-emerald-400 shadow-[0_2px_0_0_#059669]"
+                            : "bg-slate-50 border-slate-300 hover:border-slate-400"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <Lightbulb className="w-4 h-4 text-yellow-500" />
+                          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                            assemblySlots.bulb ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"
+                          }`}>
+                            {assemblySlots.bulb ? "Terpasang" : "Perkakas"}
+                          </span>
+                        </div>
+                        <p className="text-xs font-black text-slate-800 leading-tight">Bohlam Pijar</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Pengubah energi cahaya</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleAssemblySlot("bulb");
+                          }}
+                          className={`mt-2 py-1 px-2 rounded-xl text-[11px] font-black border flex items-center justify-center gap-1 btn-chunky ${
+                            assemblySlots.bulb
+                              ? "bg-white text-rose-700 border-rose-300 hover:bg-rose-50"
+                              : "bg-amber-400 text-amber-950 border-amber-500 shadow-sm"
+                          }`}
+                        >
+                          {assemblySlots.bulb ? "Lepas" : "Pasang"}
+                        </button>
+                      </div>
+
+                      {/* Komponen 4: Kabel Merah & Biru */}
+                      <div
+                        onClick={() => handleToggleAssemblySlot("wires")}
+                        className={`p-2.5 rounded-2xl border-2 cursor-pointer transition-all btn-chunky flex flex-col justify-between ${
+                          assemblySlots.wires
+                            ? "bg-emerald-50 border-emerald-400 shadow-[0_2px_0_0_#059669]"
+                            : "bg-slate-50 border-slate-300 hover:border-slate-400"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <Shuffle className="w-4 h-4 text-sky-500" />
+                          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                            assemblySlots.wires ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"
+                          }`}>
+                            {assemblySlots.wires ? "Terpasang" : "Perkakas"}
+                          </span>
+                        </div>
+                        <p className="text-xs font-black text-slate-800 leading-tight">2x Kabel (Merah/Biru)</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Jalur aliran elektron</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleAssemblySlot("wires");
+                          }}
+                          className={`mt-2 py-1 px-2 rounded-xl text-[11px] font-black border flex items-center justify-center gap-1 btn-chunky ${
+                            assemblySlots.wires
+                              ? "bg-white text-rose-700 border-rose-300 hover:bg-rose-50"
+                              : "bg-amber-400 text-amber-950 border-amber-500 shadow-sm"
+                          }`}
+                        >
+                          {assemblySlots.wires ? "Lepas" : "Pasang"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Eksperimen Bahan Celah Uji (Konduktor vs Isolator) */}
+                  <div className="pt-2 border-t border-slate-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-black text-slate-800 uppercase tracking-wide">
+                        Eksperimen Bahan: Celah Uji Konduktor vs Isolator
+                      </span>
+                      <span className="text-[11px] font-medium text-slate-500">
+                        Uji benda penghantar listrik
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      <button
+                        onClick={() => handleSelectAssemblyTestItem("wire")}
+                        className={`p-2.5 rounded-2xl border-2 font-black text-xs text-left transition-all btn-chunky flex items-center justify-between ${
+                          assemblyTestItem === "wire"
+                            ? "bg-amber-400 text-amber-950 border-amber-500 shadow-[0_2px_0_0_#b45309]"
+                            : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
+                        }`}
+                      >
+                        <div>
+                          <p className="font-black text-xs">Kawat Tembaga</p>
+                          <span className="text-[10px] font-bold text-amber-900 block">Konduktor Listrik Normal</span>
+                        </div>
+                        {assemblyTestItem === "wire" && <Check className="w-4 h-4 text-amber-950" />}
+                      </button>
+
+                      <button
+                        onClick={() => handleSelectAssemblyTestItem("paperclip")}
+                        className={`p-2.5 rounded-2xl border-2 font-black text-xs text-left transition-all btn-chunky flex items-center justify-between ${
+                          assemblyTestItem === "paperclip"
+                            ? "bg-sky-400 text-sky-950 border-sky-500 shadow-[0_2px_0_0_#0284c7]"
+                            : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
+                        }`}
+                      >
+                        <div>
+                          <p className="font-black text-xs">Klip Kertas Logam</p>
+                          <span className="text-[10px] font-bold text-sky-900 block">Konduktor Logam (Besi/Baja)</span>
+                        </div>
+                        {assemblyTestItem === "paperclip" && <Check className="w-4 h-4 text-sky-950" />}
+                      </button>
+
+                      <button
+                        onClick={() => handleSelectAssemblyTestItem("eraser")}
+                        className={`p-2.5 rounded-2xl border-2 font-black text-xs text-left transition-all btn-chunky flex items-center justify-between ${
+                          assemblyTestItem === "eraser"
+                            ? "bg-rose-400 text-rose-950 border-rose-500 shadow-[0_2px_0_0_#e11d48]"
+                            : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
+                        }`}
+                      >
+                        <div>
+                          <p className="font-black text-xs">Penghapus Karet</p>
+                          <span className="text-[10px] font-bold text-rose-900 block">Isolator Listrik (Bukan Logam)</span>
+                        </div>
+                        {assemblyTestItem === "eraser" && <Check className="w-4 h-4 text-rose-950" />}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Controls Mode 1 */}
               {circuitMode === "basic" && (
                 <div className="flex flex-wrap items-center gap-3">
@@ -2736,17 +3763,438 @@ export default function ScienceLabModal({
                 </div>
                 <div>
                   <h5 className="font-black text-sm text-slate-900 mb-1">
+                    {circuitMode === "assembly" && "Konsep Sirkuit Terbuka vs Tertutup & Konduktor Listrik"}
                     {circuitMode === "basic" && "Konsep Rangkaian Dasar & Arus Listrik"}
                     {circuitMode === "series" && "Karakteristik Kunci Rangkaian Seri"}
                     {circuitMode === "parallel" && "Keunggulan Rangkaian Paralel di Rumah"}
                   </h5>
                   <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                    {circuitMode === "assembly" &&
+                      "Arus listrik hanya dapat mengalir pada sirkuit tertutup tanpa celah udara. Saklar pisau berfungsi membuka atau menutup rangkaian secara fisik. Bahan konduktor (seperti kawat tembaga dan klip kertas logam) memiliki elektron bebas yang mudah mengalir, sedangkan bahan isolator (seperti karet dan kayu) menghambat aliran elektron sehingga lampu padam!"}
                     {circuitMode === "basic" &&
                       "Arus listrik hanya dapat mengalir pada rangkaian tertutup (sirkuit tanpa celah). Baterai berperan sebagai sumber energi listrik, sedangkan saklar berfungsi sebagai alat pemutus dan penyambung aliran elektron secara aman."}
                     {circuitMode === "series" &&
                       "Pada rangkaian seri, seluruh lampu dipasang secara berurutan dalam satu jalur kawat tunggal. Kelemahannya: jika salah satu lampu rusak atau dicopot, sirkuit langsung terbuka dan seluruh lampu lainnya otomatis ikut padam!"}
                     {circuitMode === "parallel" &&
                       "Pada rangkaian paralel, kawat listrik memiliki percabangan mandiri ke tiap lampu. Tiap cabang memiliki jalur arus sendiri, sehingga saat satu saklar dimatikan, lampu di cabang lain tetap menyala terang. Ini adalah jenis rangkaian yang digunakan pada instalasi listrik rumah tangga!"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 5: WAHANA MAGNET HUNTER (FISIKA KEMAGNETAN IPAS SD)                   */}
+        {/* ========================================================================= */}
+        {activeTab === "magnet" && (
+          <div className="space-y-4">
+            <style>{`
+              @keyframes magnetShakeKeyframes {
+                0%, 100% { transform: translateX(0) rotate(0deg); }
+                20% { transform: translateX(-8px) rotate(-1.5deg); }
+                40% { transform: translateX(8px) rotate(1.5deg); }
+                60% { transform: translateX(-6px) rotate(-1deg); }
+                80% { transform: translateX(6px) rotate(1deg); }
+              }
+              .animate-magnet-shake {
+                animation: magnetShakeKeyframes 0.5s ease-in-out;
+                transform-origin: center center;
+              }
+            `}</style>
+
+            {/* Top Bar: Mission Progress, Star Reward, Audio Guide & Reset */}
+            <div className="bg-slate-100 rounded-2xl p-3 border border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2">
+                <span className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
+                  <Magnet className="w-4 h-4 text-rose-500" />
+                  <span>Benda Magnetik Terkumpul:</span>
+                  <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 font-black">
+                    {stuckMagnetIds.length} / 3
+                  </span>
+                </span>
+
+                <span className="text-[11px] sm:text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-1 rounded-full border border-amber-300 flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                  +45 Bintang Misi
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleResetMagnetHunter}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-300 shadow-sm btn-chunky"
+                  title="Lepas semua benda dari magnet"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-slate-600" />
+                  <span className="hidden sm:inline">Lepas Semua</span>
+                </button>
+
+                <button
+                  onClick={handleSpeakMagnetExplanation}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-slate-800 text-xs font-bold border border-slate-300 shadow-sm btn-chunky"
+                  title="Dengarkan penjelasan Tobi"
+                >
+                  <Volume2 className="w-4 h-4 text-rose-600" />
+                  <span className="hidden sm:inline">Dengarkan Tobi</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Papan U-Magnet Interaktif (Pure SVG Canvas) */}
+            <div className="bg-slate-950 rounded-3xl p-3 sm:p-5 border-4 border-slate-800 shadow-xl relative overflow-hidden">
+              {/* Header Status di Atas Papan Magnet */}
+              <div className="flex items-center justify-between gap-2 mb-3 px-1">
+                <div className="flex items-center gap-2">
+                  <Magnet className="w-4 h-4 text-rose-400" />
+                  <span className="text-xs font-black tracking-wider text-slate-300 uppercase">
+                    Laboratorium Gaya Magnet Ladam (U-Magnet)
+                  </span>
+                </div>
+
+                <div>
+                  <span
+                    className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                      stuckMagnetIds.length === 3
+                        ? "bg-emerald-950 text-emerald-300 border-emerald-500 animate-pulse"
+                        : stuckMagnetIds.length > 0
+                        ? "bg-rose-950 text-rose-300 border-rose-500"
+                        : "bg-slate-900 text-slate-400 border-slate-700"
+                    }`}
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    {stuckMagnetIds.length === 3
+                      ? "Semua Benda Magnetik Ditemukan"
+                      : `${stuckMagnetIds.length} Benda Menempel`}
+                  </span>
+                </div>
+              </div>
+
+              {/* SVG Canvas U-Magnet */}
+              <div className="w-full flex items-center justify-center">
+                <svg
+                  viewBox="0 0 600 320"
+                  className={`w-full h-auto max-h-[300px] sm:max-h-[340px] select-none ${
+                    isMagnetShaking ? "animate-magnet-shake" : ""
+                  }`}
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <linearGradient id="magnetSteelGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#94a3b8" />
+                      <stop offset="50%" stopColor="#64748b" />
+                      <stop offset="100%" stopColor="#475569" />
+                    </linearGradient>
+                    <linearGradient id="poleNorthGrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#ef4444" />
+                      <stop offset="100%" stopColor="#dc2626" />
+                    </linearGradient>
+                    <linearGradient id="poleSouthGrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#3b82f6" />
+                      <stop offset="100%" stopColor="#2563eb" />
+                    </linearGradient>
+                    <radialGradient id="sparkleGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#fef08a" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#facc15" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+
+                  {/* Canvas Background */}
+                  <rect width="600" height="320" rx="20" fill="#0f172a" />
+                  <circle cx="20" cy="20" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                  <circle cx="580" cy="20" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                  <circle cx="20" cy="300" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+                  <circle cx="580" cy="300" r="5" fill="#334155" stroke="#1e293b" strokeWidth="1.5" />
+
+                  {/* Garis-Garis Medan Magnet Tak Kasat Mata (Magnetic Flux Lines) */}
+                  <path
+                    d="M 235 215 C 235 270, 365 270, 365 215"
+                    stroke="#38bdf8"
+                    strokeWidth="2.5"
+                    strokeDasharray="5 5"
+                    fill="none"
+                    opacity="0.8"
+                  />
+                  <path
+                    d="M 220 215 C 220 300, 380 300, 380 215"
+                    stroke="#38bdf8"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 4"
+                    fill="none"
+                    opacity="0.5"
+                  />
+                  <path
+                    d="M 250 215 C 250 245, 350 245, 350 215"
+                    stroke="#38bdf8"
+                    strokeWidth="2"
+                    strokeDasharray="3 3"
+                    fill="none"
+                    opacity="0.9"
+                  />
+                  <text x="300" y="275" fill="#38bdf8" fontSize="10" fontWeight="bold" textAnchor="middle" opacity="0.8">
+                    GARIS MEDAN MAGNET (GAYA TARIK)
+                  </text>
+
+                  {/* Busur Baja Magnet Ladam (U-Magnet Arch) */}
+                  <path
+                    d="M 210 140 L 210 95 C 210 30, 390 30, 390 95 L 390 140 L 340 140 L 340 95 C 340 65, 260 65, 260 95 L 260 140 Z"
+                    fill="url(#magnetSteelGrad)"
+                    stroke="#334155"
+                    strokeWidth="2.5"
+                  />
+                  <path
+                    d="M 230 85 C 250 55, 350 55, 370 85"
+                    stroke="#ffffff"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    opacity="0.4"
+                    fill="none"
+                  />
+
+                  {/* Kutub Utara (U - Merah) di Kaki Kiri */}
+                  <g>
+                    <rect x="210" y="140" width="50" height="75" rx="3" fill="url(#poleNorthGrad)" stroke="#b91c1c" strokeWidth="2" />
+                    <rect x="210" y="210" width="50" height="10" rx="1.5" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
+                    <text x="235" y="180" fill="#ffffff" fontSize="26" fontWeight="900" textAnchor="middle">
+                      U
+                    </text>
+                    <text x="235" y="198" fill="#fecaca" fontSize="9" fontWeight="900" textAnchor="middle">
+                      UTARA
+                    </text>
+                  </g>
+
+                  {/* Kutub Selatan (S - Biru) di Kaki Kanan */}
+                  <g>
+                    <rect x="340" y="140" width="50" height="75" rx="3" fill="url(#poleSouthGrad)" stroke="#1d4ed8" strokeWidth="2" />
+                    <rect x="340" y="210" width="50" height="10" rx="1.5" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
+                    <text x="365" y="180" fill="#ffffff" fontSize="26" fontWeight="900" textAnchor="middle">
+                      S
+                    </text>
+                    <text x="365" y="198" fill="#bfdbfe" fontSize="9" fontWeight="900" textAnchor="middle">
+                      SELATAN
+                    </text>
+                  </g>
+
+                  {/* Paku Besi menempel di Kutub U (Kiri) */}
+                  {stuckMagnetIds.includes("paku_besi") && (
+                    <g transform="translate(230, 220) rotate(-22)">
+                      <ellipse cx="0" cy="0" rx="9" ry="3" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+                      <path d="M -3 3 L -3 28 L 0 38 L 3 28 L 3 3 Z" fill="#cbd5e1" stroke="#475569" strokeWidth="1.5" />
+                      <line x1="-1" y1="3" x2="-1" y2="28" stroke="#ffffff" strokeWidth="1.5" />
+                      <circle cx="10" cy="5" r="4" fill="url(#sparkleGrad)" />
+                      <circle cx="-12" cy="18" r="3" fill="url(#sparkleGrad)" />
+                    </g>
+                  )}
+
+                  {/* Peniti Logam menempel di Kutub S (Kanan) */}
+                  {stuckMagnetIds.includes("peniti_logam") && (
+                    <g transform="translate(365, 220) rotate(22)">
+                      <path d="M -8 0 C -8 0 0 -2 6 0 C 10 1 11 6 7 9 C 3 11 -6 11 -8 7 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+                      <circle cx="5" cy="5" r="1.5" fill="#475569" />
+                      <circle cx="-6" cy="30" r="3.5" fill="none" stroke="#64748b" strokeWidth="2" />
+                      <path d="M -7 7 L -9 29" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+                      <path d="M -3 30 L 2 7" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="-10" cy="12" r="4" fill="url(#sparkleGrad)" />
+                      <circle cx="8" cy="22" r="3" fill="url(#sparkleGrad)" />
+                    </g>
+                  )}
+
+                  {/* Klip Kertas menempel di Antara Kedua Kutub */}
+                  {stuckMagnetIds.includes("klip_kertas") && (
+                    <g transform="translate(300, 225) rotate(12)">
+                      <path
+                        d="M -12 -12 L -12 12 C -12 18 -6 20 0 20 C 6 20 12 18 12 12 L 12 -15 C 12 -20 6 -22 0 -22 C -6 -22 -10 -20 -10 -15 L -10 10 C -10 13 -8 15 -4 15 C 0 15 4 13 4 10 L 4 -12"
+                        stroke="#e2e8f0"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                      <path
+                        d="M -12 -12 L -12 12 C -12 18 -6 20 0 20 C 6 20 12 18 12 12 L 12 -15 C 12 -20 6 -22 0 -22 C -6 -22 -10 -20 -10 -15 L -10 10 C -10 13 -8 15 -4 15 C 0 15 4 13 4 10 L 4 -12"
+                        stroke="#94a3b8"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        fill="none"
+                      />
+                      <circle cx="14" cy="-5" r="4" fill="url(#sparkleGrad)" />
+                      <circle cx="-14" cy="5" r="4" fill="url(#sparkleGrad)" />
+                    </g>
+                  )}
+                </svg>
+              </div>
+            </div>
+
+            {/* Socratic Feedback Box: Hasil Uji Terakhir */}
+            {lastTestedMagnetId && (() => {
+              const testedObj = MAGNET_OBJECTS.find((o) => o.id === lastTestedMagnetId);
+              if (!testedObj) return null;
+              return (
+                <div
+                  className={`p-3.5 sm:p-4 rounded-2xl border-2 shadow-sm transition-all flex items-start gap-3 ${
+                    testedObj.isMagnetic
+                      ? "bg-emerald-50 border-emerald-400 text-emerald-950"
+                      : "bg-amber-50 border-amber-300 text-amber-950"
+                  }`}
+                >
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                      testedObj.isMagnetic
+                        ? "bg-emerald-200 text-emerald-900"
+                        : "bg-amber-200 text-amber-900"
+                    }`}
+                  >
+                    {testedObj.isMagnetic ? (
+                      <CheckCircle2 className="w-5 h-5 text-emerald-700" />
+                    ) : (
+                      <Info className="w-5 h-5 text-amber-700" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <h5 className="font-black text-sm mb-0.5">
+                      {testedObj.isMagnetic
+                        ? `SNAP & STICK! ${testedObj.name} Tertarik Kuat ke Magnet`
+                        : `${testedObj.name} Tidak Tertarik Magnet`}
+                    </h5>
+                    <p className="text-xs font-medium leading-relaxed">
+                      {testedObj.isMagnetic
+                        ? testedObj.speechSuccess
+                        : testedObj.speechFail}
+                    </p>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Celebration Banner when 3/3 Objects Found */}
+            {stuckMagnetIds.length === 3 && (
+              <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 rounded-2xl p-4 border-2 border-amber-600 shadow-lg text-slate-950 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-white text-amber-600 flex items-center justify-center shadow-md shrink-0">
+                    <Trophy className="w-6 h-6 text-amber-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-base sm:text-lg leading-tight">
+                      Misi Detektif Magnet Selesai!
+                    </h4>
+                    <p className="text-xs sm:text-sm font-bold text-amber-950">
+                      Kamu berhasil menemukan ketiga benda feromagnetik! (+45 Bintang Didapatkan)
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleResetMagnetHunter}
+                  className="px-4 py-2 rounded-xl bg-slate-950 text-white font-black text-xs sm:text-sm border-2 border-slate-800 shadow-md flex items-center gap-1.5 btn-chunky"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Ulangi Eksperimen</span>
+                </button>
+              </div>
+            )}
+
+            {/* Meja Percobaan: 8 Kartu Objek Eksplorasi Sifat Kemagnetan */}
+            <div>
+              <div className="flex items-center justify-between mb-3 px-1">
+                <div className="flex items-center gap-1.5">
+                  <Magnet className="w-4 h-4 text-rose-500" />
+                  <span className="text-xs font-black text-slate-800 uppercase tracking-wide">
+                    Meja Percobaan (Sentuh Benda untuk Menguji):
+                  </span>
+                </div>
+                <span className="text-[11px] font-bold text-slate-500">
+                  Temukan 3 benda yang ditarik magnet
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+                {MAGNET_OBJECTS.map((obj) => {
+                  const isStuck = stuckMagnetIds.includes(obj.id);
+                  const SvgIcon = obj.SvgComponent;
+                  return (
+                    <div
+                      key={obj.id}
+                      onClick={() => handleTestMagnetObject(obj)}
+                      className={`p-3 rounded-2xl border-2 transition-all cursor-pointer btn-chunky flex flex-col justify-between ${
+                        isStuck
+                          ? "bg-emerald-50 border-emerald-400 shadow-[0_3px_0_0_#059669]"
+                          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div>
+                        {/* Status Badge */}
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${
+                            isStuck
+                              ? "bg-emerald-200 text-emerald-950 border-emerald-400"
+                              : obj.badgeBg
+                          }`}>
+                            {isStuck ? "Menempel di Magnet" : obj.category}
+                          </span>
+                        </div>
+
+                        {/* Visual SVG Icon */}
+                        <div className="flex items-center justify-center py-2">
+                          <SvgIcon />
+                        </div>
+
+                        {/* Title & Material */}
+                        <h5 className="font-black text-xs sm:text-sm text-slate-900 leading-tight">
+                          {obj.name}
+                        </h5>
+                        <p className="text-[10px] text-slate-500 font-bold mb-1">
+                          {obj.material}
+                        </p>
+                        <p className="text-[10px] text-slate-600 line-clamp-2 leading-snug">
+                          {obj.desc}
+                        </p>
+                      </div>
+
+                      {/* Action Button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleTestMagnetObject(obj);
+                        }}
+                        className={`mt-2.5 py-1.5 px-2 rounded-xl text-xs font-black border flex items-center justify-center gap-1.5 btn-chunky transition-all ${
+                          isStuck
+                            ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_2px_0_0_#065f46]"
+                            : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
+                        }`}
+                      >
+                        {isStuck ? (
+                          <>
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>Menempel</span>
+                          </>
+                        ) : (
+                          <>
+                            <Magnet className="w-3.5 h-3.5 text-rose-500" />
+                            <span>Uji Tempel</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Catatan Konsep Edukatif IPAS SD: Teori Kemagnetan */}
+            <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-4 border-2 border-rose-200 shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-rose-200 text-rose-900 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Info className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="font-black text-sm text-slate-900 mb-1">
+                    Konsep Sifat Kemagnetan Benda (IPAS SD Kelas 4 & 5)
+                  </h5>
+                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                    1. <strong>Benda Feromagnetik</strong> adalah benda yang ditarik sangat kuat oleh gaya magnet. Contohnya: paku besi, peniti baja, dan klip kertas logam.
+                    <br />
+                    2. <strong>Benda Non-Magnetik</strong> adalah benda yang tidak dapat ditarik oleh magnet. Terdiri dari bahan kayu, karet, kertas, plastik, dan bahkan logam mulia tertentu seperti emas murni.
+                    <br />
+                    3. <strong>Kutub Magnet</strong> selalu berpasangan: Kutub Utara (U/Merah) dan Kutub Selatan (S/Biru). Gaya tarik magnet paling kuat terletak pada kedua ujung kutubnya!
                   </p>
                 </div>
               </div>
