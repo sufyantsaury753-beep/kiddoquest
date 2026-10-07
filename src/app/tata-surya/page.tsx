@@ -205,17 +205,17 @@ export default function TataSuryaPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`h-[100dvh] max-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col select-none overflow-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`fixed inset-0 w-full h-[100dvh] max-h-[100dvh] overflow-hidden select-none overscroll-none bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] sm:my-2 lg:my-3 overflow-hidden">
+      <div className="w-full max-w-4xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-slate-900/95 rounded-none sm:rounded-3xl border-0 sm:border-4 border-indigo-500 sm:shadow-[0_0_40px_rgba(99,102,241,0.25)] sm:my-1.5 lg:my-2 overflow-hidden">
         
         {/* 1. Header Game */}
-        <header className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">
+        <header className="px-3.5 py-1.5 sm:px-5 sm:py-2 bg-indigo-950/90 border-b-2 border-indigo-800/80 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
               onClick={() => sound.stopSpeaking()}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm border border-slate-600 shadow-[0_2px_0_0_#1e1b4b] btn-chunky"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm border border-slate-600 shadow-[0_2px_0_0_#1e1b4b] btn-chunky"
               title="Kembali ke Beranda"
             >
               <ArrowLeft className="w-4 h-4 text-indigo-400" />
@@ -241,7 +241,7 @@ export default function TataSuryaPage() {
             </div>
             <button
               onClick={handleSpeakPlanet}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black border-2 border-sky-400 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white shadow-[0_2px_0_0_#1e1b4b] transition-all btn-chunky"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl text-xs font-black border-2 border-sky-400 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white shadow-[0_2px_0_0_#1e1b4b] transition-all btn-chunky"
               title="Dengarkan Penjelasan Tobi"
             >
               <Volume2 className="w-3.5 h-3.5 text-yellow-300" />
@@ -265,7 +265,7 @@ export default function TataSuryaPage() {
                 <button
                   key={planet.id}
                   onClick={() => handleSelectPlanet(planet)}
-                  className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-xl border transition-all btn-chunky ${
+                  className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-0.5 sm:py-1 rounded-xl border transition-all btn-chunky ${
                     isSelected
                       ? "bg-indigo-600 border-yellow-400 shadow-[0_0_10px_#facc15] scale-105"
                       : "bg-slate-800/80 border-slate-700 hover:bg-slate-800 hover:border-indigo-400 text-slate-300"
@@ -289,8 +289,8 @@ export default function TataSuryaPage() {
         </div>
 
         {/* 3. Main Stage: Panggung Planet & Lembar Fakta (Kompak & Menyatu Tanpa Ruang Kosong Berlebih) */}
-        <main className="p-3 sm:p-4 lg:p-5 flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
-          <div className="w-full max-w-3xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-6 items-center my-auto">
+        <main className="flex-1 min-h-0 overflow-hidden flex flex-col justify-center items-center py-1 sm:py-2 px-3">
+          <div className="w-full max-w-sm sm:max-w-md lg:max-w-3xl mx-auto flex flex-col items-center justify-center gap-3 md:grid md:grid-cols-12 md:gap-6 md:items-center">
             
             {/* Visual Planet Celestial Graphic (Kiri / Atas) */}
             <div className="md:col-span-5 flex flex-col items-center justify-center relative shrink-0">

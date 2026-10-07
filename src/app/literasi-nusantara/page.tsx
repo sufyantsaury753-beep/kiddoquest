@@ -197,17 +197,17 @@ export default function LiterasiNusantaraPage() {
   if (!mounted) return null;
 
   return (
-    <div className={`h-[100dvh] max-h-[100dvh] w-full bg-purple-50/40 text-slate-800 flex flex-col select-none overflow-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`fixed inset-0 w-full h-[100dvh] max-h-[100dvh] overflow-hidden select-none overscroll-none bg-purple-50/40 text-slate-800 flex flex-col ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* Container Utama Layar Penuh Edge-to-Edge */}
-      <div className="w-full max-w-3xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl sm:my-2 lg:my-3 overflow-hidden">
+      <div className="w-full max-w-3xl lg:max-w-5xl mx-auto flex-1 min-h-0 flex flex-col bg-white rounded-none sm:rounded-3xl border-0 sm:border-4 border-purple-400 sm:shadow-xl sm:my-1.5 lg:my-2 overflow-hidden">
         
         {/* 1. Header Bar Game */}
-        <header className="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-purple-50/90 border-b-2 border-purple-100 flex items-center justify-between gap-2 shrink-0">
+        <header className="px-3.5 py-1.5 sm:px-5 sm:py-2 bg-purple-50/90 border-b-2 border-purple-100 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
               onClick={() => sound.stopSpeaking()}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-black text-xs sm:text-sm border-2 border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-black text-xs sm:text-sm border-2 border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"
               title="Kembali ke Beranda"
             >
               <ArrowLeft className="w-4 h-4 text-purple-700" />
@@ -230,7 +230,7 @@ export default function LiterasiNusantaraPage() {
             </div>
             <button
               onClick={handleSpeakQuestion}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black border-2 transition-all btn-chunky ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl text-xs font-black border-2 transition-all btn-chunky ${
                 isSpeaking
                   ? "bg-rose-500 text-white border-rose-600 animate-pulse"
                   : "bg-purple-600 hover:bg-purple-700 text-white border-purple-700 shadow-[0_2px_0_0_#581c87]"
@@ -244,11 +244,11 @@ export default function LiterasiNusantaraPage() {
         </header>
 
         {/* 2. Filter Bar Ringkas (1 Baris Rapi) */}
-        <div className="px-3 py-1.5 sm:px-5 sm:py-2 bg-slate-50 border-b border-purple-100 flex items-center justify-between gap-2 text-xs shrink-0">
+        <div className="px-3 py-1 sm:px-5 sm:py-1.5 bg-slate-50 border-b border-purple-100 flex items-center justify-between gap-2 text-xs shrink-0">
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             <button
               onClick={() => handleChangeCategory("all")}
-              className={`px-2 sm:px-2.5 py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
+              className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
                 selectedCategory === "all" ? "bg-purple-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
@@ -256,7 +256,7 @@ export default function LiterasiNusantaraPage() {
             </button>
             <button
               onClick={() => handleChangeCategory("makanan")}
-              className={`px-2 sm:px-2.5 py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
+              className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
                 selectedCategory === "makanan" ? "bg-purple-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
@@ -264,7 +264,7 @@ export default function LiterasiNusantaraPage() {
             </button>
             <button
               onClick={() => handleChangeCategory("ikon")}
-              className={`px-2 sm:px-2.5 py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
+              className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg font-black text-[11px] sm:text-xs transition-all ${
                 selectedCategory === "ikon" ? "bg-purple-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
@@ -276,7 +276,7 @@ export default function LiterasiNusantaraPage() {
             <select
               value={selectedIsland}
               onChange={(e) => handleChangeIsland(e.target.value)}
-              className="bg-white text-purple-900 font-extrabold text-[11px] sm:text-xs px-2 py-1 rounded-lg border border-purple-200 focus:outline-none cursor-pointer"
+              className="bg-white text-purple-900 font-extrabold text-[11px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-lg border border-purple-200 focus:outline-none cursor-pointer"
             >
               <option value="all">Semua Wilayah</option>
               <option value="Jawa">Pulau Jawa</option>
@@ -289,13 +289,14 @@ export default function LiterasiNusantaraPage() {
           </div>
         </div>
 
-        {/* 3. Panggung Foto & Pilihan Ganda (Adaptif: Vertikal di Mobile/Tablet, Berdampingan di Desktop) */}
-        <main className="flex-1 min-h-0 flex flex-col justify-between py-2 sm:py-3 px-3 sm:px-5 overflow-hidden">
-          <div className="w-full max-w-md sm:max-w-xl lg:max-w-4xl mx-auto flex-1 min-h-0 flex flex-col justify-between lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
-            {/* SISI KIRI (Mobile: Atas, Desktop: Kolom Kiri 5-span) */}
-            <div className="lg:col-span-5 flex flex-col items-center text-center space-y-1 sm:space-y-2 lg:space-y-3 shrink-0">
-              {/* Foto Objek */}
-              <div className="relative w-44 h-36 sm:w-56 sm:h-44 lg:w-72 lg:h-52 max-h-[22vh] lg:max-h-[30vh] shrink-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-2 sm:p-3 overflow-hidden mx-auto">
+        {/* 3. Panggung Foto & Pilihan Ganda (Menyatu di Tengah dengan Jarak Terukur ~12px) */}
+        <main className="flex-1 min-h-0 overflow-hidden flex flex-col justify-center items-center py-1 sm:py-2 px-3">
+          <div className="w-full max-w-sm sm:max-w-md lg:max-w-4xl mx-auto flex flex-col items-center justify-center gap-3 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+            
+            {/* SISI FOTO (Mobile: Atas, Desktop: Kolom Kiri 5-span) */}
+            <div className="lg:col-span-5 flex flex-col items-center text-center w-full shrink-0">
+              {/* Kotak Foto Objek (Kompak & max-h-[18vh]) */}
+              <div className="relative w-32 h-24 sm:w-44 sm:h-36 lg:w-60 lg:h-44 max-h-[18vh] lg:max-h-[25vh] shrink-0 rounded-2xl bg-gradient-to-b from-purple-50/70 to-slate-50 border-2 border-purple-200 shadow-inner flex items-center justify-center p-1.5 sm:p-2.5 overflow-hidden mx-auto">
                 <img
                   src={`/images/nusantara/${currentSoal.id}.webp`}
                   alt={currentSoal.title}
@@ -319,32 +320,32 @@ export default function LiterasiNusantaraPage() {
                   className="w-full h-full flex-col items-center justify-center text-center p-2 text-purple-400 bg-purple-50/50 rounded-xl"
                 >
                   {currentSoal.category === "makanan" ? (
-                    <Utensils className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
+                    <Utensils className="w-6 h-6 mb-1 opacity-60 text-purple-500" />
                   ) : (
-                    <Landmark className="w-8 h-8 mb-1 opacity-60 text-purple-500" />
+                    <Landmark className="w-6 h-6 mb-1 opacity-60 text-purple-500" />
                   )}
                   <span className="text-[10px] font-extrabold text-purple-700">Foto Segera Hadir</span>
                 </div>
               </div>
 
-              {/* Nama Objek & Pertanyaan */}
-              <div className="shrink-0">
-                <h2 className="text-lg sm:text-2xl lg:text-3xl font-black font-display text-slate-900 tracking-tight text-center leading-tight">
+              {/* Judul Objek & Label Pertanyaan */}
+              <div className="mt-1 mb-1.5 text-center shrink-0">
+                <h2 className="text-base sm:text-xl lg:text-2xl font-black font-display text-slate-900 tracking-tight leading-tight">
                   {currentSoal.title}
                 </h2>
 
                 {/* Badge Kategori & Wilayah (Desktop) */}
-                <div className="hidden lg:flex items-center justify-center gap-2 mt-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-purple-100 text-purple-900 border border-purple-200">
+                <div className="hidden lg:flex items-center justify-center gap-2 mt-1.5">
+                  <span className="px-2 py-0.5 rounded-full text-xs font-black bg-purple-100 text-purple-900 border border-purple-200">
                     {currentSoal.category === "makanan" ? "Makanan Khas" : "Ikon Budaya"}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                  <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
                     {currentSoal.island}
                   </span>
                 </div>
 
                 {/* Pertanyaan Singkat (Mobile / Tablet) */}
-                <p className="lg:hidden text-xs sm:text-sm font-bold text-purple-900 bg-purple-50/90 py-1 px-3 sm:px-4 rounded-xl border border-purple-200 text-center inline-block mt-0.5 sm:mt-1 leading-tight">
+                <p className="lg:hidden text-[11px] sm:text-xs font-bold text-purple-900 bg-purple-50/90 py-0.5 px-2.5 sm:px-3 rounded-lg border border-purple-200 inline-block mt-0.5 leading-tight">
                   {currentSoal.category === "makanan"
                     ? "Dari daerah manakah makanan khas ini berasal?"
                     : "Dari daerah manakah ikon budaya ini berasal?"}
@@ -352,22 +353,22 @@ export default function LiterasiNusantaraPage() {
               </div>
             </div>
 
-            {/* SISI KANAN (Mobile: Bawah, Desktop: Kolom Kanan 7-span) */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-2 sm:space-y-2.5 lg:space-y-3.5 w-full shrink-0">
+            {/* SISI PILIHAN GANDA (Mobile: Bawah, Desktop: Kolom Kanan 7-span) */}
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-2 lg:space-y-2.5 w-full shrink-0">
               {/* Banner Pertanyaan Khusus Layar Desktop / Laptop */}
-              <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50/60 p-3 sm:p-3.5 rounded-2xl border-2 border-purple-200 text-left">
-                <span className="text-[11px] font-black uppercase text-purple-700 tracking-wider block mb-0.5">
+              <div className="hidden lg:block bg-gradient-to-r from-purple-50 to-indigo-50/60 p-2.5 sm:p-3 rounded-2xl border-2 border-purple-200 text-left">
+                <span className="text-[10px] font-black uppercase text-purple-700 tracking-wider block mb-0.5">
                   Misi Detektif Daerah:
                 </span>
-                <p className="text-base font-extrabold text-slate-900">
+                <p className="text-sm lg:text-base font-extrabold text-slate-900">
                   {currentSoal.category === "makanan"
                     ? "Tebak, dari daerah manakah makanan khas pada foto di samping berasal?"
                     : "Tebak, dari daerah manakah ikon budaya pada foto di samping berasal?"}
                 </p>
               </div>
 
-              {/* Grid Pilihan Ganda 2x2 */}
-              <div className="w-full grid grid-cols-2 gap-2 sm:gap-2.5 lg:gap-3">
+              {/* Grid Pilihan Ganda 2x2 Kompak */}
+              <div className="w-full grid grid-cols-2 gap-2">
                 {currentSoal.options.map((opt, idx) => {
                   const letter = ["A", "B", "C", "D"][idx];
                   const isSelected = selectedAnswer === opt;
@@ -389,87 +390,89 @@ export default function LiterasiNusantaraPage() {
                     <button
                       key={opt}
                       onClick={() => handleSelectOption(opt)}
-                      className={`py-2.5 sm:py-3.5 px-2.5 sm:px-3.5 lg:p-4 rounded-2xl border-2 font-black text-xs sm:text-sm lg:text-base flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
+                      className={`py-2 sm:py-2.5 px-2.5 sm:px-3 rounded-xl sm:rounded-2xl border-2 font-black text-xs sm:text-sm flex items-center justify-between transition-all btn-chunky text-left ${btnStyle}`}
                     >
                       <div className="flex items-center gap-1.5 sm:gap-2 overflow-hidden">
-                        <span className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-lg border flex items-center justify-center font-black text-xs lg:text-sm shrink-0 ${badgeStyle}`}>
+                        <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg border flex items-center justify-center font-black text-[11px] sm:text-xs shrink-0 ${badgeStyle}`}>
                           {letter}
                         </span>
                         <span className="font-display tracking-wide truncate">{opt}</span>
                       </div>
-                      {isThisCorrect && <CheckCircle2 className="w-4 h-4 lg:w-5 lg:h-5 text-white shrink-0 ml-1" />}
+                      {isThisCorrect && <CheckCircle2 className="w-4 h-4 text-white shrink-0 ml-1" />}
                     </button>
                   );
                 })}
               </div>
 
-              {/* Fakta Edukasi di Akhir (Muncul Setelah Menjawab) */}
-              {selectedAnswer ? (
-                <div className={`p-2 sm:p-2.5 lg:p-3 rounded-2xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 shrink-0 ${
-                  isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
-                }`}>
-                  <div className="flex items-center gap-2 overflow-hidden">
-                    <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 shrink-0 text-amber-600" />
-                    <div className="truncate">
-                      <span className="font-black mr-1.5">
-                        {isCorrect ? `Tepat! Asal: ${currentSoal.correctAnswer} (${currentSoal.province})` : "Hampir Tepat!"}
-                      </span>
-                      <span className="text-[11px] sm:text-xs opacity-90 hidden sm:inline">
-                        {isCorrect ? currentSoal.funFact : `Petunjuk Tobi: ${currentSoal.hint}`}
-                      </span>
+              {/* Box Fakta / Feedback Ramping dengan Tinggi Tetap min-h-[40px] */}
+              <div className="min-h-[40px] h-[40px] sm:h-[44px] w-full shrink-0 flex items-center">
+                {selectedAnswer ? (
+                  <div className={`p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border text-[11px] sm:text-xs font-medium flex items-center justify-between gap-1.5 w-full h-full shrink-0 ${
+                    isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
+                  }`}>
+                    <div className="flex items-center gap-1.5 overflow-hidden">
+                      <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                      <div className="truncate">
+                        <span className="font-black mr-1">
+                          {isCorrect ? `Tepat! ${currentSoal.correctAnswer} (${currentSoal.province})` : "Hampir Tepat!"}
+                        </span>
+                        <span className="opacity-90 hidden sm:inline">
+                          {isCorrect ? currentSoal.funFact : `Petunjuk: ${currentSoal.hint}`}
+                        </span>
+                      </div>
                     </div>
+                    {isCorrect && (
+                      <button
+                        onClick={handleNext}
+                        className="shrink-0 px-2.5 py-1 rounded-lg sm:rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center gap-1 shadow-sm btn-chunky"
+                      >
+                        <span>Lanjut</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
-                  {isCorrect && (
-                    <button
-                      onClick={handleNext}
-                      className="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs lg:text-sm flex items-center gap-1 shadow-sm btn-chunky"
-                    >
-                      <span>Lanjut</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <div className="h-8 lg:h-10 shrink-0 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-400">
-                  Pilih salah satu jawaban di atas untuk melihat fakta edukasi
-                </div>
-              )}
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-slate-400 shrink-0">
+                    Pilih salah satu jawaban di atas untuk melihat fakta edukasi
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </main>
 
         {/* 6. Footer Navigasi */}
-        <footer className="px-3.5 py-1.5 sm:px-5 sm:py-2.5 bg-purple-50/80 border-t border-purple-100 flex items-center justify-between gap-2 shrink-0">
+        <footer className="px-3.5 py-1.5 sm:px-5 sm:py-2 bg-purple-50/80 border-t border-purple-100 flex items-center justify-between gap-2 shrink-0">
           <button
             onClick={handlePrev}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-extrabold text-xs border border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-extrabold text-xs border border-slate-300 shadow-[0_2px_0_0_#cbd5e1] btn-chunky"
             title="Soal Sebelumnya"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Sebelumnya</span>
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={handleShuffle}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-xs border border-purple-300 btn-chunky"
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-xs border border-purple-300 btn-chunky"
               title="Acak Soal"
             >
-              <Shuffle className="w-3.5 h-3.5" />
+              <Shuffle className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <span>Acak</span>
             </button>
-            <span className="text-[11px] sm:text-xs font-black text-purple-900 bg-white px-2 py-1 rounded-lg border border-purple-200">
+            <span className="text-[11px] sm:text-xs font-black text-purple-900 bg-white px-2 py-0.5 sm:py-1 rounded-lg border border-purple-200">
               {currentIndex + 1} / {filteredQuestions.length}
             </span>
           </div>
 
           <button
             onClick={handleNext}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs border border-purple-700 shadow-[0_2px_0_0_#581c87] btn-chunky"
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs border border-purple-700 shadow-[0_2px_0_0_#581c87] btn-chunky"
             title="Soal Berikutnya"
           >
             <span className="hidden sm:inline">Berikutnya</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </footer>
 
