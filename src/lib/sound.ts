@@ -143,6 +143,58 @@ class SoundEngine {
     this.playChime();
   }
 
+  // Sound of water droplet falling and dripping into flask ("pluk... gluk")
+  public playWaterDrop() {
+    if (!this.soundEnabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    const startFreq = 700 + Math.random() * 150;
+    const endFreq = 250 + Math.random() * 50;
+    osc.frequency.setValueAtTime(startFreq, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(endFreq, ctx.currentTime + 0.08);
+
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.13);
+  }
+
+  // Sound of bubbling fizzy chemical reaction ("fizzzz... psst")
+  public playFizz() {
+    if (!this.soundEnabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    // Create a burst of modulated bubble pops
+    for (let i = 0; i < 5; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const delay = i * 0.04;
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(450 + Math.random() * 400, ctx.currentTime + delay);
+      osc.frequency.linearRampToValueAtTime(800 + Math.random() * 600, ctx.currentTime + delay + 0.06);
+
+      gain.gain.setValueAtTime(0.08, ctx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.08);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + 0.09);
+    }
+  }
+
   // Native Web Speech API for Tobi Text-To-Speech (Indonesian voice)
   public speak(text: string, onStart?: () => void, onEnd?: () => void) {
     if (!this.speechEnabled) return;
