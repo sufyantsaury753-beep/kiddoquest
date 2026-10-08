@@ -33,6 +33,7 @@ export const SCIENCE_STATIONS = [
     name: "Lab Warna",
     path: "/lab-sains/warna",
     Icon: FlaskConical,
+    imageSrc: "/images/science/icon_warna.webp",
     accent: "bg-emerald-500 text-white border-emerald-600",
     hoverAccent: "hover:bg-emerald-50 hover:text-emerald-700",
   },
@@ -41,6 +42,7 @@ export const SCIENCE_STATIONS = [
     name: "Siklus Air",
     path: "/lab-sains/siklus-air",
     Icon: CloudRain,
+    imageSrc: "/images/science/icon_air.webp",
     accent: "bg-sky-500 text-white border-sky-600",
     hoverAccent: "hover:bg-sky-50 hover:text-sky-700",
   },
@@ -49,6 +51,7 @@ export const SCIENCE_STATIONS = [
     name: "Rantai Makanan",
     path: "/lab-sains/rantai-makanan",
     Icon: Sprout,
+    imageSrc: "/images/science/icon_rantai.webp",
     accent: "bg-teal-500 text-white border-teal-600",
     hoverAccent: "hover:bg-teal-50 hover:text-teal-700",
   },
@@ -57,6 +60,7 @@ export const SCIENCE_STATIONS = [
     name: "Rakit Listrik",
     path: "/lab-sains/listrik",
     Icon: Zap,
+    imageSrc: "/images/science/icon_listrik.webp",
     accent: "bg-amber-500 text-slate-950 border-amber-600",
     hoverAccent: "hover:bg-amber-50 hover:text-amber-700",
   },
@@ -65,6 +69,7 @@ export const SCIENCE_STATIONS = [
     name: "Magnet Hunter",
     path: "/lab-sains/magnet",
     Icon: Magnet,
+    imageSrc: "/images/science/icon_magnet.webp",
     accent: "bg-rose-500 text-white border-rose-600",
     hoverAccent: "hover:bg-rose-50 hover:text-rose-700",
   },
@@ -89,11 +94,11 @@ export default function ScienceNavHeader({
               href="/lab-sains"
               onClick={() => sound.playChime()}
               className="h-8 sm:h-9 px-2 sm:px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border-2 border-slate-300 font-bold text-xs flex items-center gap-1.5 transition-all btn-chunky"
-              title="Kembali ke Lobi Utama Lab Sains"
+              title="Kembali ke Peta Laboratorium Sains"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Lobi Lab Sains</span>
-              <span className="sm:hidden">Lobi</span>
+              <span className="hidden sm:inline">Kembali ke Peta Lab</span>
+              <span className="sm:hidden">Peta Lab</span>
             </Link>
 
             <Link
