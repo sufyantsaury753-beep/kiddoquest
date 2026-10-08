@@ -3,17 +3,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import confetti from "canvas-confetti";
-import {
-  ArrowLeft,
-  Orbit,
-  Sparkles,
-  Volume2,
-  Star,
-  CheckCircle2,
-  ChevronLeft,
+import { 
+  ArrowLeft, 
+  Orbit, 
+  Sparkles, 
+  Volume2, 
+  Star, 
+  CheckCircle2, 
+  ChevronLeft, 
   ChevronRight,
   Thermometer,
-  Moon,
+  Moon
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
@@ -145,17 +145,14 @@ const PLANETS: PlanetData[] = [
 export default function TataSuryaPage() {
   const [profile, setProfile] = useState<StudentProfile>(DEFAULT_PROFILE);
   const [mounted, setMounted] = useState(false);
-  const [selectedPlanetId, setSelectedPlanetId] = useState<string>("earth");
+  const [selectedPlanetId, setSelectedPlanetId] = useState<string>("saturn");
   const [isSpinning, setIsSpinning] = useState(false);
-  const [exploredPlanets, setExploredPlanets] = useState<string[]>(["earth"]);
+  const [exploredPlanets, setExploredPlanets] = useState<string[]>(["earth", "saturn"]);
 
-  // Touch swipe gesture state
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
-
-  // Bottom dock ref for smooth centering
+  // Touch Swipe Gesture State
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const dockRef = useRef<HTMLDivElement>(null);
-  const activeItemRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const stored = getStudentProfile();
@@ -172,18 +169,7 @@ export default function TataSuryaPage() {
     }
   }, []);
 
-  const activePlanet = PLANETS.find((p) => p.id === selectedPlanetId) || PLANETS[3];
-
-  // Auto-scroll active item into view in bottom dock
-  useEffect(() => {
-    if (activeItemRef.current) {
-      activeItemRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center",
-      });
-    }
-  }, [selectedPlanetId]);
+  const activePlanet = PLANETS.find((p) => p.id === selectedPlanetId) || PLANETS[6];
 
   const handleSelectPlanet = (planet: PlanetData) => {
     setSelectedPlanetId(planet.id);
@@ -213,17 +199,9 @@ export default function TataSuryaPage() {
 
   const handleSpeakPlanet = () => {
     sound.playChime();
-    setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 800);
     if (profile.audioEnabled) {
       sound.speak(activePlanet.voiceScript);
     }
-  };
-
-  const handleNextPlanet = () => {
-    const currentIndex = PLANETS.findIndex((p) => p.id === selectedPlanetId);
-    const nextIndex = (currentIndex + 1) % PLANETS.length;
-    handleSelectPlanet(PLANETS[nextIndex]);
   };
 
   const handlePrevPlanet = () => {
@@ -232,251 +210,217 @@ export default function TataSuryaPage() {
     handleSelectPlanet(PLANETS[prevIndex]);
   };
 
-  // Touch Swipe Gesture Handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-    setTouchStartY(e.touches[0].clientY);
+  const handleNextPlanet = () => {
+    const currentIndex = PLANETS.findIndex((p) => p.id === selectedPlanetId);
+    const nextIndex = (currentIndex + 1) % PLANETS.length;
+    handleSelectPlanet(PLANETS[nextIndex]);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null || touchStartY === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const touchEndY = e.changedTouches[0].clientY;
-    const diffX = touchStartX - touchEndX;
-    const diffY = touchStartY - touchEndY;
+  // Touch Swipe Gesture Handlers
+  const minSwipeDistance = 45;
 
-    // Trigger swipe if horizontal displacement is significant and larger than vertical scroll
-    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
-      if (diffX > 0) {
-        // Swiped left -> Go to Next Planet
-        handleNextPlanet();
-      } else {
-        // Swiped right -> Go to Previous Planet
-        handlePrevPlanet();
-      }
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleNextPlanet();
+    } else if (isRightSwipe) {
+      handlePrevPlanet();
     }
-    setTouchStartX(null);
-    setTouchStartY(null);
   };
 
   if (!mounted) return null;
 
   return (
-    <div
-      className={`min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white flex flex-col font-sans select-none overflow-x-hidden ${
-        profile.liteMode ? "lite-high-contrast" : ""
-      }`}
+    <div 
+      className={`min-h-[100dvh] w-full flex flex-col justify-between bg-gradient-to-b from-[#060719] via-[#0B0D2E] to-[#050616] text-white select-none relative overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* 1. Header Game */}
-      <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b-2 border-indigo-800/80 px-3.5 py-2 sm:px-5 sm:py-2.5 shadow-md">
-        <div className="max-w-5xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link
-              href="/"
-              onClick={() => sound.stopSpeaking()}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm border border-slate-600 shadow-[0_2px_0_0_#1e1b4b] transition-all btn-chunky"
-              title="Kembali ke Beranda"
-            >
-              <ArrowLeft className="w-4 h-4 text-indigo-400" />
-              <span className="hidden sm:inline">Beranda</span>
-            </Link>
-
-            <div className="h-5 w-px bg-indigo-800/60" />
-
-            <div>
-              <div className="flex items-center gap-2">
-                <Orbit className="w-4 h-4 text-indigo-400 animate-spin" style={{ animationDuration: "14s" }} />
-                <h1 className="text-sm sm:text-lg font-black font-display text-white tracking-tight leading-tight">
-                  Tata Surya Cilik
-                </h1>
-              </div>
-              <span className="text-[10px] sm:text-xs font-bold text-indigo-300 block leading-none">
-                Eksplorasi Antariksa & 9 Objek Langit
-              </span>
-            </div>
+      {/* 1. Top Header Bar */}
+      <header className="w-full px-4 sm:px-8 py-3 flex items-center justify-between border-b border-indigo-950/60 bg-slate-950/50 backdrop-blur-md z-20 shrink-0">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            onClick={() => sound.stopSpeaking()}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white font-black text-xs sm:text-sm border border-indigo-900/80 shadow-md transition-all btn-chunky"
+            title="Kembali ke Beranda"
+          >
+            <ArrowLeft className="w-4 h-4 text-indigo-400" />
+            <span>Beranda</span>
+          </Link>
+          <div className="hidden xs:flex items-center gap-2">
+            <Orbit className="w-4 h-4 text-indigo-400 animate-spin" style={{ animationDuration: "14s" }} />
+            <span className="text-xs sm:text-sm font-black font-display text-white tracking-wide">
+              Tata Surya Cilik
+            </span>
           </div>
+        </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="flex items-center gap-1 bg-amber-950/80 px-2 sm:px-2.5 py-1 rounded-xl border border-amber-600 text-amber-300 font-black text-xs">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <span>{profile.stars}</span>
-            </div>
-
-            <button
-              onClick={handleSpeakPlanet}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black border-2 border-sky-400 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white shadow-[0_2px_0_0_#1e1b4b] transition-all btn-chunky"
-              title="Dengarkan Penjelasan Tobi"
-            >
-              <Volume2 className="w-3.5 h-3.5 text-yellow-300" />
-              <span className="hidden sm:inline">Dengarkan Tobi</span>
-            </button>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 bg-amber-950/70 px-3 py-1.5 rounded-xl border border-amber-600/80 text-amber-300 font-black text-xs sm:text-sm shadow-md">
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span>{profile.stars} Bintang</span>
           </div>
         </div>
       </header>
 
-      {/* 2. Main Scrollable Container (Safe padding bottom for Floating Dock) */}
-      <main className="flex-1 w-full max-w-5xl mx-auto px-3 sm:px-6 pt-3 sm:pt-6 pb-32 sm:pb-36 flex flex-col justify-center">
-        <div className="w-full flex-1 flex flex-col md:grid md:grid-cols-12 md:gap-8 md:items-center">
-          
-          {/* A. Panggung Planet Megah (Giant Hero Stage) */}
-          <div
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            className="md:col-span-6 flex flex-col items-center justify-center relative py-4 sm:py-6"
-          >
-            {/* Tombol Panah Geser Kiri (Prev) */}
+      {/* 2. Main Exploration Stage (Hero Planet & Cosmic Fact Card) */}
+      <main className="flex-1 w-full max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-10 px-4 py-4 sm:py-6 z-10">
+        
+        {/* Kolom Kiri: Panggung Planet Raksasa & Panah Orbit */}
+        <div className="flex flex-col items-center justify-center relative shrink-0">
+          <div className="relative w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 flex items-center justify-center">
+            
+            {/* Lingkaran Orbit Dotted Berputar Lembut */}
+            <div 
+              className="absolute inset-0 rounded-full border-2 border-dashed border-indigo-500/40 animate-spin pointer-events-none" 
+              style={{ animationDuration: "50s" }} 
+            />
+            {/* Pendaran Lingkaran Dalam */}
+            <div className="absolute inset-4 rounded-full border border-indigo-400/20 pointer-events-none" />
+
+            {/* Tombol Panah Orbit Kiri (Previous) */}
             <button
-              type="button"
               onClick={handlePrevPlanet}
-              aria-label="Objek Sebelumnya"
-              className="absolute left-1 sm:left-2 z-20 w-11 h-11 sm:w-14 sm:h-14 rounded-2xl sm:rounded-3xl bg-slate-900/85 hover:bg-indigo-600 text-white border-2 border-indigo-500/80 shadow-[0_4px_0_0_#1e1b4b] flex items-center justify-center transition-all hover:scale-110 active:scale-95 btn-chunky backdrop-blur-md cursor-pointer"
+              className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/90 border-2 border-indigo-500/80 hover:border-yellow-400 hover:bg-indigo-600 text-white flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] active:scale-95 transition-all"
+              title="Objek Sebelumnya"
             >
-              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+              <ChevronLeft className="w-6 h-6 text-white" />
             </button>
 
-            {/* Panggung Visual Planet & Glowing Orbit Ring */}
-            <div className="relative flex items-center justify-center my-2">
-              {/* Cincin Orbit Berputar Kosmik */}
-              <div
-                className="absolute w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-92 lg:h-92 rounded-full border-2 border-dashed border-indigo-400/40 animate-spin pointer-events-none"
-                style={{ animationDuration: "35s" }}
+            {/* Visual Planet Megah HD */}
+            <div
+              className={`relative flex items-center justify-center cursor-pointer transition-all duration-700 select-none ${
+                isSpinning ? "rotate-180 scale-110" : "hover:scale-105 active:scale-95"
+              }`}
+              onClick={handleSpeakPlanet}
+              title="Ketuk planet untuk memutar & mendengarkan suara Tobi!"
+            >
+              <img
+                src={activePlanet.image}
+                alt={activePlanet.name}
+                className="w-48 h-48 sm:w-60 sm:h-60 lg:w-72 lg:h-72 object-contain select-none pointer-events-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
               />
-              <div
-                className="absolute w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-84 lg:h-84 rounded-full border border-indigo-500/30 shadow-[0_0_40px_rgba(99,102,241,0.3)] pointer-events-none"
-              />
+            </div>
 
-              {/* Badan Planet Megah (210px–240px di HP, 280px–320px di Desktop) */}
-              <div
-                onClick={handleSpeakPlanet}
-                className={`relative flex items-center justify-center cursor-pointer transition-transform duration-700 ${
-                  isSpinning ? "rotate-180 scale-110" : "hover:scale-105 active:scale-95"
-                }`}
-                title="Sentuh objek untuk memutar dan mendengarkan penjelasan!"
-              >
-                <img
-                  src={activePlanet.image}
-                  alt={activePlanet.name}
-                  className="w-52 h-52 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain select-none pointer-events-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.85)] filter transition-all"
-                />
+            {/* Tombol Panah Orbit Kanan (Next) */}
+            <button
+              onClick={handleNextPlanet}
+              className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/90 border-2 border-indigo-500/80 hover:border-yellow-400 hover:bg-indigo-600 text-white flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] active:scale-95 transition-all"
+              title="Objek Berikutnya"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+          </div>
+
+          {/* Petunjuk Interaktif Swipe / Ketuk */}
+          <div className="mt-3 sm:mt-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-800/50 text-[11px] sm:text-xs text-indigo-300 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+            <span>Geser layar atau ketuk planet untuk mendengar suara Tobi!</span>
+          </div>
+        </div>
+
+        {/* Kolom Kanan: Lembar Fakta Kosmik & Tombol Aksi Fokus */}
+        <div className="w-full max-w-lg space-y-3 sm:space-y-4 text-center lg:text-left">
+          
+          {/* Header Kartu: Kategori & Julukan */}
+          <div>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-1.5">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-600 text-white border border-indigo-400 shadow-sm">
+                {activePlanet.tag}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-yellow-300 italic">
+                &ldquo;{activePlanet.nickname}&rdquo;
+              </span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-display text-white tracking-tight leading-tight">
+              {activePlanet.name} ({activePlanet.order})
+            </h1>
+          </div>
+
+          {/* Kotak Fakta Menarik */}
+          <div className="bg-slate-900/80 backdrop-blur-sm rounded-2xl p-3.5 sm:p-4 border border-indigo-900/80 text-left shadow-lg">
+            <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-sans">
+              {activePlanet.funFact}
+            </p>
+          </div>
+
+          {/* Grid Metrik Cepat (Suhu & Satelit) */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 text-left">
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center gap-2.5 shadow-md">
+              <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <Thermometer className="w-4 h-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                  Suhu Permukaan:
+                </span>
+                <span className="text-xs sm:text-sm font-extrabold text-amber-300 truncate block">
+                  {activePlanet.temperature}
+                </span>
               </div>
             </div>
 
-            {/* Tombol Panah Geser Kanan (Next) */}
-            <button
-              type="button"
-              onClick={handleNextPlanet}
-              aria-label="Objek Berikutnya"
-              className="absolute right-1 sm:right-2 z-20 w-11 h-11 sm:w-14 sm:h-14 rounded-2xl sm:rounded-3xl bg-slate-900/85 hover:bg-indigo-600 text-white border-2 border-indigo-500/80 shadow-[0_4px_0_0_#1e1b4b] flex items-center justify-center transition-all hover:scale-110 active:scale-95 btn-chunky backdrop-blur-md cursor-pointer"
-            >
-              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
-            </button>
-
-            {/* Petunjuk Interaksi Ceria */}
-            <div className="flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full bg-slate-900/70 border border-indigo-800/60 text-indigo-300 text-[11px] sm:text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-              <span>Geser layar atau ketuk planet untuk mendengar suara Tobi!</span>
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center gap-2.5 shadow-md">
+              <div className="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
+                <Moon className="w-4 h-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                  Satelit / Bulan:
+                </span>
+                <span className="text-xs sm:text-sm font-extrabold text-sky-300 truncate block">
+                  {activePlanet.moons}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* B. Kapsul Fakta Kosmik (Info Card) */}
-          <div className="md:col-span-6 space-y-3 sm:space-y-4 text-center sm:text-left mt-2 md:mt-0">
-            {/* Header: Tag Kategori & Julukan */}
-            <div>
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2 mb-1.5">
-                <span className="px-3 py-1 rounded-full text-xs font-black bg-indigo-600 text-white border border-indigo-400 shadow-sm">
-                  {activePlanet.tag}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-yellow-300 italic">
-                  "{activePlanet.nickname}"
-                </span>
-              </div>
+          {/* Aksi Tunggal: Dengarkan Tobi (Satu-satunya Tombol Utama yang Jelas & Tidak Membingungkan) */}
+          <div className="pt-1">
+            <button
+              onClick={handleSpeakPlanet}
+              className="w-full py-3 sm:py-3.5 px-4 rounded-2xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black text-sm sm:text-base border-2 border-sky-400 shadow-[0_4px_16px_rgba(56,189,248,0.35)] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 btn-chunky"
+            >
+              <Volume2 className="w-5 h-5 text-yellow-300 shrink-0" />
+              <span>Dengarkan Tobi</span>
+            </button>
+          </div>
 
-              {/* Judul Besar: Nama Objek & Urutan */}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-display text-white tracking-tight leading-tight">
-                {activePlanet.name} ({activePlanet.order})
-              </h2>
-            </div>
-
-            {/* Kotak Fun Fact Menarik */}
-            <div className="bg-slate-900/90 backdrop-blur-md rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 border-2 border-indigo-900/90 text-left shadow-lg">
-              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-sans">
-                {activePlanet.funFact}
-              </p>
-            </div>
-
-            {/* Grid 2-Kolom Metrik Kosmik Ringkas */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-3 text-left">
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-slate-900/85 border border-slate-700/80 shadow-sm flex items-start gap-2 sm:gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
-                  <Thermometer className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block truncate">
-                    Suhu Permukaan:
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-amber-300 block truncate">
-                    {activePlanet.temperature}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-slate-900/85 border border-slate-700/80 shadow-sm flex items-start gap-2 sm:gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
-                  <Moon className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block truncate">
-                    Satelit / Bulan:
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-sky-300 block truncate">
-                    {activePlanet.moons}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Tombol Aksi Utama */}
-            <div className="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2.5 sm:gap-3">
-              <button
-                type="button"
-                onClick={handleSpeakPlanet}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black text-xs sm:text-sm border-2 border-sky-400 shadow-[0_3px_0_0_#1e1b4b] transition-all btn-chunky cursor-pointer"
-              >
-                <Volume2 className="w-4 h-4 text-yellow-300" />
-                <span>Dengarkan Tobi</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleNextPlanet}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border-2 border-slate-600 shadow-[0_2px_0_0_#0f172a] transition-all btn-chunky cursor-pointer"
-              >
-                <span>Objek Berikutnya</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Status Eksplorasi Bintang */}
-            <div className="pt-2 flex items-center justify-between text-xs text-slate-400 border-t border-indigo-900/40">
-              <span className="flex items-center gap-1.5 text-[11px] sm:text-xs text-emerald-400 font-bold">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>+35 Bintang Tiap Planet Baru</span>
-              </span>
-              <span className="text-indigo-300 font-extrabold text-[11px] sm:text-xs">
-                {exploredPlanets.length} / {PLANETS.length} Objek Dijelajahi
-              </span>
-            </div>
+          {/* Status Penjelajahan */}
+          <div className="flex items-center justify-between text-xs pt-0.5 px-1">
+            <span className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] sm:text-xs">
+              <CheckCircle2 className="w-4 h-4" />
+              +35 Bintang Tiap Planet Baru
+            </span>
+            <span className="text-indigo-300 font-extrabold text-[11px] sm:text-xs">
+              {exploredPlanets.length} / {PLANETS.length} Objek Dijelajahi
+            </span>
           </div>
 
         </div>
       </main>
 
-      {/* 3. Pemilih Planet di Bawah Layar (Bottom Floating Orbit Dock) */}
-      <div className="fixed bottom-2 sm:bottom-4 inset-x-0 z-30 flex justify-center px-2 pointer-events-none">
-        <div
+      {/* 3. Bottom Orbit Dock: 9 Objek Langit (Ramah Jempol Anak di Layar Bawah) */}
+      <footer className="w-full px-2 sm:px-4 py-2 sm:py-3 bg-slate-950/80 backdrop-blur-md border-t border-indigo-950/80 z-20 shrink-0">
+        <div 
           ref={dockRef}
-          style={{ scrollbarWidth: "none" }}
-          className="pointer-events-auto bg-slate-950/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border-2 border-indigo-600/80 p-1.5 sm:p-2 shadow-[0_10px_35px_rgba(0,0,0,0.85)] max-w-xl sm:max-w-2xl w-full flex items-center gap-1.5 sm:gap-2 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
+          className="max-w-4xl mx-auto flex items-center justify-start sm:justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none py-1 px-2"
         >
           {PLANETS.map((planet) => {
             const isSelected = selectedPlanetId === planet.id;
@@ -485,38 +429,36 @@ export default function TataSuryaPage() {
             return (
               <button
                 key={planet.id}
-                ref={isSelected ? activeItemRef : null}
-                type="button"
                 onClick={() => handleSelectPlanet(planet)}
-                className={`flex-shrink-0 flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border transition-all btn-chunky min-w-[56px] sm:min-w-[64px] cursor-pointer ${
+                className={`flex-shrink-0 flex flex-col items-center gap-1 py-1 px-2 sm:px-2.5 rounded-2xl border transition-all btn-chunky ${
                   isSelected
-                    ? "bg-indigo-600/95 border-yellow-400 ring-2 ring-yellow-400 shadow-[0_0_14px_rgba(250,204,21,0.6)] scale-105"
-                    : "bg-slate-900/80 border-slate-700/80 hover:bg-slate-800 text-slate-300"
+                    ? "bg-indigo-600 border-2 border-yellow-400 shadow-[0_0_14px_rgba(250,204,21,0.7)] scale-105"
+                    : "bg-slate-900/80 border-slate-800 hover:bg-slate-800/90 hover:border-indigo-400 text-slate-300"
                 }`}
                 title={planet.name}
               >
-                <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center">
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
                   <img
                     src={planet.image}
                     alt={planet.name}
-                    className="w-full h-full object-contain pointer-events-none drop-shadow-sm"
+                    className="w-full h-full object-contain pointer-events-none select-none drop-shadow-md"
                   />
                   {isExplored && (
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-slate-950" />
+                    <span 
+                      className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-900" 
+                      title="Sudah Dijelajahi"
+                    />
                   )}
                 </div>
-                <span
-                  className={`text-[10px] sm:text-[11px] font-extrabold truncate max-w-[52px] sm:max-w-[60px] mt-0.5 ${
-                    isSelected ? "text-yellow-300 font-black" : "text-slate-300"
-                  }`}
-                >
+                <span className={`text-[10px] sm:text-xs font-bold leading-none ${isSelected ? "text-yellow-300 font-black" : "text-slate-300"}`}>
                   {planet.name}
                 </span>
               </button>
             );
           })}
         </div>
-      </div>
+      </footer>
+
     </div>
   );
 }
