@@ -25,7 +25,9 @@ import {
   Lightbulb,
   Info,
   Magnet,
-  Check
+  Check,
+  AlertTriangle,
+  Fish
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -623,6 +625,27 @@ const SharkSvg = () => (
   </svg>
 );
 
+// 10. Pengurai Laut (Dekomposer & Detritivor Samudra)
+const DecomposerSeaSvg = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10 sm:w-12 sm:h-12" fill="none">
+    {/* Dasar laut pasir */}
+    <path d="M4 42 C14 38 34 38 44 42" stroke="#d97706" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M8 40 Q14 34 20 40 Q28 32 36 40" fill="#fde68a" opacity="0.4" />
+    {/* Koloni mikroba & dekomposer laut */}
+    <circle cx="16" cy="30" r="7" fill="#10b981" stroke="#047857" strokeWidth="1.5" />
+    <circle cx="32" cy="28" r="8" fill="#14b8a6" stroke="#0f766e" strokeWidth="1.5" />
+    <circle cx="24" cy="20" r="6" fill="#06b6d4" stroke="#0e7490" strokeWidth="1.5" />
+    {/* Partikel nutrisi yang terdaur ulang */}
+    <circle cx="14" cy="18" r="1.5" fill="#facc15" />
+    <circle cx="34" cy="16" r="2" fill="#facc15" />
+    <circle cx="24" cy="10" r="1.5" fill="#facc15" />
+    <path d="M16 28 Q18 24 16 22 M32 26 Q30 22 32 20" stroke="white" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+    <circle cx="16" cy="30" r="1.5" fill="white" />
+    <circle cx="32" cy="28" r="2" fill="white" />
+    <circle cx="24" cy="20" r="1.5" fill="white" />
+  </svg>
+);
+
 /* =========================================================================
    DATA EKOSISTEM DAN RANTAI MAKANAN
    ========================================================================= */
@@ -630,9 +653,11 @@ const SharkSvg = () => (
 export interface OrganismItem {
   id: string;
   name: string;
+  mysteryHint: string;
   role: string;
-  roleType: "producer" | "herbivore" | "carnivore" | "apex";
+  roleType: "producer" | "herbivore" | "carnivore" | "apex" | "decomposer";
   desc: string;
+  actionWord: string;
   badgeBg: string;
   borderColor: string;
   bgColor: string;
@@ -649,6 +674,112 @@ export interface Ecosystem {
   successSpeech: string;
 }
 
+export type CrisisScenarioId = "ular_hilang" | "kemarau_padi" | "limbah_plastik" | "overfishing_laut";
+
+export interface CrisisScenarioData {
+  id: CrisisScenarioId;
+  ecosystemId: "sawah" | "laut";
+  title: string;
+  tabLabel: string;
+  badge: string;
+  affectedSlotIndex: number;
+  effectType: "extinct" | "drought" | "pollution" | "overfishing";
+  impactBadges: { slotIdx: number; text: string; color: string }[];
+  causeText: string;
+  consequenceText: string;
+  socraticSpeech: string;
+  actionButtonText: string;
+  successSpeech: string;
+  recoverySummary: string;
+}
+
+export const CRISIS_SCENARIOS: CrisisScenarioData[] = [
+  {
+    id: "ular_hilang",
+    ecosystemId: "sawah",
+    title: "Perburuan Liar Predator (Ular Sawah Hilang)",
+    tabLabel: "Ular Sawah Hilang",
+    badge: "Krisis Rantai Predator",
+    affectedSlotIndex: 3,
+    effectType: "extinct",
+    impactBadges: [
+      { slotIdx: 1, text: "Hama Belalang Meledak!", color: "bg-rose-500 text-white" },
+      { slotIdx: 2, text: "Populasi Katak Tak Terkendali!", color: "bg-amber-500 text-slate-950" },
+      { slotIdx: 3, text: "Ular Punah Diburu!", color: "bg-red-600 text-white animate-pulse" },
+      { slotIdx: 0, text: "Padi Habis Dimakan Hama!", color: "bg-rose-700 text-white" },
+    ],
+    causeText: "Ular sawah ditangkapi secara berlebihan hingga punah dari area persawahan.",
+    consequenceText: "Tanpa ular predator, katak dan tikus berkembang biak liar. Hama serangga meledak tak terkendali dan melahap seluruh rumpun padi petani hingga gagal panen total!",
+    socraticSpeech: "Gawat sekali! Saat predator ular diburu habis, rantai makanan terputus. Hama padi meledak dan petani terancam gagal panen. Ayo pulihkan keseimbangan ekosistem!",
+    actionButtonText: "Pulihkan Keseimbangan & Lindungi Ular",
+    successSpeech: "Luar biasa! Perlindungan ular sawah berhasil. Populasi katak terkontrol, padi selamat, dan ekosistem sawah kembali harmonis!",
+    recoverySummary: "Perburuan liar dihentikan. Ular sawah kembali mengontrol rantai makanan sehingga tanaman padi selamat dari serangan hama masif.",
+  },
+  {
+    id: "kemarau_padi",
+    ecosystemId: "sawah",
+    title: "Musim Kemarau Ekstrem (Padi Kering & Layu)",
+    tabLabel: "Kemarau Padi Kering",
+    badge: "Krisis Pondasi Produsen",
+    affectedSlotIndex: 0,
+    effectType: "drought",
+    impactBadges: [
+      { slotIdx: 0, text: "Padi Layu & Kering!", color: "bg-amber-600 text-white animate-pulse" },
+      { slotIdx: 1, text: "Belalang Kelaparan!", color: "bg-rose-600 text-white" },
+      { slotIdx: 2, text: "Katak Kehabisan Makanan!", color: "bg-rose-600 text-white" },
+      { slotIdx: 4, text: "Elang Terancam Kelaparan!", color: "bg-rose-700 text-white" },
+    ],
+    causeText: "Kemarau panjang tanpa hujan membuat sawah retak dan tanaman padi layu mengering.",
+    consequenceText: "Pondasi energi terputus! Belalang pemakan daun mati kelaparan, disusul katak, ular, dan elang yang kehabisan mangsa di seluruh tingkatan rantai.",
+    socraticSpeech: "Perhatikan akibatnya! Padi adalah produsen penghasil energi pertama. Jika tumbuhan mati, seluruh hewan di atasnya ikut kelaparan. Ayo alirkan air irigasi!",
+    actionButtonText: "Irigasi Sawah & Turunkan Hujan",
+    successSpeech: "Segar sekali! Air irigasi membasahi sawah. Tanaman padi kembali hijau royo-royo dan kehidupan hewan sawah terselamatkan!",
+    recoverySummary: "Irigasi darurat berhasil menyegarkan kembali tanaman padi. Seluruh rantai makanan sawah memperoleh pasokan energi kehidupan.",
+  },
+  {
+    id: "limbah_plastik",
+    ecosystemId: "laut",
+    title: "Pencemaran Limbah Plastik & Racun Kimia",
+    tabLabel: "Limbah Sampah Plastik",
+    badge: "Krisis Pencemaran Samudra",
+    affectedSlotIndex: 0,
+    effectType: "pollution",
+    impactBadges: [
+      { slotIdx: 0, text: "Fitoplankton Tertutup Plastik!", color: "bg-rose-600 text-white animate-pulse" },
+      { slotIdx: 1, text: "Udang Makan Mikroplastik!", color: "bg-amber-600 text-white" },
+      { slotIdx: 2, text: "Ikan Tuna Teracuni!", color: "bg-rose-600 text-white" },
+      { slotIdx: 3, text: "Hiu Terancam Racun!", color: "bg-rose-700 text-white" },
+    ],
+    causeText: "Sampah plastik dan limbah kimia tumpah mencemari permukaan laut nusantara.",
+    consequenceText: "Sinar matahari terhalang dan fitoplankton mati teracuni. Mikroplastik termakan udang, racun menumpuk ke ikan tuna dan hiu, hingga membahayakan manusia yang memakannya!",
+    socraticSpeech: "Bahaya limbah plastik di samudra! Racun mikroplastik masuk ke rantai makanan hingga ke ikan yang kita makan. Ayo bersihkan laut dari sampah plastik!",
+    actionButtonText: "Bersihkan Laut dari Sampah Plastik",
+    successSpeech: "Luar biasa! Laut kembali bersih dari limbah plastik. Cahaya matahari menembus samudra dan kehidupan laut kembali sehat!",
+    recoverySummary: "Operasi pembersihan sampah laut berhasil. Fitoplankton kembali berfotosintesis dan siklus energi samudra pulih bebas dari racun mikroplastik.",
+  },
+  {
+    id: "overfishing_laut",
+    ecosystemId: "laut",
+    title: "Penangkapan Berlebih (Overfishing Tuna Lenyap)",
+    tabLabel: "Overfishing Pukat Harimau",
+    badge: "Krisis Eksploitasi Perairan",
+    affectedSlotIndex: 2,
+    effectType: "overfishing",
+    impactBadges: [
+      { slotIdx: 2, text: "Tuna Habis Terjaring!", color: "bg-red-600 text-white animate-pulse" },
+      { slotIdx: 3, text: "Hiu Kelaparan Tanpa Mangsa!", color: "bg-rose-600 text-white" },
+      { slotIdx: 1, text: "Ledakan Kawanan Udang!", color: "bg-amber-500 text-slate-950" },
+      { slotIdx: 4, text: "Dekomposer Krisis Nutrisi!", color: "bg-rose-700 text-white" },
+    ],
+    causeText: "Pukat harimau ilegal menangkap kawanan ikan tuna secara berlebihan tanpa batas kuota.",
+    consequenceText: "Populasi tuna hancur! Ikan hiu sebagai predator puncak kelaparan, sementara udang kecil meledak tanpa pemangsa alami hingga ekosistem karang rusak berat.",
+    socraticSpeech: "Ini akibat penangkapan ikan berlebih! Jika ikan di tengah rantai habis, predator puncak kelaparan dan rantai makanan samudra runtuh. Ayo tegakkan aturan konservasi!",
+    actionButtonText: "Terapkan Konservasi & Batasi Penangkapan",
+    successSpeech: "Bagus sekali! Kawasan konservasi laut berhasil melindungi tuna. Populasi pulih dan hiu mendapatkan makanannya kembali secara seimbang!",
+    recoverySummary: "Regulasi konservasi laut berhasil diberlakukan. Penangkapan liar dihentikan sehingga populasi tuna dan predator puncak seimbang kembali.",
+  },
+];
+
 export const ECOSYSTEMS: Ecosystem[] = [
   {
     id: "sawah",
@@ -656,14 +787,16 @@ export const ECOSYSTEMS: Ecosystem[] = [
     desc: "Siklus energi di persawahan tropis Indonesia",
     bgGradient: "from-emerald-500 to-green-600",
     borderTheme: "border-emerald-400",
-    successSpeech: "Luar biasa! Rantai makanan ekosistem sawah seimbang sempurna! Energi mengalir dari Padi ke Belalang, Katak, Ular, hingga Burung Elang!",
+    successSpeech: "Luar biasa! Rantai makanan sawah seimbang sempurna! Sekarang, mari teliti Laboratorium Krisis Ekosistem untuk melihat apa yang terjadi jika salah satu rantai terputus!",
     chain: [
       {
         id: "padi",
         name: "Padi",
-        role: "Produsen (Penghasil)",
+        mysteryHint: "Penghasil Makanan Utama dari Sinar Matahari",
+        role: "Produsen Utama",
         roleType: "producer",
-        desc: "Menghasilkan makanan sendiri lewat fotosintesis sinar matahari.",
+        desc: "Menyerap sinar matahari dan air tanah untuk menghasilkan bulir beras bergizi.",
+        actionWord: "MEKAR! Padi menyerap cahaya surya & tumbuh subur!",
         badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
         borderColor: "border-emerald-400",
         bgColor: "bg-emerald-50",
@@ -672,9 +805,11 @@ export const ECOSYSTEMS: Ecosystem[] = [
       {
         id: "belalang",
         name: "Belalang",
-        role: "Konsumen I (Herbivora)",
+        mysteryHint: "Herbivora Pemakan Tumbuhan Segar",
+        role: "Konsumen I",
         roleType: "herbivore",
-        desc: "Memakan daun padi sebagai sumber energi utama.",
+        desc: "Serangga pelompat lincah pemakan daun hijau di pematang sawah.",
+        actionWord: "KRAUK! Belalang melahap dedaunan padi segar!",
         badgeBg: "bg-lime-100 text-lime-800 border-lime-300",
         borderColor: "border-lime-400",
         bgColor: "bg-lime-50",
@@ -682,10 +817,12 @@ export const ECOSYSTEMS: Ecosystem[] = [
       },
       {
         id: "katak",
-        name: "Katak",
-        role: "Konsumen II (Karnivora)",
+        name: "Katak Sawah",
+        mysteryHint: "Karnivora Pemangsa Serangga Melompat",
+        role: "Konsumen II",
         roleType: "carnivore",
-        desc: "Memangsa serangga belalang di sela-sela rumpun padi.",
+        desc: "Memiliki lidah panjang dan lengket secepat kilat untuk menyambar serangga terbang.",
+        actionWord: "HAP! Lidah katak menyambar belalang secepat kilat!",
         badgeBg: "bg-amber-100 text-amber-800 border-amber-300",
         borderColor: "border-amber-400",
         bgColor: "bg-amber-50",
@@ -694,9 +831,11 @@ export const ECOSYSTEMS: Ecosystem[] = [
       {
         id: "ular",
         name: "Ular Sawah",
-        role: "Konsumen III (Predator)",
+        mysteryHint: "Predator Melata Pemburu Katak & Tikus",
+        role: "Konsumen III",
         roleType: "carnivore",
-        desc: "Memburu katak dan tikus untuk menjaga populasi alam.",
+        desc: "Reptil melata tanpa kaki yang merayap senyap berburu mangsa di antara rimbunnya sawah.",
+        actionWord: "SREK! Ular sawah menyergap mangsa dalam sekejap!",
         badgeBg: "bg-orange-100 text-orange-800 border-orange-300",
         borderColor: "border-orange-400",
         bgColor: "bg-orange-50",
@@ -705,9 +844,11 @@ export const ECOSYSTEMS: Ecosystem[] = [
       {
         id: "elang",
         name: "Burung Elang",
-        role: "Konsumen Puncak (Penguasa)",
+        mysteryHint: "Penguasa Puncak Rantai Makanan Angkasa",
+        role: "Konsumen Puncak",
         roleType: "apex",
-        desc: "Predator tertinggi yang memburu ular dari angkasa.",
+        desc: "Burung pemangsa bermata tajam dan bercakar kokoh yang mengintai dari langit biru.",
+        actionWord: "WUSSH! Elang menukik tajam mencengkeram mangsa dari angkasa!",
         badgeBg: "bg-purple-100 text-purple-800 border-purple-300",
         borderColor: "border-purple-400",
         bgColor: "bg-purple-50",
@@ -721,14 +862,16 @@ export const ECOSYSTEMS: Ecosystem[] = [
     desc: "Siklus energi di perairan samudra nusantara",
     bgGradient: "from-sky-500 to-blue-600",
     borderTheme: "border-sky-400",
-    successSpeech: "Hebat sekali! Rantai makanan laut berhasil kamu susun! Energi mengalir dari Fitoplankton ke Udang Kecil, Ikan Tuna, hingga Hiu sang predator laut!",
+    successSpeech: "Hebat sekali! Rantai makanan samudra nusantara lengkap sempurna! Sekarang, mari uji daya tahan ekosistem laut di Laboratorium Krisis!",
     chain: [
       {
         id: "fitoplankton",
         name: "Fitoplankton",
-        role: "Produsen (Tumbuhan Mikro)",
+        mysteryHint: "Produsen Mikroskopis Penghasil Energi Surya di Laut",
+        role: "Produsen Samudra",
         roleType: "producer",
-        desc: "Tumbuhan mikroskopis laut penghasil makanan dari matahari.",
+        desc: "Jasad renik nabati melayang di perairan yang mengolah energi surya menjadi nutrisi & oksigen.",
+        actionWord: "KILAU! Fitoplankton memanen energi matahari di permukaan samudra!",
         badgeBg: "bg-teal-100 text-teal-800 border-teal-300",
         borderColor: "border-teal-400",
         bgColor: "bg-teal-50",
@@ -736,10 +879,12 @@ export const ECOSYSTEMS: Ecosystem[] = [
       },
       {
         id: "udang",
-        name: "Udang Kecil",
-        role: "Konsumen I (Herbivora Laut)",
+        name: "Udang & Zooplankton",
+        mysteryHint: "Herbivora Kecil Pemakan Plankton Nabati",
+        role: "Konsumen I",
         roleType: "herbivore",
-        desc: "Memakan fitoplankton yang melayang di air laut.",
+        desc: "Hewan perenang mungil transparan yang menyaring jasad renik nabati di arus ombak.",
+        actionWord: "NYAM! Udang kecil menyaring & melahap fitoplankton!",
         badgeBg: "bg-orange-100 text-orange-800 border-orange-300",
         borderColor: "border-orange-400",
         bgColor: "bg-orange-50",
@@ -748,9 +893,11 @@ export const ECOSYSTEMS: Ecosystem[] = [
       {
         id: "tuna",
         name: "Ikan Tuna",
-        role: "Konsumen II (Karnivora)",
+        mysteryHint: "Karnivora Perenang Cepat Pemangsa Udang",
+        role: "Konsumen II",
         roleType: "carnivore",
-        desc: "Ikan perenang cepat yang memakan kawanan udang kecil.",
+        desc: "Ikan perenang tangguh berbentuk torpedo yang memburu kawanan udang di laut lepas.",
+        actionWord: "WUSH! Tuna menyambar kawanan udang dengan kecepatan tinggi!",
         badgeBg: "bg-blue-100 text-blue-800 border-blue-300",
         borderColor: "border-blue-400",
         bgColor: "bg-blue-50",
@@ -759,13 +906,28 @@ export const ECOSYSTEMS: Ecosystem[] = [
       {
         id: "hiu",
         name: "Ikan Hiu",
-        role: "Konsumen Puncak (Predator Laut)",
+        mysteryHint: "Predator Puncak Penguasa Samudra",
+        role: "Konsumen Puncak",
         roleType: "apex",
-        desc: "Penguasa lautan yang memangsa ikan-ikan besar.",
+        desc: "Penguasa perairan bergigi tajam yang mengendus jejak mangsa dari jarak bermil-mil.",
+        actionWord: "GELAP! Ikan hiu memburu tangguh dari kedalaman samudra!",
         badgeBg: "bg-indigo-100 text-indigo-800 border-indigo-300",
         borderColor: "border-indigo-400",
         bgColor: "bg-indigo-50",
         SvgComponent: SharkSvg,
+      },
+      {
+        id: "pengurai",
+        name: "Pengurai Laut",
+        mysteryHint: "Pengurai Alami Pengolah Sisa Organik di Dasar Samudra",
+        role: "Dekomposer",
+        roleType: "decomposer",
+        desc: "Mikroba dan biota dasar laut yang mendaur ulang sisa organisme menjadi nutrisi alami air laut.",
+        actionWord: "DAUR ULANG! Pengurai mengembalikan nutrisi alami ke dasar samudra!",
+        badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+        borderColor: "border-emerald-400",
+        bgColor: "bg-emerald-50",
+        SvgComponent: DecomposerSeaSvg,
       },
     ],
   },
@@ -780,10 +942,11 @@ export const FOODCHAIN_COORDINATES: Record<"sawah" | "laut", Array<{ left: strin
     { left: "85.8%", top: "55.5%" },
   ],
   laut: [
-    { left: "14.5%", top: "48.7%" },
-    { left: "38.2%", top: "50.8%" },
-    { left: "61.8%", top: "48.2%" },
-    { left: "85.5%", top: "48.0%" },
+    { left: "12.0%", top: "52.0%" },
+    { left: "30.0%", top: "64.0%" },
+    { left: "50.0%", top: "48.0%" },
+    { left: "70.0%", top: "64.0%" },
+    { left: "88.0%", top: "52.0%" },
   ],
 };
 
@@ -1089,6 +1252,12 @@ export default function ScienceLabModal({
   const [availableCardIds, setAvailableCardIds] = useState<string[]>([]);
   const [foodChainComplete, setFoodChainComplete] = useState(false);
   const [chainErrorFeedback, setChainErrorFeedback] = useState<string | null>(null);
+  const [actionBurst, setActionBurst] = useState<{ index: number; text: string } | null>(null);
+
+  // Laboratorium Krisis Ekosistem (What If? Mode) State
+  const [activeCrisisId, setActiveCrisisId] = useState<CrisisScenarioId | null>(null);
+  const [crisisResolved, setCrisisResolved] = useState<boolean>(false);
+  const [earnedCrisisStars, setEarnedCrisisStars] = useState<boolean>(false);
 
   const activeEcosystem = ECOSYSTEMS.find((e) => e.id === selectedEcosystemId) || ECOSYSTEMS[0];
 
@@ -1099,6 +1268,10 @@ export default function ScienceLabModal({
     setPlacedChainIds([]);
     setFoodChainComplete(false);
     setChainErrorFeedback(null);
+    setActionBurst(null);
+    setActiveCrisisId(null);
+    setCrisisResolved(false);
+    setEarnedCrisisStars(false);
     const shuffled = [...eco.chain].map((c) => c.id).sort(() => Math.random() - 0.5);
     if (shuffled.join() === eco.chain.map((c) => c.id).join()) {
       shuffled.reverse();
@@ -1117,6 +1290,10 @@ export default function ScienceLabModal({
     setPlacedChainIds([]);
     setFoodChainComplete(false);
     setChainErrorFeedback(null);
+    setActionBurst(null);
+    setActiveCrisisId(null);
+    setCrisisResolved(false);
+    setEarnedCrisisStars(false);
   }, [selectedEcosystemId]);
 
   // Preload gambar WebP siklus air & rantai makanan untuk instan zero-latency switching
@@ -1148,8 +1325,19 @@ export default function ScienceLabModal({
       setPlacedChainIds(newPlaced);
       setAvailableCardIds((prev) => prev.filter((id) => id !== organismId));
 
+      // Trigger animasi aksi seru ("HAP!")
+      setActionBurst({ index: currentStep, text: expectedOrganism.actionWord });
+      setTimeout(() => {
+        setActionBurst((curr) => (curr?.index === currentStep ? null : curr));
+      }, 2500);
+
       if (newPlaced.length === activeEcosystem.chain.length) {
         setFoodChainComplete(true);
+        const defaultCrisis = CRISIS_SCENARIOS.find((c) => c.ecosystemId === selectedEcosystemId);
+        if (defaultCrisis) {
+          setActiveCrisisId(defaultCrisis.id);
+          setCrisisResolved(false);
+        }
         sound.playCelebration();
         onEarnStars(35);
         if (!liteMode) {
@@ -1165,21 +1353,51 @@ export default function ScienceLabModal({
         }
       } else {
         if (audioEnabled) {
-          sound.speak(`Hebat! ${expectedOrganism.name} berhasil tersambung. Selanjutnya, siapa yang memakannya?`);
+          const nextTarget = activeEcosystem.chain[newPlaced.length];
+          sound.speak(`Tepat sekali! ${expectedOrganism.name} tersambung. Target berikutnya: cari ${nextTarget.mysteryHint}!`);
         }
       }
     } else {
       sound.playSocraticHint();
-      const wrong = activeEcosystem.chain.find((c) => c.id === organismId);
-      const previousName =
-        placedChainIds.length > 0
-          ? activeEcosystem.chain[placedChainIds.length - 1].name
-          : "energi sinar matahari";
-      const errorMsg = `Belum tepat! ${wrong?.name || "Makhluk ini"} belum pada urutan ini. Pikirkan siapa yang memakan ${previousName}!`;
+      const currentTarget = activeEcosystem.chain[currentStep];
+      const errorMsg = `Belum tepat! Perhatikan petunjuknya: "${currentTarget.mysteryHint}". Periksa deskripsi perilaku alami hewan/tumbuhan di bawah!`;
       setChainErrorFeedback(errorMsg);
       if (audioEnabled) {
         sound.speak(errorMsg);
       }
+    }
+  };
+
+  const handleSelectCrisis = (crisisId: CrisisScenarioId) => {
+    const scenario = CRISIS_SCENARIOS.find((c) => c.id === crisisId);
+    if (!scenario) return;
+    setActiveCrisisId(crisisId);
+    setCrisisResolved(false);
+    sound.playChime();
+    if (audioEnabled) {
+      sound.speak(scenario.socraticSpeech);
+    }
+  };
+
+  const handleResolveCrisis = () => {
+    const scenario = CRISIS_SCENARIOS.find((c) => c.id === activeCrisisId);
+    if (!scenario) return;
+    setCrisisResolved(true);
+    sound.playCelebration();
+    if (!earnedCrisisStars) {
+      onEarnStars(40);
+      setEarnedCrisisStars(true);
+    }
+    if (!liteMode) {
+      confetti({
+        particleCount: 65,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ["#10b981", "#06b6d4", "#f59e0b", "#8b5cf6", "#ec4899"],
+      });
+    }
+    if (audioEnabled) {
+      sound.speak(scenario.successSpeech);
     }
   };
 
@@ -2265,7 +2483,7 @@ export default function ScienceLabModal({
         {activeTab === "foodChain" && (
           <div>
             {/* Top Toolbar: Pilihan Ekosistem & Tombol Kontrol */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 mb-3">
               {/* Ekosistem Selector Pills */}
               <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl border-2 border-slate-200">
                 <button
@@ -2293,7 +2511,7 @@ export default function ScienceLabModal({
                 </button>
               </div>
 
-              {/* Action Buttons: Reset & TTS Voice */}
+              {/* Action Buttons: Dengar Panduan & Acak Ulang */}
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
@@ -2301,8 +2519,8 @@ export default function ScienceLabModal({
                     const promptText = foodChainComplete
                       ? activeEcosystem.successSpeech
                       : currentStep === 0
-                      ? "Langkah 1: Siapa produsen yang menghasilkan makanan pertama dari sinar matahari?"
-                      : `Langkah ${currentStep + 1}: Siapa yang memakan ${activeEcosystem.chain[currentStep - 1].name} untuk mendapatkan energi?`;
+                      ? `Langkah 1: ${activeEcosystem.chain[0].mysteryHint}`
+                      : `Langkah ${currentStep + 1}: ${activeEcosystem.chain[currentStep].mysteryHint}`;
                     sound.playChime();
                     if (audioEnabled) {
                       sound.speak(promptText);
@@ -2326,11 +2544,33 @@ export default function ScienceLabModal({
               </div>
             </div>
 
+            {/* Misi Detektif Aktif Banner (Ketika belum selesai) */}
+            {!foodChainComplete && (
+              <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-2.5 sm:p-3 mb-3 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-7 h-7 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
+                    ?
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 block">
+                      Target Urutan #{placedChainIds.length + 1}
+                    </span>
+                    <p className="text-xs sm:text-sm font-black text-slate-900 truncate">
+                      {activeEcosystem.chain[placedChainIds.length]?.mysteryHint}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-[11px] font-bold text-amber-900 shrink-0 bg-amber-200/80 px-2 py-0.5 rounded-full border border-amber-300">
+                  {placedChainIds.length} / {activeEcosystem.chain.length} Terpasang
+                </span>
+              </div>
+            )}
+
             {/* Error Feedback jika anak salah memilih kartu */}
             {chainErrorFeedback && (
-              <div className="p-3.5 rounded-2xl border-2 bg-rose-50 border-rose-300 text-rose-900 mb-4 flex items-center gap-2.5 animate-pulse">
-                <div className="w-8 h-8 rounded-xl bg-rose-500 text-white border border-rose-600 flex items-center justify-center flex-shrink-0">
-                  <RotateCcw className="w-4 h-4" />
+              <div className="p-3 rounded-2xl border-2 bg-rose-50 border-rose-300 text-rose-900 mb-3 flex items-center gap-2.5 animate-pulse">
+                <div className="w-7 h-7 rounded-xl bg-rose-500 text-white border border-rose-600 flex items-center justify-center shrink-0">
+                  <AlertTriangle className="w-4 h-4" />
                 </div>
                 <p className="text-xs sm:text-sm font-black leading-snug">
                   {chainErrorFeedback}
@@ -2339,13 +2579,58 @@ export default function ScienceLabModal({
             )}
 
             {/* Papan Alur Rantai Makanan (Background Ilustrasi WebP dengan Lingkaran Interaktif) */}
-            <div className="relative w-full aspect-[1024/571] rounded-3xl overflow-hidden border-2 border-slate-200 shadow-lg mb-5 select-none bg-slate-900">
+            <div className="relative w-full aspect-[1024/571] rounded-3xl overflow-hidden border-2 border-slate-200 shadow-lg mb-4 select-none bg-slate-900">
               {/* Latar Belakang Gambar WebP Sesuai Ekosistem */}
               <img
                 src={selectedEcosystemId === "sawah" ? "/images/foodchain/sawah.webp" : "/images/foodchain/laut.webp"}
                 alt={`Papan Rantai Makanan ${activeEcosystem.name}`}
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
+
+              {/* Overlay Efek Krisis pada Papan jika simulasi aktif */}
+              {activeCrisisId && !crisisResolved && (
+                <div className="absolute inset-0 bg-red-950/25 pointer-events-none z-[4] backdrop-contrast-125" />
+              )}
+
+              {/* Garis Aliran Energi Antar-Slot (SVG Connecting Energy Flow) */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]">
+                <defs>
+                  <filter id="chainEnergyGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+                {activeEcosystem.chain.map((_, idx) => {
+                  if (idx === activeEcosystem.chain.length - 1) return null;
+                  const p1 = FOODCHAIN_COORDINATES[selectedEcosystemId][idx];
+                  const p2 = FOODCHAIN_COORDINATES[selectedEcosystemId][idx + 1];
+                  if (!p1 || !p2) return null;
+
+                  const isFlowConnected = idx < placedChainIds.length - 1;
+                  const isFlowBroken = Boolean(activeCrisisId && !crisisResolved);
+
+                  return (
+                    <line
+                      key={`flow-line-${idx}`}
+                      x1={p1.left}
+                      y1={p1.top}
+                      x2={p2.left}
+                      y2={p2.top}
+                      stroke={
+                        isFlowBroken && isFlowConnected
+                          ? "#ef4444"
+                          : isFlowConnected
+                          ? "#22c55e"
+                          : "rgba(255, 255, 255, 0.28)"
+                      }
+                      strokeWidth={isFlowConnected ? "4" : "2"}
+                      strokeDasharray={isFlowConnected ? "6,4" : "4,4"}
+                      filter={isFlowConnected ? "url(#chainEnergyGlow)" : undefined}
+                      className={isFlowConnected ? "animate-pulse" : ""}
+                    />
+                  );
+                })}
+              </svg>
 
               {/* Slot Lingkaran Interaktif Berbasis Koordinat Persentase */}
               {activeEcosystem.chain.map((item, idx) => {
@@ -2357,43 +2642,86 @@ export default function ScienceLabModal({
                 const PlacedSvg = placedItem ? placedItem.SvgComponent : null;
                 const coords = FOODCHAIN_COORDINATES[selectedEcosystemId][idx] || { left: "50%", top: "50%" };
 
+                // Deteksi efek krisis pada slot ini
+                const currentCrisis = CRISIS_SCENARIOS.find((c) => c.id === activeCrisisId);
+                const isCrisisActive = Boolean(activeCrisisId && !crisisResolved);
+                const isDirectlyStruck = isCrisisActive && currentCrisis?.affectedSlotIndex === idx;
+                const impactBadge = isCrisisActive ? currentCrisis?.impactBadges.find((b) => b.slotIdx === idx) : null;
+                const isCurrentBurst = actionBurst?.index === idx;
+
                 return (
                   <div
                     key={item.id}
                     style={{ left: coords.left, top: coords.top }}
                     className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-10"
                   >
+                    {/* Comic Burst "HAP!" Action Animation */}
+                    {isCurrentBurst && (
+                      <div className="absolute -top-10 sm:-top-12 z-30 animate-bounce pointer-events-none whitespace-nowrap">
+                        <div className="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-black text-[9px] sm:text-xs shadow-2xl border-2 border-amber-600 flex items-center gap-1">
+                          <Sparkles className="w-3 h-3 text-amber-900" />
+                          <span>{actionBurst.text}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Warning badge saat krisis melanda slot */}
+                    {impactBadge && (
+                      <div className="absolute -top-6 sm:-top-7 z-25 pointer-events-none whitespace-nowrap animate-bounce">
+                        <span className={`px-1.5 py-0.5 rounded-full text-[7px] sm:text-[9px] font-black shadow border border-white/40 ${impactBadge.color}`}>
+                          {impactBadge.text}
+                        </span>
+                      </div>
+                    )}
+
                     {isPlaced && PlacedSvg && placedItem ? (
-                      /* Slot Terisi (Organisme Muncul dengan Animasi Pop-in) */
+                      /* Slot Terisi (Organisme Muncul) */
                       <div
-                        className={`relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white/95 border-2 sm:border-3 ${placedItem.borderColor} shadow-xl flex items-center justify-center p-1 sm:p-2 transition-transform duration-300 transform scale-100 ${
-                          foodChainComplete ? "animate-bounce ring-4 ring-emerald-400 ring-offset-2 ring-offset-black/50" : ""
+                        className={`relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-white/95 border-2 sm:border-3 shadow-xl flex items-center justify-center p-1 sm:p-2 transition-all duration-300 transform scale-100 ${
+                          isDirectlyStruck
+                            ? "border-red-600 ring-4 ring-red-500 ring-offset-2 ring-offset-black/50 animate-pulse bg-red-50"
+                            : placedItem.borderColor
+                        } ${
+                          foodChainComplete && !isCrisisActive
+                            ? "ring-4 ring-emerald-400 ring-offset-2 ring-offset-black/50"
+                            : ""
                         }`}
                       >
-                        <div className="w-full h-full flex items-center justify-center">
+                        <div className={`w-full h-full flex items-center justify-center ${isDirectlyStruck ? "opacity-35 grayscale" : ""}`}>
                           <PlacedSvg />
                         </div>
 
+                        {/* Indikator Silang Merah jika terkena krisis punah/rusak */}
+                        {isDirectlyStruck && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-red-600/40 rounded-full">
+                            <X className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow stroke-[3]" />
+                          </div>
+                        )}
+
                         {/* Label Nama Hewan / Tumbuhan */}
-                        <span className="absolute -bottom-4 sm:-bottom-5 px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] font-black bg-slate-900/90 text-white whitespace-nowrap shadow-md pointer-events-none border border-white/20">
+                        <span className={`absolute -bottom-4 sm:-bottom-5 px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] font-black whitespace-nowrap shadow-md pointer-events-none border border-white/20 ${
+                          isDirectlyStruck ? "bg-red-700 text-white" : "bg-slate-900/90 text-white"
+                        }`}>
                           {placedItem.name}
                         </span>
                       </div>
                     ) : isNextTarget ? (
-                      /* Slot Target Aktif (Cincin Kuning Berdenyut) */
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-amber-400/25 border-2 border-amber-300 ring-4 ring-amber-400 ring-offset-2 ring-offset-black/40 animate-pulse flex flex-col items-center justify-center shadow-lg">
-                        <span className="text-white font-black text-sm sm:text-xl drop-shadow-md animate-bounce">
-                          ?
-                        </span>
-                        <span className="absolute -bottom-4 sm:-bottom-5 px-1.5 py-0.5 rounded-full text-[7px] sm:text-[9px] font-black bg-amber-500 text-slate-950 whitespace-nowrap shadow border border-amber-300">
-                          Target {idx + 1}
-                        </span>
+                      /* Slot Target Aktif (Cincin Kuning Berdenyut & Mystery Hint) */
+                      <div className="relative group">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-amber-400/30 border-2 border-amber-300 ring-4 ring-amber-400 ring-offset-2 ring-offset-black/40 animate-pulse flex flex-col items-center justify-center shadow-lg">
+                          <span className="text-white font-black text-sm sm:text-xl drop-shadow-md animate-bounce">
+                            ?
+                          </span>
+                          <span className="absolute -bottom-4 sm:-bottom-5 px-1.5 py-0.5 rounded-full text-[7px] sm:text-[9px] font-black bg-amber-500 text-slate-950 whitespace-nowrap shadow border border-amber-300">
+                            [ ? ] Target {idx + 1}
+                          </span>
+                        </div>
                       </div>
                     ) : (
-                      /* Slot Terkunci (Belum Terisi) */
-                      <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-slate-950/40 border border-white/30 backdrop-blur-[1px] flex items-center justify-center shadow-inner">
-                        <span className="text-white/50 text-[10px] sm:text-xs font-black">
-                          {idx + 1}
+                      /* Slot Terkunci (Belum Terisi, Zero-Spoiler [ ? ]) */
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-slate-950/45 border border-white/30 backdrop-blur-[1px] flex items-center justify-center shadow-inner">
+                        <span className="text-white/60 text-[10px] sm:text-xs font-black">
+                          ?
                         </span>
                       </div>
                     )}
@@ -2402,12 +2730,12 @@ export default function ScienceLabModal({
               })}
             </div>
 
-            {/* Kolam Kartu Pilihan Makhluk Hidup (Tap-to-Order) */}
+            {/* Kolam Kartu Pilihan Makhluk Hidup (Mode Detektif: Tanpa Spoiler Kategori) */}
             {!foodChainComplete ? (
               <div>
-                <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs sm:text-sm font-black font-display text-slate-800">
-                    Ketuk Makhluk Hidup yang Tepat Sesuai Urutan Aliran Energi:
+                    Teliti Perilaku Alami Makhluk Hidup & Pilih Target #{placedChainIds.length + 1}:
                   </h4>
                   <span className="text-[11px] font-bold text-slate-500">
                     Tersisa: {availableCardIds.length} pilihan
@@ -2432,10 +2760,7 @@ export default function ScienceLabModal({
                         <span className="font-black text-xs sm:text-sm text-slate-800 leading-tight">
                           {org.name}
                         </span>
-                        <span className={`mt-1 text-[9px] font-black px-2 py-0.5 rounded-full border ${org.badgeBg}`}>
-                          {org.role}
-                        </span>
-                        <p className="mt-1 text-[9px] text-slate-600 line-clamp-2 leading-tight">
+                        <p className="mt-1.5 text-[10px] sm:text-[11px] text-slate-600 leading-snug">
                           {org.desc}
                         </p>
                       </button>
@@ -2444,35 +2769,211 @@ export default function ScienceLabModal({
                 </div>
               </div>
             ) : (
-              /* Layar Perayaan dan Penjelasan Edukasi Sukses */
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-3xl p-5 sm:p-7 border-4 border-emerald-400 shadow-xl text-center flex flex-col items-center gap-3">
-                <div className="w-14 h-14 rounded-2xl bg-white/20 border-2 border-white/40 flex items-center justify-center">
-                  <Trophy className="w-8 h-8 text-amber-300" />
+              /* ========================================================================= */
+              /* LABORATORIUM KRISIS EKOSISTEM (WHAT IF? MODE) SIMULASI KESEIMBANGAN ALAM  */
+              /* ========================================================================= */
+              <div className="space-y-4">
+                {/* Header Laboratorium Krisis */}
+                <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 rounded-3xl border-2 border-indigo-500 shadow-xl flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-md shrink-0">
+                      <AlertTriangle className="w-5 h-5 text-slate-950" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm sm:text-base font-black font-display text-white">
+                        Laboratorium Krisis Ekosistem (What If? Mode)
+                      </h4>
+                      <p className="text-xs text-indigo-200">
+                        Rantai seimbang sempurna! Uji simulasi apa yang terjadi jika salah satu rantai terputus:
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-black flex items-center gap-1.5 shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Rantai 5/5 Terhubung</span>
+                  </span>
                 </div>
 
-                <div>
-                  <h4 className="text-xl sm:text-2xl font-black font-display text-white">
-                    Rantai Makanan Berhasil Diselesaikan!
-                  </h4>
-                  <p className="text-xs sm:text-sm text-emerald-100 max-w-xl mx-auto mt-1 leading-relaxed">
-                    Hebat! Kamu berhasil membuktikan bahwa energi di alam mengalir secara teratur dari produsen nabati hingga pemangsa puncak. Tanpa salah satu di antaranya, ekosistem alam tidak akan seimbang!
-                  </p>
+                {/* Skenario Selector Tabs (2 Skenario Sesuai Ekosistem) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {CRISIS_SCENARIOS.filter((c) => c.ecosystemId === selectedEcosystemId).map((scenario) => {
+                    const isSelected = activeCrisisId === scenario.id;
+                    return (
+                      <button
+                        key={scenario.id}
+                        onClick={() => handleSelectCrisis(scenario.id)}
+                        className={`p-3 rounded-2xl border-2 transition-all btn-chunky flex items-center justify-between text-left ${
+                          isSelected
+                            ? "bg-amber-500 text-slate-950 border-amber-600 shadow-md ring-2 ring-amber-400"
+                            : "bg-white text-slate-800 border-slate-200 hover:bg-slate-50"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+                            isSelected ? "bg-slate-950 text-amber-400" : "bg-slate-100 text-slate-700"
+                          }`}>
+                            {scenario.id === "ular_hilang" && <AlertTriangle className="w-4 h-4 text-amber-500" />}
+                            {scenario.id === "kemarau_padi" && <CloudRain className="w-4 h-4 text-sky-500" />}
+                            {scenario.id === "limbah_plastik" && <AlertTriangle className="w-4 h-4 text-rose-500" />}
+                            {scenario.id === "overfishing_laut" && <Fish className="w-4 h-4 text-blue-500" />}
+                          </div>
+                          <div className="min-w-0">
+                            <span className={`text-[10px] font-black uppercase tracking-wider block ${
+                              isSelected ? "text-slate-900" : "text-slate-500"
+                            }`}>
+                              {scenario.badge}
+                            </span>
+                            <span className="text-xs sm:text-sm font-black truncate block">
+                              {scenario.tabLabel}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className={`text-[10px] font-black px-2 py-0.5 rounded-full shrink-0 border ${
+                          isSelected
+                            ? "bg-slate-950 text-white border-black"
+                            : "bg-slate-100 text-slate-600 border-slate-300"
+                        }`}>
+                          Uji Simulasi
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
 
+                {/* Detail Panel Krisis Aktif */}
+                {(() => {
+                  const currentScenario = CRISIS_SCENARIOS.find((c) => c.id === activeCrisisId);
+                  if (!currentScenario) return null;
+
+                  return (
+                    <div className="bg-white rounded-3xl p-4 sm:p-6 border-2 border-slate-200 shadow-md space-y-4">
+                      {/* Judul & Deskripsi Krisis */}
+                      <div className="border-b border-slate-100 pb-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                            {currentScenario.badge}
+                          </span>
+                          <span className="text-xs text-slate-500 font-bold">
+                            {selectedEcosystemId === "sawah" ? "Ekosistem Sawah" : "Ekosistem Laut"}
+                          </span>
+                        </div>
+                        <h4 className="text-base sm:text-lg font-black text-slate-900">
+                          {currentScenario.title}
+                        </h4>
+                      </div>
+
+                      {/* Kotak Analisis Penyebab vs Dampak Domino */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                          <span className="font-black text-slate-500 uppercase text-[10px] tracking-wider block mb-1">
+                            Pemicu Krisis:
+                          </span>
+                          <p className="font-bold text-slate-800 leading-relaxed">
+                            {currentScenario.causeText}
+                          </p>
+                        </div>
+
+                        <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200">
+                          <span className="font-black text-rose-700 uppercase text-[10px] tracking-wider block mb-1">
+                            Dampak Domino Ekologis:
+                          </span>
+                          <p className="font-bold text-rose-900 leading-relaxed">
+                            {currentScenario.consequenceText}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Penjelasan Edukasi Socrates dari Tobi */}
+                      <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-300 flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center shrink-0 font-black shadow-sm">
+                          <Volume2 className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-black text-amber-900 uppercase tracking-wider block">
+                            Catatan Sains Tobi:
+                          </span>
+                          <p className="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed">
+                            &ldquo;{currentScenario.socraticSpeech}&rdquo;
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Solusi & Pemulihan Ekosistem (Zero-Emoji Chunky Button) */}
+                      {!crisisResolved ? (
+                        <div className="pt-1 flex flex-col sm:flex-row items-center justify-between gap-3">
+                          <div className="flex items-center gap-2 text-rose-700 text-xs font-bold">
+                            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 animate-pulse" />
+                            <span>Krisis masih berlangsung! Pulihkan rantai makanan untuk menyelamatkan habitat.</span>
+                          </div>
+
+                          <button
+                            onClick={handleResolveCrisis}
+                            className="w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm border-2 border-emerald-600 btn-chunky flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 shrink-0"
+                          >
+                            <CheckCircle2 className="w-4 h-4 text-emerald-200" />
+                            <span>{currentScenario.actionButtonText}</span>
+                            <span className="px-1.5 py-0.5 rounded-full bg-emerald-700/60 text-[10px] text-emerald-100 font-black border border-emerald-400">
+                              +40 Bintang
+                            </span>
+                          </button>
+                        </div>
+                      ) : (
+                        /* Status Sukses Pemulihan */
+                        <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 flex flex-col sm:flex-row items-center justify-between gap-3 animate-fadeIn">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                              <CheckCircle2 className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <h5 className="font-black text-emerald-900 text-sm">
+                                  Keseimbangan Ekosistem Berhasil Dipulihkan!
+                                </h5>
+                                <span className="px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900 text-[10px] font-black border border-emerald-300">
+                                  +40 Bintang Diperoleh
+                                </span>
+                              </div>
+                              <p className="text-xs text-emerald-800 font-bold mt-0.5 leading-snug">
+                                {currentScenario.recoverySummary}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              sound.playChime();
+                              if (audioEnabled) {
+                                sound.speak(currentScenario.successSpeech);
+                              }
+                            }}
+                            className="p-2 rounded-xl bg-white text-emerald-800 border border-emerald-300 text-xs font-black btn-chunky flex items-center gap-1.5 shrink-0"
+                          >
+                            <Volume2 className="w-4 h-4 text-emerald-600" />
+                            <span>Dengar Ulasan</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* Navigasi Bawah: Mainkan Lagi / Ganti Ekosistem */}
                 <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
                   <button
                     onClick={() => resetFoodChain(selectedEcosystemId)}
-                    className="py-2 px-4 rounded-xl bg-white text-emerald-800 font-black text-xs sm:text-sm border-2 border-emerald-200 btn-chunky flex items-center gap-1.5"
+                    className="py-2 px-4 rounded-xl bg-white text-slate-800 font-black text-xs sm:text-sm border-2 border-slate-200 btn-chunky flex items-center gap-1.5 shadow-sm"
                   >
-                    <Shuffle className="w-4 h-4" />
-                    <span>Mainkan Lagi (Acak Ulang)</span>
+                    <Shuffle className="w-4 h-4 text-slate-600" />
+                    <span>Acak Ulang Kartu</span>
                   </button>
 
                   <button
                     onClick={() => resetFoodChain(selectedEcosystemId === "sawah" ? "laut" : "sawah")}
-                    className="py-2 px-4 rounded-xl bg-amber-400 text-amber-950 font-black text-xs sm:text-sm border-2 border-amber-500 btn-chunky flex items-center gap-1.5"
+                    className="py-2 px-4 rounded-xl bg-amber-400 text-amber-950 font-black text-xs sm:text-sm border-2 border-amber-500 btn-chunky flex items-center gap-1.5 shadow-sm"
                   >
-                    <Sparkles className="w-4 h-4" />
+                    <Sparkles className="w-4 h-4 text-amber-900" />
                     <span>
                       Jelajahi Ekosistem {selectedEcosystemId === "sawah" ? "Laut" : "Sawah"}
                     </span>
