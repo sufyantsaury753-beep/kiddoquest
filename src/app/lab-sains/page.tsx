@@ -84,62 +84,62 @@ const MOBILE_SPRITES: InteractiveSprite[] = [
   },
 ];
 
-// Koordinat & Ukuran Ekstra Besar untuk Tampilan Laptop (Desktop) - Aspek Rasio 16:9
+// Koordinat & Ukuran Proporsional Pas untuk Tampilan Laptop (Desktop) - Aspek Rasio 16:9
 const DESKTOP_SPRITES: InteractiveSprite[] = [
   {
     id: "rantai-makanan",
     name: "1. Ekosistem",
     route: "/lab-sains/rantai-makanan",
     socraticSpeech: "Stasiun satu: Rantai Makanan!",
-    leftPercent: 28,
-    topPercent: 32, // Diturunkan agar tidak terpotong di atas frame
-    widthClass: "w-[20%] max-w-[200px]", // Menggunakan persentase agar responsif sempurna di layar lebar
-    iconSrc: "/images/science/sprite_rantai.png?v=5",
-    hoverGlow: "drop-shadow-[0_0_30px_rgba(20,184,166,1)]",
+    leftPercent: 33, // Digeser agak ke tengah agar tidak mepet jendela / lengkungan sudut
+    topPercent: 29, // Diturunkan agar tidak terpotong oleh sudut border rounded atas
+    widthClass: "w-32 md:w-40 lg:w-44 xl:w-48", // Ukuran pas: tidak raksasa, tidak kekecilan
+    iconSrc: "/images/science/sprite_rantai.png?v=6",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(20,184,166,0.9)]",
   },
   {
     id: "siklus-air",
     name: "2. Siklus Air",
     route: "/lab-sains/siklus-air",
     socraticSpeech: "Stasiun dua: Siklus Air Bumi!",
-    leftPercent: 71,
-    topPercent: 32, // Diturunkan sejajar dengan poster kiri
-    widthClass: "w-[20%] max-w-[200px]",
-    iconSrc: "/images/science/sprite_air.png?v=5",
-    hoverGlow: "drop-shadow-[0_0_30px_rgba(14,165,233,1)]",
+    leftPercent: 68,
+    topPercent: 29, // Sejajar presisi dengan poster rantai makanan
+    widthClass: "w-32 md:w-40 lg:w-44 xl:w-48",
+    iconSrc: "/images/science/sprite_air.png?v=6",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(14,165,233,0.9)]",
   },
   {
     id: "warna",
     name: "3. Lab Warna",
     route: "/lab-sains/warna",
     socraticSpeech: "Stasiun tiga: Lab Warna!",
-    leftPercent: 23,
-    topPercent: 70,
-    widthClass: "w-[25%] max-w-[240px]", // Proporsional di atas meja
-    iconSrc: "/images/science/sprite_warna.png?v=5",
-    hoverGlow: "drop-shadow-[0_0_30px_rgba(16,185,129,1)]",
+    leftPercent: 24, // Pas di atas meja lab kiri
+    topPercent: 68,
+    widthClass: "w-36 md:w-48 lg:w-56 xl:w-64", // Proporsional (sebelumnya terlalu raksasa 384px)
+    iconSrc: "/images/science/sprite_warna.png?v=6",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(16,185,129,0.9)]",
   },
   {
     id: "listrik",
     name: "4. Listrik",
     route: "/lab-sains/listrik",
     socraticSpeech: "Stasiun empat: Sirkuit Listrik!",
-    leftPercent: 48,
-    topPercent: 72,
-    widthClass: "w-[18%] max-w-[180px]",
-    iconSrc: "/images/science/sprite_listrik.png?v=5",
-    hoverGlow: "drop-shadow-[0_0_30px_rgba(245,158,11,1)]",
+    leftPercent: 49, // Di tengah meja
+    topPercent: 70,
+    widthClass: "w-24 md:w-32 lg:w-36 xl:w-40",
+    iconSrc: "/images/science/sprite_listrik.png?v=6",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(245,158,11,0.9)]",
   },
   {
     id: "magnet",
     name: "5. Magnet",
     route: "/lab-sains/magnet",
     socraticSpeech: "Stasiun lima: Magnet Hunter!",
-    leftPercent: 76,
-    topPercent: 81,
-    widthClass: "w-[18%] max-w-[180px]",
-    iconSrc: "/images/science/sprite_magnet.png?v=5",
-    hoverGlow: "drop-shadow-[0_0_30px_rgba(225,29,72,1)]",
+    leftPercent: 77, // Di atas meja kanan
+    topPercent: 79,
+    widthClass: "w-28 md:w-36 lg:w-40 xl:w-44",
+    iconSrc: "/images/science/sprite_magnet.png?v=6",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(225,29,72,0.9)]",
   },
 ];
 
