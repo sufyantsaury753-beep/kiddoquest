@@ -41,7 +41,7 @@ const MAP_HOTSPOTS: MapStationHotspot[] = [
     shortTag: "Biologi & Ekologi",
     route: "/lab-sains/rantai-makanan",
     leftPercent: 24.5,
-    topPercent: 22.8,
+    topPercent: 13.0,
     iconWebp: "/images/science/icon_rantai.webp",
     themeBorder: "border-teal-500",
     themeShadow: "shadow-[0_4px_0_0_#0f766e]",
@@ -59,7 +59,7 @@ const MAP_HOTSPOTS: MapStationHotspot[] = [
     shortTag: "Bumi & Cuaca",
     route: "/lab-sains/siklus-air",
     leftPercent: 78.4,
-    topPercent: 32.7,
+    topPercent: 25.1,
     iconWebp: "/images/science/icon_air.webp",
     themeBorder: "border-sky-500",
     themeShadow: "shadow-[0_4px_0_0_#0284c7]",
@@ -77,7 +77,7 @@ const MAP_HOTSPOTS: MapStationHotspot[] = [
     shortTag: "Kimia & Seni",
     route: "/lab-sains/warna",
     leftPercent: 24.5,
-    topPercent: 52.7,
+    topPercent: 49.7,
     iconWebp: "/images/science/icon_warna.webp",
     themeBorder: "border-emerald-500",
     themeShadow: "shadow-[0_4px_0_0_#059669]",
@@ -95,7 +95,7 @@ const MAP_HOTSPOTS: MapStationHotspot[] = [
     shortTag: "Fisika Kemagnetan",
     route: "/lab-sains/magnet",
     leftPercent: 75.8,
-    topPercent: 68.6,
+    topPercent: 69.2,
     iconWebp: "/images/science/icon_magnet.webp",
     themeBorder: "border-rose-500",
     themeShadow: "shadow-[0_4px_0_0_#e11d48]",
@@ -113,7 +113,7 @@ const MAP_HOTSPOTS: MapStationHotspot[] = [
     shortTag: "Fisika Kelistrikan",
     route: "/lab-sains/listrik",
     leftPercent: 47.4,
-    topPercent: 83.5,
+    topPercent: 87.4,
     iconWebp: "/images/science/icon_listrik.webp",
     themeBorder: "border-amber-500",
     themeShadow: "shadow-[0_4px_0_0_#d97706]",
@@ -219,11 +219,11 @@ export default function InteractiveScienceLobbyPage() {
 
       {/* Main Map Container */}
       <main className="max-w-4xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6">
-        {/* Papan Kanvas Peta Laboratorium Sains (Aspect Ratio 819/1024) */}
-        <div className="relative w-full max-w-2xl sm:max-w-2xl lg:max-w-3xl mx-auto aspect-[819/1024] rounded-3xl sm:rounded-[36px] overflow-hidden border-4 sm:border-6 border-slate-800 shadow-2xl bg-slate-950">
-          {/* Gambar Latar Belakang Ruangan Lab Sains (< 30 KB WebP) */}
+        {/* Papan Kanvas Peta Laboratorium Sains (Aspect Ratio 819/835 Clean Full Frame) */}
+        <div className="relative w-full max-w-2xl sm:max-w-2xl lg:max-w-3xl mx-auto aspect-[819/835] rounded-3xl sm:rounded-[36px] overflow-hidden border-4 sm:border-6 border-slate-800 shadow-2xl bg-slate-800">
+          {/* Gambar Latar Belakang Ruangan Lab Sains Bersih Tanpa Bayangan Hitam */}
           <Image
-            src="/images/science/lab_room_map.webp"
+            src="/images/science/lab_room_map.webp?v=2"
             alt="Peta Laboratorium Sains TobiQuest"
             fill
             priority
