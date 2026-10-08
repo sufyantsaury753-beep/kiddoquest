@@ -42,9 +42,6 @@ export default function TelkomselLiteBanner({
                     ? "bg-red-200 text-red-900 border border-red-300"
                     : "bg-white/25 text-white border border-white/30"
                 }`}>
-                  Inovasi Telkomsel: Pemerataan Pendidikan Digital
-                </span>
-                <span className={`text-xs font-bold ${liteMode ? "text-red-700" : "text-amber-200"}`}>
                   Payload &lt; 500 KB
                 </span>
               </div>

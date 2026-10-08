@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import MascotTobi from "@/components/MascotTobi";
 import LearningZonesGrid from "@/components/LearningZonesGrid";
-import SocraticMentorBox from "@/components/SocraticMentorBox";
 import StatsAndBadges from "@/components/StatsAndBadges";
 import TelkomselLiteBanner from "@/components/TelkomselLiteBanner";
 import Footer from "@/components/Footer";
@@ -68,15 +67,13 @@ export default function TobiQuestHomePage() {
   };
 
   return (
-    <div className={`min-h-screen w-full flex flex-col bg-amber-50/40 text-slate-800 overflow-x-hidden ${profile.liteMode ? "lite-high-contrast" : ""}`}>
+    <div className={`min-h-screen w-full flex flex-col bg-amber-50/40 text-slate-800 overflow-x-clip ${profile.liteMode ? "lite-high-contrast" : ""}`}>
       {/* 1. Interactive Navbar */}
       <Navbar
         profile={profile}
         onUpdateProfile={handleUpdateProfile}
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
-        onOpenEvaluasi={() => router.push("/evaluasi")}
-        onOpenLaguNasional={() => router.push("/lagu-nasional")}
       />
 
       {/* Main Content Area */}
@@ -102,14 +99,7 @@ export default function TobiQuestHomePage() {
           liteMode={profile.liteMode}
         />
 
-        {/* 4. Socratic AI Kids Mentor Mini Challenge */}
-        <SocraticMentorBox
-          onEarnStars={handleEarnStars}
-          audioEnabled={profile.audioEnabled}
-          liteMode={profile.liteMode}
-        />
-
-        {/* 5. Gamification Stats, Levels, & Badges */}
+        {/* 4. Gamification Stats, Levels, & Badges */}
         <StatsAndBadges
           profile={profile}
           onOpenCertificate={() => setIsCertificateOpen(true)}

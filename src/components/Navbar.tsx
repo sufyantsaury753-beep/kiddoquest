@@ -8,9 +8,7 @@ import {
   Award, 
   Wifi, 
   Zap, 
-  Star,
-  GraduationCap,
-  Music
+  Star
 } from "lucide-react";
 import { StudentProfile, AVAILABLE_AVATARS } from "@/lib/storage";
 import { sound } from "@/lib/sound";
@@ -73,7 +71,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-200/80 shadow-sm no-print">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-4 border-amber-200/80 shadow-md no-print">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
@@ -164,30 +162,7 @@ export default function Navbar({
             <span>Piagam Prestasi</span>
           </button>
 
-          {/* Lagu Nasional Button */}
-          {onOpenLaguNasional && (
-            <button
-              onClick={onOpenLaguNasional}
-              className="hidden lg:flex h-8 sm:h-11 items-center justify-center gap-1.5 px-2.5 sm:px-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-extrabold text-[11px] sm:text-sm border-2 border-red-700 shadow-[0_2px_0_0_#991b1b] sm:shadow-[0_3px_0_0_#991b1b] btn-chunky hover:brightness-105 whitespace-nowrap shrink-0"
-              title="Panggung Lagu Nasional Anak: 12 Lagu Wajib & Video 4K"
-            >
-              <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-              <span>Lagu Nasional</span>
-            </button>
-          )}
 
-          {/* Pusat Evaluasi Literasi Button */}
-          {onOpenEvaluasi && (
-            <button
-              onClick={onOpenEvaluasi}
-              className="h-8 sm:h-11 flex items-center justify-center gap-1 px-1.5 sm:px-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold text-[11px] sm:text-sm border-2 border-indigo-700 shadow-[0_2px_0_0_#3730a3] sm:shadow-[0_3px_0_0_#3730a3] btn-chunky hover:brightness-105 whitespace-nowrap shrink-0"
-              title="Pusat Evaluasi Literasi SD: 30 Soal × 10 Mapel Kurikulum Merdeka"
-            >
-              <GraduationCap className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-yellow-300" />
-              <span className="hidden sm:inline">Evaluasi SD</span>
-              <span className="sm:hidden text-[10px]">Ujian</span>
-            </button>
-          )}
 
           {/* Tombol Profil Avatar Bulat */}
           {(() => {

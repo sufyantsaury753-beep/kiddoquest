@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, ShieldCheck, Heart, Award, Volume2, RotateCcw } from "lucide-react";
+import { Compass, ShieldCheck, Heart, Award, Volume2, RotateCcw } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 interface FooterProps {
@@ -24,11 +24,11 @@ export default function Footer({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-100">
           {/* Col 1: About */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-rose-400 text-white flex items-center justify-center font-bold">
-                <Sparkles className="w-5 h-5" />
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_2px_0_0_#c2410c]">
+                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-50" strokeWidth={2.5} />
               </div>
-              <span className="text-2xl font-black font-display bg-gradient-to-r from-amber-500 via-rose-500 to-sky-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-black font-display bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 bg-clip-text text-transparent">
                 TobiQuest
               </span>
             </div>

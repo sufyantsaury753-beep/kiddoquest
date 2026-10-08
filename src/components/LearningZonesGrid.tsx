@@ -2,7 +2,7 @@
 
 import React from "react";
 import { sound } from "@/lib/sound";
-import { GraduationCap, ChevronRight } from "lucide-react";
+
 
 interface LearningZonesGridProps {
   onSelectZone: (zoneId: string) => void;
@@ -485,6 +485,82 @@ const NationalMusicIcon = () => (
   </svg>
 );
 
+// 6. Evaluasi SD: Topi Toga Wisuda Emas & Lembar Soal Ujian Nilai Sempurna
+const ExamGraduationIcon = () => (
+  <svg
+    viewBox="0 0 120 120"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="capIndigoGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#4f46e5" />
+        <stop offset="100%" stopColor="#312e81" />
+      </linearGradient>
+      <linearGradient id="examGoldGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#fef08a" />
+        <stop offset="50%" stopColor="#f59e0b" />
+        <stop offset="100%" stopColor="#d97706" />
+      </linearGradient>
+      <linearGradient id="paperGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#ffffff" />
+        <stop offset="100%" stopColor="#f8fafc" />
+      </linearGradient>
+      <filter id="evalShadow" x="-10%" y="-10%" width="130%" height="130%">
+        <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#312e81" floodOpacity="0.25" />
+      </filter>
+    </defs>
+
+    {/* Bintang-bintang Prestasi */}
+    <path d="M16 28 L18 33 L23 35 L18 37 L16 42 L14 37 L9 35 L14 33 Z" fill="#fbbf24" />
+    <path d="M104 26 L105 30 L109 31 L105 32 L104 36 L103 32 L99 31 L103 30 Z" fill="#fbbf24" />
+
+    {/* Lembar Ujian / Papan Nilai Belakang */}
+    <g transform="translate(26, 46) rotate(-3)" filter="url(#evalShadow)">
+      <rect x="0" y="0" width="68" height="52" rx="8" fill="url(#paperGrad)" stroke="#cbd5e1" strokeWidth="2.5" />
+      {/* Garis-garis Soal */}
+      <line x1="10" y1="14" x2="40" y2="14" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
+      <line x1="10" y1="24" x2="48" y2="24" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="10" y1="34" x2="38" y2="34" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="10" y1="42" x2="44" y2="42" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Nilai 100 / Centang Hijau */}
+      <circle cx="54" cy="36" r="9" fill="#dcfce7" stroke="#22c55e" strokeWidth="2" />
+      <path d="M50 36 L53 39 L59 33" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+
+    {/* TOPI TOGA WISUDA (Depan Atas) */}
+    <g filter="url(#evalShadow)">
+      {/* Kopiah / Bawah Toga */}
+      <path
+        d="M38 42 C38 52 50 58 60 58 C70 58 82 52 82 42 Z"
+        fill="#1e1b4b"
+        stroke="#312e81"
+        strokeWidth="2.5"
+      />
+      {/* Papan Belah Ketupat Toga */}
+      <path
+        d="M60 18 L104 36 L60 54 L16 36 Z"
+        fill="url(#capIndigoGrad)"
+        stroke="#1e1b4b"
+        strokeWidth="3.5"
+        strokeLinejoin="round"
+      />
+      {/* Kancing Tengah Toga */}
+      <circle cx="60" cy="36" r="4.5" fill="url(#examGoldGrad)" stroke="#78350f" strokeWidth="1.5" />
+      {/* Tali Rumbai Emas */}
+      <path
+        d="M60 36 C64 42 74 48 78 58"
+        stroke="#f59e0b"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      {/* Bandul Rumbai Emas */}
+      <rect x="75" y="58" width="6" height="12" rx="2" fill="url(#examGoldGrad)" stroke="#b45309" strokeWidth="1" />
+    </g>
+  </svg>
+);
+
 /* =========================================================================
    DEFINISI ZONA PETUALANGAN
    ========================================================================= */
@@ -540,6 +616,16 @@ export const LEARNING_ZONES = [
       shadow: "shadow-[0_4px_0_0_#dc2626] sm:shadow-[0_8px_0_0_#dc2626]",
     },
   },
+  {
+    id: "evaluasi",
+    title: "Evaluasi SD",
+    IconComponent: ExamGraduationIcon,
+    colorScheme: {
+      bg: "bg-amber-50 hover:bg-amber-100/60",
+      border: "border-amber-400",
+      shadow: "shadow-[0_4px_0_0_#d97706] sm:shadow-[0_8px_0_0_#d97706]",
+    },
+  },
 ];
 
 export default function LearningZonesGrid({
@@ -560,9 +646,9 @@ export default function LearningZonesGrid({
         </h2>
       </div>
 
-      {/* Grid Menu Ikon Game Anak (2 Kolom Kompak di HP dgn Kartu ke-5 Full-Span, 5 Kolom Sejajar di Desktop) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5">
-        {LEARNING_ZONES.map((zone, idx) => {
+      {/* Grid Menu Ikon Game Anak (2 Kolom di HP, 3 Kolom di Tablet, 6 Kolom Sejajar Simetris di Desktop) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5">
+        {LEARNING_ZONES.map((zone) => {
           const Icon = zone.IconComponent;
           return (
             <div
@@ -571,8 +657,6 @@ export default function LearningZonesGrid({
               className={`group relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 flex flex-col items-center justify-center text-center border-3 sm:border-4 transition-all duration-200 cursor-pointer select-none ${
                 zone.colorScheme.bg
               } ${zone.colorScheme.border} ${
-                idx === 4 ? "col-span-2 sm:col-span-1" : ""
-              } ${
                 liteMode
                   ? "hover:opacity-95"
                   : `${zone.colorScheme.shadow} hover:-translate-y-1.5 hover:scale-[1.03] active:translate-y-1 active:shadow-none`
@@ -584,44 +668,12 @@ export default function LearningZonesGrid({
               </div>
 
               {/* 2. Judul Singkat, Tebal, dan Ceria */}
-              <h3 className="text-sm sm:text-lg lg:text-xl font-black font-display text-slate-800 tracking-wide text-center group-hover:text-amber-800 transition-colors leading-tight">
+              <h3 className="text-sm sm:text-base lg:text-lg font-black font-display text-slate-800 tracking-wide text-center group-hover:text-amber-800 transition-colors leading-tight">
                 {zone.title}
               </h3>
             </div>
           );
         })}
-      </div>
-
-      {/* Kartu Khusus: Pusat Evaluasi Literasi SD 10 Mapel */}
-      <div 
-        onClick={() => handleZoneClick("evaluasi")}
-        className={`mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-3 sm:border-4 border-indigo-700 shadow-[0_6px_0_0_#3730a3] sm:shadow-[0_8px_0_0_#3730a3] flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer select-none transition-all ${
-          liteMode ? "hover:opacity-95" : "hover:-translate-y-1 hover:brightness-105 active:translate-y-0.5 active:shadow-none"
-        }`}
-      >
-        <div className="flex items-center gap-3.5 sm:gap-5 text-center md:text-left">
-          <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center flex-shrink-0 shadow-inner">
-            <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300" />
-          </div>
-          <div>
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black bg-yellow-400 text-yellow-950 uppercase tracking-wider">
-                Simulasi Ujian & Asesmen Mandiri
-              </span>
-              <span className="hidden sm:inline text-xs text-indigo-200 font-bold">
-                Kurikulum Merdeka 2026
-              </span>
-            </div>
-            <h3 className="text-base sm:text-2xl font-black font-display tracking-tight text-white">
-              Pusat Evaluasi Literasi SD (10 Mapel Lengkap)
-            </h3>
-          </div>
-        </div>
-
-        <button className="flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-2xl bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black text-xs sm:text-sm shadow-[0_3px_0_0_#b45309] btn-chunky flex-shrink-0">
-          <span>Mulai Evaluasi</span>
-          <ChevronRight className="w-4 h-4" />
-        </button>
       </div>
     </section>
   );
