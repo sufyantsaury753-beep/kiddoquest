@@ -9,7 +9,6 @@ import {
   Volume2,
   VolumeX,
   Compass,
-  Sparkles
 } from "lucide-react";
 import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
 import { sound } from "@/lib/sound";
@@ -26,121 +25,121 @@ interface InteractiveSprite {
   hoverGlow: string;
 }
 
-// Koordinat untuk Tampilan HP (Mobile) - Aspek Rasio 9:16
+// Koordinat & Ukuran Ekstra Besar untuk Tampilan HP (Mobile) - Aspek Rasio 9:16
 const MOBILE_SPRITES: InteractiveSprite[] = [
   {
     id: "rantai-makanan",
     name: "1. Ekosistem",
     route: "/lab-sains/rantai-makanan",
     socraticSpeech: "Stasiun satu: Rantai Makanan dan Krisis Ekosistem!",
-    leftPercent: 35,
-    topPercent: 22,
-    widthClass: "w-24 h-24 sm:w-28 sm:h-28",
-    iconSrc: "/images/science/sprite_rantai.png",
-    hoverGlow: "drop-shadow-[0_0_20px_rgba(20,184,166,0.8)]",
-  },
-  {
-    id: "siklus-air",
-    name: "2. Siklus Air",
-    route: "/lab-sains/siklus-air",
-    socraticSpeech: "Stasiun dua: Simulasi Siklus Air Bumi!",
-    leftPercent: 78,
-    topPercent: 22,
-    widthClass: "w-24 h-24 sm:w-28 sm:h-28",
-    iconSrc: "/images/science/sprite_air.png",
-    hoverGlow: "drop-shadow-[0_0_20px_rgba(14,165,233,0.8)]",
-  },
-  {
-    id: "warna",
-    name: "3. Lab Warna",
-    route: "/lab-sains/warna",
-    socraticSpeech: "Stasiun tiga: Lab Warna dan Pipet Ajaib!",
-    leftPercent: 25,
-    topPercent: 62,
-    widthClass: "w-24 h-24 sm:w-32 sm:h-32",
-    iconSrc: "/images/science/sprite_warna.png",
-    hoverGlow: "drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]",
-  },
-  {
-    id: "listrik",
-    name: "4. Sirkuit Listrik",
-    route: "/lab-sains/listrik",
-    socraticSpeech: "Stasiun empat: Rakit Sirkuit Listrik!",
-    leftPercent: 65,
-    topPercent: 63,
-    widthClass: "w-20 h-20 sm:w-28 sm:h-28",
-    iconSrc: "/images/science/sprite_listrik.png",
-    hoverGlow: "drop-shadow-[0_0_20px_rgba(245,158,11,0.8)]",
-  },
-  {
-    id: "magnet",
-    name: "5. Lab Magnet",
-    route: "/lab-sains/magnet",
-    socraticSpeech: "Stasiun lima: Petualangan Magnet Hunter!",
-    leftPercent: 82,
-    topPercent: 82,
-    widthClass: "w-20 h-20 sm:w-24 sm:h-24",
-    iconSrc: "/images/science/sprite_magnet.png",
-    hoverGlow: "drop-shadow-[0_0_20px_rgba(225,29,72,0.8)]",
-  },
-];
-
-// Koordinat untuk Tampilan Laptop (Desktop) - Aspek Rasio 16:9
-const DESKTOP_SPRITES: InteractiveSprite[] = [
-  {
-    id: "rantai-makanan",
-    name: "1. Ekosistem",
-    route: "/lab-sains/rantai-makanan",
-    socraticSpeech: "Stasiun satu: Rantai Makanan!",
-    leftPercent: 30,
-    topPercent: 25,
-    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
-    iconSrc: "/images/science/sprite_rantai.png",
+    leftPercent: 33,
+    topPercent: 24,
+    widthClass: "w-32 sm:w-40",
+    iconSrc: "/images/science/sprite_rantai.png?v=5",
     hoverGlow: "drop-shadow-[0_0_25px_rgba(20,184,166,0.9)]",
   },
   {
     id: "siklus-air",
     name: "2. Siklus Air",
     route: "/lab-sains/siklus-air",
-    socraticSpeech: "Stasiun dua: Siklus Air Bumi!",
-    leftPercent: 70,
-    topPercent: 25,
-    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
-    iconSrc: "/images/science/sprite_air.png",
+    socraticSpeech: "Stasiun dua: Simulasi Siklus Air Bumi!",
+    leftPercent: 75,
+    topPercent: 24,
+    widthClass: "w-32 sm:w-40",
+    iconSrc: "/images/science/sprite_air.png?v=5",
     hoverGlow: "drop-shadow-[0_0_25px_rgba(14,165,233,0.9)]",
   },
   {
     id: "warna",
     name: "3. Lab Warna",
     route: "/lab-sains/warna",
-    socraticSpeech: "Stasiun tiga: Lab Warna!",
-    leftPercent: 22,
-    topPercent: 68,
-    widthClass: "md:w-40 md:h-40 lg:w-48 lg:h-48",
-    iconSrc: "/images/science/sprite_warna.png",
+    socraticSpeech: "Stasiun tiga: Lab Warna dan Pipet Ajaib!",
+    leftPercent: 26,
+    topPercent: 62,
+    widthClass: "w-44 sm:w-56",
+    iconSrc: "/images/science/sprite_warna.png?v=5",
     hoverGlow: "drop-shadow-[0_0_25px_rgba(16,185,129,0.9)]",
+  },
+  {
+    id: "listrik",
+    name: "4. Sirkuit Listrik",
+    route: "/lab-sains/listrik",
+    socraticSpeech: "Stasiun empat: Rakit Sirkuit Listrik!",
+    leftPercent: 66,
+    topPercent: 63,
+    widthClass: "w-32 sm:w-44",
+    iconSrc: "/images/science/sprite_listrik.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(245,158,11,0.9)]",
+  },
+  {
+    id: "magnet",
+    name: "5. Lab Magnet",
+    route: "/lab-sains/magnet",
+    socraticSpeech: "Stasiun lima: Petualangan Magnet Hunter!",
+    leftPercent: 80,
+    topPercent: 82,
+    widthClass: "w-36 sm:w-48",
+    iconSrc: "/images/science/sprite_magnet.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(225,29,72,0.9)]",
+  },
+];
+
+// Koordinat & Ukuran Ekstra Besar untuk Tampilan Laptop (Desktop) - Aspek Rasio 16:9
+const DESKTOP_SPRITES: InteractiveSprite[] = [
+  {
+    id: "rantai-makanan",
+    name: "1. Ekosistem",
+    route: "/lab-sains/rantai-makanan",
+    socraticSpeech: "Stasiun satu: Rantai Makanan!",
+    leftPercent: 27,
+    topPercent: 26,
+    widthClass: "w-36 md:w-48 lg:w-56 xl:w-64",
+    iconSrc: "/images/science/sprite_rantai.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_30px_rgba(20,184,166,1)]",
+  },
+  {
+    id: "siklus-air",
+    name: "2. Siklus Air",
+    route: "/lab-sains/siklus-air",
+    socraticSpeech: "Stasiun dua: Siklus Air Bumi!",
+    leftPercent: 67,
+    topPercent: 26,
+    widthClass: "w-36 md:w-48 lg:w-56 xl:w-64",
+    iconSrc: "/images/science/sprite_air.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_30px_rgba(14,165,233,1)]",
+  },
+  {
+    id: "warna",
+    name: "3. Lab Warna",
+    route: "/lab-sains/warna",
+    socraticSpeech: "Stasiun tiga: Lab Warna!",
+    leftPercent: 19,
+    topPercent: 67,
+    widthClass: "w-48 md:w-64 lg:w-80 xl:w-96",
+    iconSrc: "/images/science/sprite_warna.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_30px_rgba(16,185,129,1)]",
   },
   {
     id: "listrik",
     name: "4. Listrik",
     route: "/lab-sains/listrik",
     socraticSpeech: "Stasiun empat: Sirkuit Listrik!",
-    leftPercent: 50,
-    topPercent: 70,
-    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
-    iconSrc: "/images/science/sprite_listrik.png",
-    hoverGlow: "drop-shadow-[0_0_25px_rgba(245,158,11,0.9)]",
+    leftPercent: 47,
+    topPercent: 69,
+    widthClass: "w-32 md:w-44 lg:w-56 xl:w-64",
+    iconSrc: "/images/science/sprite_listrik.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_30px_rgba(245,158,11,1)]",
   },
   {
     id: "magnet",
     name: "5. Magnet",
     route: "/lab-sains/magnet",
     socraticSpeech: "Stasiun lima: Magnet Hunter!",
-    leftPercent: 78,
-    topPercent: 82,
-    widthClass: "md:w-28 md:h-28 lg:w-36 lg:h-36",
-    iconSrc: "/images/science/sprite_magnet.png",
-    hoverGlow: "drop-shadow-[0_0_25px_rgba(225,29,72,0.9)]",
+    leftPercent: 75,
+    topPercent: 79,
+    widthClass: "w-36 md:w-52 lg:w-64 xl:w-72",
+    iconSrc: "/images/science/sprite_magnet.png?v=5",
+    hoverGlow: "drop-shadow-[0_0_30px_rgba(225,29,72,1)]",
   },
 ];
 
@@ -171,7 +170,7 @@ export default function InteractiveScienceLobbyPage() {
     if (profile.audioEnabled) {
       sound.speak(sprite.socraticSpeech);
     }
-    // Waktu tunggu agar efek animasi klik terlihat sebelum pindah
+    // Waktu tunggu agar efek animasi klik terlihat sebelum berpindah halaman
     setTimeout(() => {
       router.push(sprite.route);
     }, 400);
@@ -206,7 +205,7 @@ export default function InteractiveScienceLobbyPage() {
                   Peta Laboratorium Sains
                 </h1>
                 <p className="text-[10px] text-blue-200 font-bold hidden sm:block">
-                  Ketuk objek yang menyala untuk mulai!
+                  Pilih stasiun laboratorium untuk bereksperimen!
                 </p>
               </div>
             </div>
@@ -229,7 +228,7 @@ export default function InteractiveScienceLobbyPage() {
               {profile.audioEnabled ? (
                 <Volume2 className="w-4 h-4 text-yellow-300 animate-pulse" />
               ) : (
-               <VolumeX className="w-4 h-4" />
+                <VolumeX className="w-4 h-4" />
               )}
             </button>
           </div>
@@ -250,12 +249,7 @@ export default function InteractiveScienceLobbyPage() {
             className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           />
 
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-[10px] font-bold text-blue-200 flex items-center gap-1.5 shadow-lg whitespace-nowrap pointer-events-none">
-            <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-            Sentuh objek yang menyala!
-          </div>
-
-          {/* Sprite Components Mobile */}
+          {/* Sprite Components Mobile (Ukuran Ekstra Besar & Jelas) */}
           {MOBILE_SPRITES.map((sprite) => (
             <Link
               key={sprite.id}
@@ -268,9 +262,9 @@ export default function InteractiveScienceLobbyPage() {
               <img
                 src={sprite.iconSrc}
                 alt={sprite.name}
-                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-125 group-hover:-translate-y-3 group-active:scale-90 group-hover:${sprite.hoverGlow}`}
+                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-120 group-hover:-translate-y-3 group-active:scale-90 group-hover:${sprite.hoverGlow} filter drop-shadow-md`}
               />
-              <div className="absolute -bottom-6 px-2 py-1 bg-slate-900/90 text-white font-bold text-[10px] rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-blue-500/50">
+              <div className="absolute -bottom-6 px-2.5 py-1 bg-slate-900/90 text-white font-black text-[10px] rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-blue-400/50 z-30">
                 {sprite.name}
               </div>
             </Link>
@@ -289,12 +283,7 @@ export default function InteractiveScienceLobbyPage() {
             className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           />
 
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 px-6 py-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-sm font-bold text-blue-200 flex items-center gap-2 shadow-lg whitespace-nowrap pointer-events-none">
-            <Sparkles className="w-5 h-5 text-yellow-400" />
-            Sentuh objek yang menyala untuk bereksperimen!
-          </div>
-
-          {/* Sprite Components Desktop */}
+          {/* Sprite Components Desktop (Ukuran Ekstra Besar & Megah) */}
           {DESKTOP_SPRITES.map((sprite) => (
             <Link
               key={sprite.id}
@@ -307,9 +296,9 @@ export default function InteractiveScienceLobbyPage() {
               <img
                 src={sprite.iconSrc}
                 alt={sprite.name}
-                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-125 group-hover:-translate-y-4 group-active:scale-90 group-hover:${sprite.hoverGlow}`}
+                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-120 group-hover:-translate-y-4 group-active:scale-90 group-hover:${sprite.hoverGlow} filter drop-shadow-lg`}
               />
-              <div className="absolute -bottom-8 px-3 py-1.5 bg-slate-900/90 text-white font-bold text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-blue-500/50">
+              <div className="absolute -bottom-8 px-3.5 py-1.5 bg-slate-900/90 text-white font-black text-xs rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-xl pointer-events-none border border-blue-400/50 z-30">
                 {sprite.name}
               </div>
             </Link>
