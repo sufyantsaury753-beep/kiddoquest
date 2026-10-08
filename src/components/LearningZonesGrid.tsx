@@ -369,6 +369,122 @@ const StoryBookIcon = () => (
   </svg>
 );
 
+// 5. Harmoni Nasional: Melodi Musik & Bendera Merah-Putih / Not Balok & Pianika Emas
+const NationalMusicIcon = () => (
+  <svg
+    viewBox="0 0 120 120"
+    className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-lg group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="musicRedGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#ef4444" />
+        <stop offset="100%" stopColor="#b91c1c" />
+      </linearGradient>
+      <linearGradient id="musicGoldGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#fef08a" />
+        <stop offset="50%" stopColor="#f59e0b" />
+        <stop offset="100%" stopColor="#d97706" />
+      </linearGradient>
+      <linearGradient id="musicWhiteGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#ffffff" />
+        <stop offset="100%" stopColor="#f1f5f9" />
+      </linearGradient>
+      <filter id="musicShadow" x="-10%" y="-10%" width="130%" height="130%">
+        <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#991b1b" floodOpacity="0.3" />
+      </filter>
+    </defs>
+
+    {/* Bintang-bintang & Kilau Melodi */}
+    <path d="M22 24 L24 29 L29 31 L24 33 L22 38 L20 33 L15 31 L20 29 Z" fill="#facc15" />
+    <path d="M100 20 L101 24 L105 25 L101 26 L100 30 L99 26 L95 25 L99 24 Z" fill="#facc15" />
+    <circle cx="14" cy="72" r="3" fill="#fb7185" />
+    <circle cx="106" cy="76" r="3.5" fill="#fde047" />
+
+    {/* Pita Bendera Merah Putih Melengkung Elegan di Belakang */}
+    <path
+      d="M16 48 C36 30 84 30 104 48 C94 56 70 46 60 46 C50 46 26 56 16 48 Z"
+      fill="url(#musicRedGrad)"
+      stroke="#991b1b"
+      strokeWidth="2"
+    />
+    <path
+      d="M16 48 C26 56 50 46 60 46 C70 46 94 56 104 48 C94 56 72 52 60 52 C48 52 26 56 16 48 Z"
+      fill="url(#musicWhiteGrad)"
+      stroke="#cbd5e1"
+      strokeWidth="1.5"
+    />
+
+    {/* Rangka Harpa / Lira Emas */}
+    <path
+      d="M32 94 C26 70 26 50 36 36 C42 27 50 28 50 36 C50 48 40 68 40 94"
+      stroke="url(#musicGoldGrad)"
+      strokeWidth="6"
+      strokeLinecap="round"
+      filter="url(#musicShadow)"
+    />
+    <path
+      d="M88 94 C94 70 94 50 84 36 C78 27 70 28 70 36 C70 48 80 68 80 94"
+      stroke="url(#musicGoldGrad)"
+      strokeWidth="6"
+      strokeLinecap="round"
+      filter="url(#musicShadow)"
+    />
+
+    {/* Palang Dasar Pianika / Dudukan Harpa */}
+    <rect
+      x="28"
+      y="90"
+      width="64"
+      height="18"
+      rx="6"
+      fill="url(#musicRedGrad)"
+      stroke="#991b1b"
+      strokeWidth="3.5"
+      filter="url(#musicShadow)"
+    />
+    {/* Tuts Pianika Putih & Hitam */}
+    <rect x="34" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    <rect x="43" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    <rect x="52" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    <rect x="61" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    <rect x="70" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    <rect x="79" y="93" width="7" height="12" rx="2" fill="white" stroke="#64748b" strokeWidth="1" />
+    {/* Tuts Hitam */}
+    <rect x="39" y="93" width="4" height="7" rx="1" fill="#1e293b" />
+    <rect x="48" y="93" width="4" height="7" rx="1" fill="#1e293b" />
+    <rect x="66" y="93" width="4" height="7" rx="1" fill="#1e293b" />
+    <rect x="75" y="93" width="4" height="7" rx="1" fill="#1e293b" />
+
+    {/* Not Balok Ganda Utama Melayang */}
+    <g transform="translate(42, 28) rotate(-6)" filter="url(#musicShadow)">
+      {/* Batang & Bendera */}
+      <rect x="8" y="10" width="4.5" height="28" rx="2" fill="#ef4444" stroke="#991b1b" strokeWidth="1" />
+      <rect x="26" y="5" width="4.5" height="28" rx="2" fill="#ef4444" stroke="#991b1b" strokeWidth="1" />
+      <path
+        d="M8 10 L30 5 L30 11 L8 16 Z"
+        fill="url(#musicGoldGrad)"
+        stroke="#b45309"
+        strokeWidth="1.5"
+      />
+      {/* Kepala Not Balok Kiri */}
+      <ellipse cx="6" cy="38" rx="7" ry="5.5" transform="rotate(-25 6 38)" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
+      <circle cx="5" cy="37" r="2" fill="#fca5a5" />
+      {/* Kepala Not Balok Kanan */}
+      <ellipse cx="24" cy="33" rx="7" ry="5.5" transform="rotate(-25 24 33)" fill="#dc2626" stroke="#991b1b" strokeWidth="1.5" />
+      <circle cx="23" cy="32" r="2" fill="#fca5a5" />
+    </g>
+
+    {/* Not Balok Tunggal Kecil Berdenting Ceria */}
+    <g transform="translate(80, 50) rotate(15)">
+      <ellipse cx="6" cy="18" rx="5" ry="4" transform="rotate(-20 6 18)" fill="#f59e0b" />
+      <rect x="9" y="3" width="3" height="15" rx="1.5" fill="#f59e0b" />
+      <path d="M11 3 C16 4 19 8 18 11" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
+    </g>
+  </svg>
+);
+
 /* =========================================================================
    DEFINISI ZONA PETUALANGAN
    ========================================================================= */
@@ -414,6 +530,16 @@ export const LEARNING_ZONES = [
       shadow: "shadow-[0_4px_0_0_#9333ea] sm:shadow-[0_8px_0_0_#9333ea]",
     },
   },
+  {
+    id: "lagunasional",
+    title: "Harmoni Nasional",
+    IconComponent: NationalMusicIcon,
+    colorScheme: {
+      bg: "bg-red-50 hover:bg-red-100/60",
+      border: "border-red-400",
+      shadow: "shadow-[0_4px_0_0_#dc2626] sm:shadow-[0_8px_0_0_#dc2626]",
+    },
+  },
 ];
 
 export default function LearningZonesGrid({
@@ -434,29 +560,31 @@ export default function LearningZonesGrid({
         </h2>
       </div>
 
-      {/* Grid Menu Ikon Game Anak (2 Kolom Kompak di Layar HP, 4 Kolom di Layar Lebar) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-        {LEARNING_ZONES.map((zone) => {
+      {/* Grid Menu Ikon Game Anak (2 Kolom Kompak di HP dgn Kartu ke-5 Full-Span, 5 Kolom Sejajar di Desktop) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5">
+        {LEARNING_ZONES.map((zone, idx) => {
           const Icon = zone.IconComponent;
           return (
             <div
               key={zone.id}
               onClick={() => handleZoneClick(zone.id)}
-              className={`group relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex flex-col items-center justify-center text-center border-3 sm:border-4 transition-all duration-200 cursor-pointer select-none ${
+              className={`group relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 flex flex-col items-center justify-center text-center border-3 sm:border-4 transition-all duration-200 cursor-pointer select-none ${
                 zone.colorScheme.bg
               } ${zone.colorScheme.border} ${
+                idx === 4 ? "col-span-2 sm:col-span-1" : ""
+              } ${
                 liteMode
                   ? "hover:opacity-95"
                   : `${zone.colorScheme.shadow} hover:-translate-y-1.5 hover:scale-[1.03] active:translate-y-1 active:shadow-none`
               }`}
             >
               {/* 1. Ikon SVG Murni Berukuran Pas di HP & Besar di Desktop */}
-              <div className="mb-2 sm:mb-4 flex items-center justify-center">
+              <div className="mb-2 sm:mb-3 flex items-center justify-center">
                 <Icon />
               </div>
 
               {/* 2. Judul Singkat, Tebal, dan Ceria */}
-              <h3 className="text-sm sm:text-xl font-black font-display text-slate-800 tracking-wide text-center group-hover:text-amber-800 transition-colors leading-tight">
+              <h3 className="text-sm sm:text-lg lg:text-xl font-black font-display text-slate-800 tracking-wide text-center group-hover:text-amber-800 transition-colors leading-tight">
                 {zone.title}
               </h3>
             </div>

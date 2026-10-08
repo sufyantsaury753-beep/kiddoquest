@@ -94,6 +94,7 @@ export default function TobiQuestHomePage() {
             else if (zoneId === "berhitung") router.push("/hitung-ceria");
             else if (zoneId === "tatasurya") router.push("/tata-surya");
             else if (zoneId === "cerita") router.push("/literasi-nusantara");
+            else if (zoneId === "lagunasional") router.push("/lagu-nasional");
             else if (zoneId === "evaluasi") router.push("/evaluasi");
           }}
           audioEnabled={profile.audioEnabled}
