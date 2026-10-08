@@ -36,7 +36,7 @@ export default function RantaiMakananStationPage() {
           stars={profile.stars}
           audioEnabled={profile.audioEnabled}
           onToggleAudio={handleToggleAudio}
-          stationTitle="Stasiun 3: Papan Rantai Makanan & Krisis Ekosistem"
+          stationTitle="Stasiun 1: Papan Rantai Makanan & Krisis Ekosistem"
           stationSubtitle="Tebak misteri peran ekologi makhluk hidup di sawah & laut, serta telusuri dampak kepunahan spesies!"
         />
 

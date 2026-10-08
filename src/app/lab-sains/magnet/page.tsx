@@ -36,7 +36,7 @@ export default function MagnetStationPage() {
           stars={profile.stars}
           audioEnabled={profile.audioEnabled}
           onToggleAudio={handleToggleAudio}
-          stationTitle="Stasiun 5: Petualangan Magnet Hunter"
+          stationTitle="Stasiun 4: Petualangan Magnet Hunter"
           stationSubtitle="Uji 8 objek percobaan pada kutub magnet ladam U dan bedakan sifat feromagnetik vs non-magnetik!"
         />
 

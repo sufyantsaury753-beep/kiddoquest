@@ -36,7 +36,7 @@ export default function ListrikStationPage() {
           stars={profile.stars}
           audioEnabled={profile.audioEnabled}
           onToggleAudio={handleToggleAudio}
-          stationTitle="Stasiun 4: Laboratorium Rakit Listrik Seri & Paralel"
+          stationTitle="Stasiun 5: Laboratorium Rakit Listrik Seri & Paralel"
           stationSubtitle="Rakit baterai, saklar, dan lampu secara mandiri, lalu pelajari konduktor vs isolator dan sirkuit listrik!"
         />
 

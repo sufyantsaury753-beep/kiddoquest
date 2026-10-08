@@ -36,7 +36,7 @@ export default function WarnaStationPage() {
           stars={profile.stars}
           audioEnabled={profile.audioEnabled}
           onToggleAudio={handleToggleAudio}
-          stationTitle="Stasiun 1: Lab Warna & Pipet Ajaib"
+          stationTitle="Stasiun 3: Lab Warna & Pipet Ajaib"
           stationSubtitle="Teteskan larutan primer dengan pipet kaca, aduk pusaran kimia, dan temukan ramuan warna ajaib!"
         />
 
