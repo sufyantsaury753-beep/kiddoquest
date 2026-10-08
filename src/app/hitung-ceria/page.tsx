@@ -12,7 +12,8 @@ import {
   Calculator, 
   Search,
   CheckCircle2,
-  Lightbulb
+  Lightbulb,
+  Scale
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
@@ -135,6 +136,63 @@ const AvocadoSvg = ({ className = "w-8 h-8" }: { className?: string }) => (
   </svg>
 );
 
+/* =========================================================================
+   PURE SVG ILUSTRASI BEBAN TIMBANGAN NERACA (NO EMOJI)
+   ========================================================================= */
+
+// 1. Peti Harta Karun Bertanda Tanya Emas [ ? ] (Mystery Chest)
+const MysteryChestGraphic = ({ label = "?" }: { label?: string }) => (
+  <g>
+    <rect x="-18" y="-12" width="36" height="26" rx="5" fill="#854d0e" stroke="#451a03" strokeWidth="2" />
+    <path d="M-19 -12 C-19 -20 -10 -24 0 -24 C10 -24 19 -20 19 -12 Z" fill="#a16207" stroke="#451a03" strokeWidth="2" />
+    <rect x="-10" y="-24" width="4" height="38" fill="#eab308" stroke="#713f12" strokeWidth="1" />
+    <rect x="6" y="-24" width="4" height="38" fill="#eab308" stroke="#713f12" strokeWidth="1" />
+    <circle cx="0" cy="1" r="9" fill="#facc15" stroke="#713f12" strokeWidth="1.5" />
+    <text x="0" y="5" textAnchor="middle" fill="#713f12" fontSize="12" fontWeight="900" fontFamily="sans-serif">
+      {label}
+    </text>
+  </g>
+);
+
+// 2. Anak Timbangan Besi Kuningan Klasik (Brass Weight)
+const BrassWeightGraphic = ({ weight = 5 }: { weight?: number }) => (
+  <g>
+    <circle cx="0" cy="-17" r="5" fill="#facc15" stroke="#713f12" strokeWidth="1.5" />
+    <rect x="-2.5" y="-13" width="5" height="4" fill="#eab308" stroke="#713f12" strokeWidth="1" />
+    <path d="M-14 12 L-10 -9 L10 -9 L14 12 Z" fill="#eab308" stroke="#713f12" strokeWidth="2" />
+    <rect x="-16" y="9" width="32" height="4" rx="1.5" fill="#ca8a04" stroke="#713f12" strokeWidth="1" />
+    <text x="0" y="4" textAnchor="middle" fill="#451a03" fontSize="9" fontWeight="900" fontFamily="sans-serif">
+      {weight}k
+    </text>
+  </g>
+);
+
+// 3. Kristal Safir / Zamrud Berkilau (Gem Weight)
+const GemWeightGraphic = ({ weight = 7 }: { weight?: number }) => (
+  <g>
+    <polygon points="-8,-16 8,-16 16,-6 0,14 -16,-6" fill="#06b6d4" stroke="#0e7490" strokeWidth="1.5" />
+    <polygon points="-8,-16 0,-6 8,-16" fill="#a5f3fc" opacity="0.7" />
+    <polygon points="-16,-6 0,-6 0,14" fill="#0891b2" opacity="0.6" />
+    <circle cx="0" cy="0" r="7" fill="white" opacity="0.9" />
+    <text x="0" y="3" textAnchor="middle" fill="#0e7490" fontSize="8" fontWeight="900" fontFamily="sans-serif">
+      {weight}k
+    </text>
+  </g>
+);
+
+// 4. Balok Kayu Ceria (Wood Block Weight)
+const WoodBlockGraphic = ({ weight = 10 }: { weight?: number }) => (
+  <g>
+    <rect x="-14" y="-14" width="28" height="28" rx="3" fill="#d97706" stroke="#78350f" strokeWidth="2" />
+    <line x1="-14" y1="-14" x2="14" y2="14" stroke="#b45309" strokeWidth="1.5" />
+    <line x1="14" y1="-14" x2="-14" y2="14" stroke="#b45309" strokeWidth="1.5" />
+    <circle cx="0" cy="0" r="8" fill="#fef3c7" stroke="#78350f" strokeWidth="1.5" />
+    <text x="0" y="3.5" textAnchor="middle" fill="#78350f" fontSize="8.5" fontWeight="900" fontFamily="sans-serif">
+      {weight}k
+    </text>
+  </g>
+);
+
 interface FruitVariable {
   id: string;
   name: string;
@@ -160,7 +218,7 @@ const FRUIT_VARIABLES: FruitVariable[] = [
 
 function generateOptions(correct: number): number[] {
   const opts = new Set<number>([correct]);
-  const offsets = [-3, -2, -1, 1, 2, 3, 4, -4];
+  const offsets = [-4, -3, -2, -1, 1, 2, 3, 4, 5, -5];
   while (opts.size < 4) {
     const offset = offsets[Math.floor(Math.random() * offsets.length)];
     const candidate = correct + offset;
@@ -171,21 +229,169 @@ function generateOptions(correct: number): number[] {
   return Array.from(opts).sort(() => Math.random() - 0.5);
 }
 
+/* =========================================================================
+   SISTEM GENERATOR PROSEDURAL TIMBANGAN NERACA MISTERI (INFINITE GENERATOR)
+   ========================================================================= */
+
+export interface ScaleWeightItem {
+  type: "mystery" | "brass" | "gem" | "wood";
+  value: number; // in kg
+  label: string;
+}
+
+export interface ScaleQuestionData {
+  level: 1 | 2 | 3 | 4;
+  levelName: string;
+  mysteryCount: number; // 1 or 2
+  leftItems: ScaleWeightItem[];
+  rightItems: ScaleWeightItem[];
+  leftKnownWeight: number;
+  rightTotalWeight: number;
+  correctAnswer: number;
+  options: number[];
+  hint: string;
+  equationText: string;
+}
+
+function generateProceduralScaleQuestion(level: 1 | 2 | 3 | 4): ScaleQuestionData {
+  let mysteryCount = 1;
+  let leftKnownWeight = 0;
+  let rightTotalWeight = 0;
+  let correctAnswer = 0;
+  let leftItems: ScaleWeightItem[] = [];
+  let rightItems: ScaleWeightItem[] = [];
+  let hint = "";
+  let equationText = "";
+
+  if (level === 1) {
+    // Level 1 (Pemula - Kelas 1-2 SD): Penjumlahan dasar satu sisi
+    // Kiri: 1 Peti [ ? ] + Known A kg. Kanan: Total B kg.
+    // ? + A = B -> ? = B - A
+    const knownA = Math.floor(Math.random() * 8) + 3; // 3 to 10
+    correctAnswer = Math.floor(Math.random() * 9) + 4; // 4 to 12
+    rightTotalWeight = knownA + correctAnswer;
+    leftKnownWeight = knownA;
+    mysteryCount = 1;
+
+    leftItems = [
+      { type: "mystery", value: correctAnswer, label: "?" },
+      { type: "brass", value: knownA, label: `${knownA} kg` },
+    ];
+    rightItems = [
+      { type: "brass", value: rightTotalWeight, label: `${rightTotalWeight} kg` },
+    ];
+    equationText = `[ ? ] + ${knownA} kg = ${rightTotalWeight} kg`;
+    hint = `Sisi kanan neraca beratnya ${rightTotalWeight} kg. Di sisi kiri sudah ada anak timbangan ${knownA} kg. Agar kedua sisi seimbang, kurangi: ${rightTotalWeight} - ${knownA} = ${correctAnswer} kg.`;
+  } else if (level === 2) {
+    // Level 2 (Benda Kembar - Kelas 3 SD): Konsep kelipatan/perkalian
+    // Kiri: 2 Peti [ ? ] + [ ? ]. Kanan: Total B (Genap).
+    // 2 x ? = B -> ? = B / 2
+    mysteryCount = 2;
+    correctAnswer = Math.floor(Math.random() * 8) + 3; // 3 to 10
+    rightTotalWeight = correctAnswer * 2;
+    leftKnownWeight = 0;
+
+    leftItems = [
+      { type: "mystery", value: correctAnswer, label: "?" },
+      { type: "mystery", value: correctAnswer, label: "?" },
+    ];
+    rightItems = [
+      { type: "wood", value: rightTotalWeight, label: `${rightTotalWeight} kg` },
+    ];
+    equationText = `2 × [ ? ] = ${rightTotalWeight} kg`;
+    hint = `Ada 2 peti misteri kembar yang sama beratnya. Total beban di sisi kanan adalah ${rightTotalWeight} kg. Maka berat 1 peti misteri adalah: ${rightTotalWeight} ÷ 2 = ${correctAnswer} kg.`;
+  } else if (level === 3) {
+    // Level 3 (Dua Sisi - Kelas 4-5 SD): Beban di kedua sisi
+    // Kiri: [ ? ] + Known A. Kanan: B1 + B2.
+    // ? + A = B1 + B2 -> ? = (B1 + B2) - A
+    mysteryCount = 1;
+    const knownA = Math.floor(Math.random() * 7) + 4; // 4 to 10
+    const rightB1 = Math.floor(Math.random() * 9) + 6; // 6 to 14
+    const rightB2 = Math.floor(Math.random() * 7) + 3; // 3 to 9
+    rightTotalWeight = rightB1 + rightB2;
+    leftKnownWeight = knownA;
+    correctAnswer = rightTotalWeight - knownA;
+
+    if (correctAnswer <= 2) {
+      correctAnswer = 7;
+      rightTotalWeight = knownA + correctAnswer;
+    }
+
+    leftItems = [
+      { type: "mystery", value: correctAnswer, label: "?" },
+      { type: "gem", value: knownA, label: `${knownA} kg` },
+    ];
+    rightItems = [
+      { type: "brass", value: rightB1, label: `${rightB1} kg` },
+      { type: "wood", value: rightB2, label: `${rightB2} kg` },
+    ];
+    equationText = `[ ? ] + ${knownA} kg = ${rightB1} kg + ${rightB2} kg`;
+    hint = `Hitung total beban sisi kanan terlebih dahulu: ${rightB1} + ${rightB2} = ${rightTotalWeight} kg. Di sisi kiri ada kristal ${knownA} kg. Maka peti misteri: ${rightTotalWeight} - ${knownA} = ${correctAnswer} kg.`;
+  } else {
+    // Level 4 (Master Neraca - Kelas 5-6 SD): 3 komponen / angka puluhan
+    // Kiri: 2 Peti [ ? ] + Known A. Kanan: B1 + B2.
+    // 2 x ? + A = B1 + B2 -> 2 x ? = (B1 + B2) - A
+    mysteryCount = 2;
+    correctAnswer = Math.floor(Math.random() * 11) + 6; // 6 to 16
+    const knownA = (Math.floor(Math.random() * 4) + 2) * 2; // genap: 4, 6, 8, 10
+    const totalReq = (2 * correctAnswer) + knownA;
+    const rightB1 = Math.floor(totalReq / 2);
+    const rightB2 = totalReq - rightB1;
+    rightTotalWeight = totalReq;
+    leftKnownWeight = knownA;
+
+    leftItems = [
+      { type: "mystery", value: correctAnswer, label: "?" },
+      { type: "mystery", value: correctAnswer, label: "?" },
+      { type: "brass", value: knownA, label: `${knownA} kg` },
+    ];
+    rightItems = [
+      { type: "wood", value: rightB1, label: `${rightB1} kg` },
+      { type: "gem", value: rightB2, label: `${rightB2} kg` },
+    ];
+    equationText = `2 × [ ? ] + ${knownA} kg = ${rightB1} kg + ${rightB2} kg`;
+    hint = `Total sisi kanan: ${rightB1} + ${rightB2} = ${rightTotalWeight} kg. Kurangi beban di kiri: ${rightTotalWeight} - ${knownA} = ${2 * correctAnswer} kg. Karena ada 2 peti misteri: ${2 * correctAnswer} ÷ 2 = ${correctAnswer} kg.`;
+  }
+
+  const options = generateOptions(correctAnswer);
+
+  const levelNames: Record<number, string> = {
+    1: "Level 1: Pemula (Kelas 1-2)",
+    2: "Level 2: Benda Kembar (Kelas 3)",
+    3: "Level 3: Dua Sisi (Kelas 4-5)",
+    4: "Level 4: Master Neraca (Kelas 5-6)",
+  };
+
+  return {
+    level,
+    levelName: levelNames[level],
+    mysteryCount,
+    leftItems,
+    rightItems,
+    leftKnownWeight,
+    rightTotalWeight,
+    correctAnswer,
+    options,
+    hint,
+    equationText,
+  };
+}
+
 export default function HitungCeriaPage() {
   const [profile, setProfile] = useState<StudentProfile>(DEFAULT_PROFILE);
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"kalkulasi" | "detektif">("kalkulasi");
+  const [activeTab, setActiveTab] = useState<"kalkulasi" | "detektif" | "neraca">("neraca");
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [showHint, setShowHint] = useState(false);
 
-  // Mode 1: Kalkulasi
+  // --- Mode 1: Kalkulasi Buah ---
   const [calcTerms, setCalcTerms] = useState<{ fruit: FruitVariable; count: number; op: "+" | "-" }[]>([]);
   const [calcAnswer, setCalcAnswer] = useState(0);
   const [calcOptions, setCalcOptions] = useState<number[]>([]);
   const [calcHint, setCalcHint] = useState("");
 
-  // Mode 2: Detektif
+  // --- Mode 2: Detektif Aljabar Buah ---
   const [detFruitA, setDetFruitA] = useState<FruitVariable>(FRUIT_VARIABLES[1]);
   const [detFruitB, setDetFruitB] = useState<FruitVariable>(FRUIT_VARIABLES[2]);
   const [detLine1, setDetLine1] = useState(4);
@@ -194,6 +400,12 @@ export default function HitungCeriaPage() {
   const [detAnswer, setDetAnswer] = useState(0);
   const [detOptions, setDetOptions] = useState<number[]>([]);
   const [detHint, setDetHint] = useState("");
+
+  // --- Mode 3: Timbangan Neraca Misteri ---
+  const [scaleLevel, setScaleLevel] = useState<1 | 2 | 3 | 4>(1);
+  const [scaleQuestion, setScaleQuestion] = useState<ScaleQuestionData>(generateProceduralScaleQuestion(1));
+  const [selectedScaleAnswer, setSelectedScaleAnswer] = useState<number | null>(null);
+  const [isScaleCorrect, setIsScaleCorrect] = useState<boolean | null>(null);
 
   const newCalcQuestion = () => {
     setSelectedAnswer(null);
@@ -240,6 +452,15 @@ export default function HitungCeriaPage() {
     setDetHint(`Baris 1: Dua ${fA.name} = ${l1}, maka 1 ${fA.name} = ${fA.value}. Baris 2: ${fA.value} + ${fB.name} = ${l2}, maka ${fB.name} = ${fB.value}!`);
   };
 
+  const newScaleQuestion = (lvl: 1 | 2 | 3 | 4 = scaleLevel) => {
+    setSelectedScaleAnswer(null);
+    setIsScaleCorrect(null);
+    setShowHint(false);
+    setScaleLevel(lvl);
+    const q = generateProceduralScaleQuestion(lvl);
+    setScaleQuestion(q);
+  };
+
   useEffect(() => {
     const stored = getStudentProfile();
     setProfile(stored);
@@ -247,8 +468,10 @@ export default function HitungCeriaPage() {
     setMounted(true);
     newCalcQuestion();
     newDetQuestion();
+    newScaleQuestion(1);
   }, []);
 
+  // Handler Pemilihan Jawaban Mode 1 & 2
   const handleSelectAnswer = (ans: number) => {
     setSelectedAnswer(ans);
     const target = activeTab === "kalkulasi" ? calcAnswer : detAnswer;
@@ -273,14 +496,64 @@ export default function HitungCeriaPage() {
     }
   };
 
+  // Handler Pemilihan Jawaban Mode 3: Timbangan Neraca
+  const handleSelectScaleAnswer = (ans: number) => {
+    setSelectedScaleAnswer(ans);
+    const target = scaleQuestion.correctAnswer;
+    const chosenWeight = ans;
+    const currentLeftTotal = scaleQuestion.leftKnownWeight + (scaleQuestion.mysteryCount * chosenWeight);
+    const currentRightTotal = scaleQuestion.rightTotalWeight;
+
+    if (ans === target) {
+      setIsScaleCorrect(true);
+      sound.playCelebration();
+      const updated = saveStudentProfile({ stars: profile.stars + 35 });
+      setProfile(updated);
+      if (!profile.liteMode) {
+        confetti({ particleCount: 55, spread: 65, origin: { y: 0.58 } });
+      }
+      if (profile.audioEnabled) {
+        sound.speak(`Luar biasa! Neraca sekarang seimbang sempurna di ${currentRightTotal} kilogram! Berat setiap peti adalah ${ans} kilogram. Kamu mendapatkan 35 bintang!`);
+      }
+    } else {
+      setIsScaleCorrect(false);
+      sound.playSocraticHint();
+      if (profile.audioEnabled) {
+        if (currentLeftTotal > currentRightTotal) {
+          sound.speak(`Belum seimbang! Sisi kiri sekarang terlalu berat dengan total ${currentLeftTotal} kilogram. Coba pilih angka yang lebih ringan!`);
+        } else {
+          sound.speak(`Belum seimbang! Sisi kanan masih lebih berat dengan ${currentRightTotal} kilogram. Coba pilih angka yang lebih besar!`);
+        }
+      }
+    }
+  };
+
+  // Handler Suara Tobi Narator
   const handleSpeakTobi = () => {
     sound.playChime();
     if (!profile.audioEnabled) return;
-    const script = activeTab === "kalkulasi"
-      ? "Hitung nilai total dari buah-buah di layar! Setiap buah memiliki nilai angka rahasia masing-masing. Berapa totalnya?"
-      : "Pecahkan teka-teki misteri buah! Cari nilai buah pertama di baris atas, lalu gunakan untuk mengungkap buah kedua!";
-    sound.speak(script);
+    if (activeTab === "kalkulasi") {
+      sound.speak("Hitung nilai total dari buah-buah di layar! Setiap buah memiliki nilai angka rahasia masing-masing. Berapa totalnya?");
+    } else if (activeTab === "detektif") {
+      sound.speak("Pecahkan teka-teki misteri buah! Cari nilai buah pertama di baris atas, lalu gunakan untuk mengungkap buah kedua!");
+    } else {
+      sound.speak(scaleQuestion.hint);
+    }
   };
+
+  // Perhitungan Sudut Kemiringan Dinamis Neraca
+  let tiltAngle = 12; // default: sisi kanan lebih berat sebelum dijawab (+12 deg)
+  if (selectedScaleAnswer !== null) {
+    const leftCalc = scaleQuestion.leftKnownWeight + (scaleQuestion.mysteryCount * selectedScaleAnswer);
+    const rightCalc = scaleQuestion.rightTotalWeight;
+    if (leftCalc === rightCalc) {
+      tiltAngle = 0; // SEIMBANG SEMPURNA
+    } else if (leftCalc > rightCalc) {
+      tiltAngle = -13; // Sisi kiri lebih berat (miring ke kiri)
+    } else {
+      tiltAngle = 13; // Sisi kanan masih lebih berat (miring ke kanan)
+    }
+  }
 
   if (!mounted) return null;
 
@@ -306,7 +579,7 @@ export default function HitungCeriaPage() {
                 Hitung Ceria
               </h1>
               <span className="text-[10px] sm:text-xs font-bold text-rose-700 block leading-none">
-                Matematika & Logika Koding SD
+                Matematika & Logika Keseimbangan SD
               </span>
             </div>
           </div>
@@ -327,32 +600,54 @@ export default function HitungCeriaPage() {
           </div>
         </header>
 
-        {/* 2. Mode Switcher (1 Baris Rapi) */}
-        <div className="px-3 py-1 sm:px-5 sm:py-1.5 bg-slate-50 border-b border-rose-100 flex items-center justify-between gap-2 text-xs shrink-0">
-          <div className="flex items-center gap-1.5">
+        {/* 2. Mode Switcher (3 Mode Lengkap: Kalkulasi, Detektif, Timbangan Neraca) */}
+        <div className="px-3 py-1 sm:px-5 sm:py-1.5 bg-slate-50 border-b border-rose-100 flex items-center justify-between gap-1.5 text-xs shrink-0 overflow-x-auto">
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            {/* Mode 1 */}
             <button
               onClick={() => { setActiveTab("kalkulasi"); setSelectedAnswer(null); }}
-              className={`px-3 py-0.5 sm:py-1 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all ${
+              className={`px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-xl font-black text-xs flex items-center gap-1 sm:gap-1.5 transition-all ${
                 activeTab === "kalkulasi" ? "bg-rose-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
               <Calculator className="w-3.5 h-3.5" />
-              <span>Kalkulasi Buah</span>
+              <span className="hidden sm:inline">Kalkulasi Buah</span>
+              <span className="sm:hidden">Buah</span>
             </button>
+
+            {/* Mode 2 */}
             <button
               onClick={() => { setActiveTab("detektif"); setSelectedAnswer(null); }}
-              className={`px-3 py-0.5 sm:py-1 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all ${
+              className={`px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-xl font-black text-xs flex items-center gap-1 sm:gap-1.5 transition-all ${
                 activeTab === "detektif" ? "bg-rose-600 text-white shadow-sm" : "bg-white text-slate-700 border border-slate-200"
               }`}
             >
               <Search className="w-3.5 h-3.5" />
-              <span>Detektif Misteri</span>
+              <span className="hidden sm:inline">Detektif Aljabar</span>
+              <span className="sm:hidden">Aljabar</span>
+            </button>
+
+            {/* Mode 3: Timbangan Neraca */}
+            <button
+              onClick={() => { setActiveTab("neraca"); setSelectedScaleAnswer(null); }}
+              className={`px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-xl font-black text-xs flex items-center gap-1 sm:gap-1.5 transition-all ${
+                activeTab === "neraca" ? "bg-amber-500 text-amber-950 shadow-sm border border-amber-600 font-black" : "bg-white text-slate-700 border border-slate-200"
+              }`}
+            >
+              <Scale className="w-3.5 h-3.5 text-amber-900" />
+              <span className="hidden sm:inline">Timbangan Neraca</span>
+              <span className="sm:hidden">Neraca</span>
             </button>
           </div>
 
+          {/* Tombol Acak / Soal Baru */}
           <button
-            onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
-            className="flex items-center gap-1 px-2.5 py-0.5 sm:py-1 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-900 font-extrabold text-xs border border-rose-300 btn-chunky"
+            onClick={() => {
+              if (activeTab === "kalkulasi") newCalcQuestion();
+              else if (activeTab === "detektif") newDetQuestion();
+              else newScaleQuestion(scaleLevel);
+            }}
+            className="flex items-center gap-1 px-2.5 py-0.5 sm:py-1 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-900 font-extrabold text-xs border border-rose-300 btn-chunky shrink-0"
             title="Ganti Soal Baru"
           >
             <Shuffle className="w-3 h-3" />
@@ -360,154 +655,405 @@ export default function HitungCeriaPage() {
           </button>
         </div>
 
-        {/* 3. Main Stage Game (Menyatu di Tengah dengan Jarak Terukur ~12px) */}
+        {/* 3. Main Stage Game (Menyatu di Tengah) */}
         <main className="flex-1 min-h-0 overflow-hidden flex flex-col justify-center items-center py-1 sm:py-2 px-3">
-          <div className="w-full max-w-sm sm:max-w-md lg:max-w-4xl mx-auto flex flex-col items-center justify-center gap-3 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
-            {/* SISI KIRI: Persamaan Matematika / Teka-Teki Buah */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center w-full shrink-0">
-              {activeTab === "kalkulasi" ? (
-                /* Mode 1: Kalkulasi Buah */
-                <div className="flex flex-col items-center justify-center w-full">
-                  <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200 mb-1.5">
-                    Hitung Nilai Total Buah
-                  </span>
-
-                  {/* Persamaan Visual Buah */}
-                  <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
-                    {calcTerms.map((t, idx) => (
-                      <React.Fragment key={idx}>
-                        {idx > 0 && (
-                          <span className="text-lg sm:text-xl font-black text-rose-700">+</span>
-                        )}
-                        <div className="flex items-center gap-1 bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-rose-200 shadow-sm">
-                          <t.fruit.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                          <div className="text-left">
-                            <span className="text-[11px] sm:text-xs font-black text-slate-900 block leading-tight">
-                              {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
-                            </span>
-                            <span className="text-[9px] font-extrabold text-rose-600 block leading-tight">
-                              (= {t.fruit.value})
-                            </span>
-                          </div>
-                        </div>
-                      </React.Fragment>
-                    ))}
-                    <span className="text-lg sm:text-xl font-black text-rose-700">=</span>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-rose-600 text-white text-base sm:text-lg font-black flex items-center justify-center shadow-md">
-                      ?
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* Mode 2: Detektif Misteri Buah */
-                <div className="flex flex-col items-center justify-center w-full">
-                  <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200 mb-1.5">
-                    Pecahkan Nilai Rahasia
-                  </span>
-
-                  <div className="p-2 sm:p-2.5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-1 sm:space-y-1.5">
-                    {/* Baris 1 */}
-                    <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                      <div className="flex items-center gap-1.5">
-                        <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
-                        <span>+</span>
-                        <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
-                      </div>
-                      <span className="text-sm sm:text-base text-rose-700 font-display">= {detLine1}</span>
-                    </div>
-                    {/* Baris 2 */}
-                    <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
-                      <div className="flex items-center gap-1.5">
-                        <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
-                        <span>+</span>
-                        <detFruitB.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
-                      </div>
-                      <span className="text-sm sm:text-base text-rose-700 font-display">= {detLine2}</span>
-                    </div>
-                    {/* Baris Target Pertanyaan */}
-                    <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
-                      <span>
-                        {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
-                      </span>
-                      <span className="text-sm sm:text-base font-display">= ?</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* SISI KANAN: Grid Pilihan Jawaban 2x2 & Feedback */}
-            <div className="lg:col-span-6 flex flex-col justify-center space-y-2 lg:space-y-2.5 w-full shrink-0">
-              <span className="hidden lg:block text-xs font-black text-rose-800 uppercase tracking-wider">
-                Pilih Jawaban yang Tepat:
-              </span>
-
-              {/* Grid Pilihan Jawaban 2x2 Kompak */}
-              <div className="w-full grid grid-cols-2 gap-2">
-                {(activeTab === "kalkulasi" ? calcOptions : detOptions).map((opt) => {
-                  const isSelected = selectedAnswer === opt;
-                  const isThisCorrect = isCorrect && isSelected;
-                  const isThisWrong = isCorrect === false && isSelected;
-
-                  let btnStyle = "bg-white border-rose-200 text-slate-800 hover:bg-rose-50 shadow-[0_2px_0_0_#fecdd3]";
-                  if (isThisCorrect) {
-                    btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
-                  } else if (isThisWrong) {
-                    btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
-                  }
-
-                  return (
+          
+          {/* =========================================================================
+              KONTEN MODE 3: TIMBANGAN NERACA MISTERI (INTERACTIVE BALANCE SCALE PUZZLE)
+              ========================================================================= */}
+          {activeTab === "neraca" ? (
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-4xl mx-auto flex flex-col items-center justify-center gap-2 lg:grid lg:grid-cols-12 lg:gap-6 lg:items-center">
+              
+              {/* SISI KIRI: Simulasi Fisika Neraca Pure SVG (7 Kolom di Desktop) */}
+              <div className="lg:col-span-7 flex flex-col items-center justify-center w-full shrink-0">
+                
+                {/* 4 Pilihan Level Kesulitan */}
+                <div className="flex items-center justify-center gap-1 sm:gap-1.5 mb-1 sm:mb-1.5 w-full overflow-x-auto">
+                  {([1, 2, 3, 4] as const).map((lvl) => (
                     <button
-                      key={opt}
-                      onClick={() => handleSelectAnswer(opt)}
-                      className={`py-2 sm:py-2.5 lg:py-3 px-2 rounded-xl sm:rounded-2xl border-2 font-display font-black text-base sm:text-lg lg:text-xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
+                      key={lvl}
+                      onClick={() => newScaleQuestion(lvl)}
+                      className={`px-2 sm:px-2.5 py-0.5 rounded-lg text-[10px] sm:text-xs font-black transition-all ${
+                        scaleLevel === lvl
+                          ? "bg-amber-500 text-amber-950 shadow-sm border border-amber-600 scale-105"
+                          : "bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300"
+                      }`}
                     >
-                      <span>{opt}</span>
-                      {isThisCorrect && <CheckCircle2 className="w-4 h-4 ml-1.5 text-white shrink-0" />}
+                      Lvl {lvl}
                     </button>
-                  );
-                })}
+                  ))}
+                  <span className="text-[10px] font-bold text-amber-800 ml-1 hidden sm:inline">
+                    {scaleQuestion.levelName}
+                  </span>
+                </div>
+
+                {/* Ilustrasi Neraca Interaktif Pure SVG dengan Animasi Kemiringan */}
+                <div className="w-full max-w-[340px] sm:max-w-[420px] aspect-[360/195] bg-gradient-to-b from-amber-50/70 via-white to-orange-50/40 rounded-2xl sm:rounded-3xl border-2 border-amber-200 shadow-inner relative flex items-center justify-center overflow-hidden">
+                  
+                  {/* Status Keseimbangan Badge di Sudut Kiri Atas */}
+                  <div className="absolute top-2 left-2 z-10">
+                    {tiltAngle === 0 ? (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-white shadow-sm flex items-center gap-1 animate-pulse">
+                        <CheckCircle2 className="w-3 h-3 text-white" />
+                        <span>SEIMBANG!</span>
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300">
+                        {tiltAngle > 0 ? "Kanan Lebih Berat" : "Kiri Lebih Berat"}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* SVG Neraca Dua Piringan */}
+                  <svg viewBox="0 0 360 200" className="w-full h-full" fill="none">
+                    {/* 1. Tiang Poros Tengah & Dasar Penyangga */}
+                    <path d="M152 186 L167 80 L193 80 L208 186 Z" fill="#78350f" stroke="#451a03" strokeWidth="2" />
+                    <rect x="130" y="180" width="100" height="15" rx="4" fill="#92400e" stroke="#451a03" strokeWidth="2" />
+                    <circle cx="180" cy="188" r="3" fill="#facc15" />
+                    <circle cx="150" cy="188" r="2" fill="#ca8a04" />
+                    <circle cx="210" cy="188" r="2" fill="#ca8a04" />
+
+                    {/* Skala Derajat Pusat (Arc Gauge) */}
+                    <path d="M164 116 A 20 20 0 0 0 196 116" stroke="#ca8a04" strokeWidth="2" strokeDasharray="2 3" />
+                    <circle cx="180" cy="120" r="3" fill={tiltAngle === 0 ? "#10b981" : "#f59e0b"} />
+
+                    {/* 2. Rangka Lengan Neraca Berputar (Rotating Beam) */}
+                    <g
+                      style={{
+                        transform: `rotate(${tiltAngle}deg)`,
+                        transformOrigin: "180px 80px",
+                        transition: "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      }}
+                    >
+                      {/* Lengan Kayu / Kuningan */}
+                      <rect x="45" y="76" width="270" height="8" rx="4" fill="#d97706" stroke="#78350f" strokeWidth="2" />
+                      
+                      {/* Jarum Penunjuk Tengah Merah */}
+                      <polygon points="178,86 182,86 180,118" fill={tiltAngle === 0 ? "#10b981" : "#ef4444"} stroke="#7f1d1d" strokeWidth="1" />
+                      
+                      {/* Poros Putar Tengah Emas */}
+                      <circle cx="180" cy="80" r="10" fill="#f59e0b" stroke="#78350f" strokeWidth="2.5" />
+                      <circle cx="180" cy="80" r="4" fill="#fef08a" />
+
+                      {/* --- PIRINGAN KIRI (Left Pan & Hanger) --- */}
+                      <g
+                        style={{
+                          transform: `rotate(${-tiltAngle}deg)`,
+                          transformOrigin: "55px 80px",
+                          transition: "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                        }}
+                      >
+                        {/* Rantai Gantung */}
+                        <line x1="55" y1="80" x2="28" y2="132" stroke="#92400e" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <line x1="55" y1="80" x2="82" y2="132" stroke="#92400e" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <circle cx="55" cy="80" r="3.5" fill="#f59e0b" stroke="#78350f" strokeWidth="1.5" />
+
+                        {/* Mangkok Piringan Kiri */}
+                        <path d="M22 132 C26 148 84 148 88 132 Z" fill="#fde047" stroke="#ca8a04" strokeWidth="2" />
+                        <ellipse cx="55" cy="132" rx="33" ry="3.5" fill="#fef08a" stroke="#ca8a04" strokeWidth="1.5" />
+
+                        {/* Beban-beban di Piringan Kiri */}
+                        {scaleQuestion.leftItems.map((item, idx) => {
+                          const isDouble = scaleQuestion.leftItems.length > 1;
+                          const posX = isDouble ? (idx === 0 ? 41 : 69) : 55;
+                          const posY = 130;
+                          const scaleVal = isDouble ? 0.68 : 0.82;
+
+                          return (
+                            <g key={idx} transform={`translate(${posX}, ${posY}) scale(${scaleVal})`}>
+                              {item.type === "mystery" ? (
+                                <MysteryChestGraphic label={selectedScaleAnswer !== null ? `${selectedScaleAnswer}` : "?"} />
+                              ) : item.type === "brass" ? (
+                                <BrassWeightGraphic weight={item.value} />
+                              ) : item.type === "gem" ? (
+                                <GemWeightGraphic weight={item.value} />
+                              ) : (
+                                <WoodBlockGraphic weight={item.value} />
+                              )}
+                            </g>
+                          );
+                        })}
+                      </g>
+
+                      {/* --- PIRINGAN KANAN (Right Pan & Hanger) --- */}
+                      <g
+                        style={{
+                          transform: `rotate(${-tiltAngle}deg)`,
+                          transformOrigin: "305px 80px",
+                          transition: "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                        }}
+                      >
+                        {/* Rantai Gantung */}
+                        <line x1="305" y1="80" x2="278" y2="132" stroke="#92400e" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <line x1="305" y1="80" x2="332" y2="132" stroke="#92400e" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <circle cx="305" cy="80" r="3.5" fill="#f59e0b" stroke="#78350f" strokeWidth="1.5" />
+
+                        {/* Mangkok Piringan Kanan */}
+                        <path d="M272 132 C276 148 334 148 338 132 Z" fill="#fde047" stroke="#ca8a04" strokeWidth="2" />
+                        <ellipse cx="305" cy="132" rx="33" ry="3.5" fill="#fef08a" stroke="#ca8a04" strokeWidth="1.5" />
+
+                        {/* Beban-beban di Piringan Kanan */}
+                        {scaleQuestion.rightItems.map((item, idx) => {
+                          const isDouble = scaleQuestion.rightItems.length > 1;
+                          const posX = isDouble ? (idx === 0 ? 291 : 319) : 305;
+                          const posY = 130;
+                          const scaleVal = isDouble ? 0.68 : 0.82;
+
+                          return (
+                            <g key={idx} transform={`translate(${posX}, ${posY}) scale(${scaleVal})`}>
+                              {item.type === "brass" ? (
+                                <BrassWeightGraphic weight={item.value} />
+                              ) : item.type === "gem" ? (
+                                <GemWeightGraphic weight={item.value} />
+                              ) : (
+                                <WoodBlockGraphic weight={item.value} />
+                              )}
+                            </g>
+                          );
+                        })}
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+
+                {/* Persamaan Aljabar Neraca */}
+                <div className="mt-1.5 px-3 py-1 bg-amber-100/80 rounded-xl border border-amber-300 text-center w-full max-w-[340px] sm:max-w-[420px]">
+                  <span className="text-xs sm:text-sm font-black font-display text-amber-950">
+                    {scaleQuestion.equationText}
+                  </span>
+                </div>
               </div>
 
-              {/* Box Feedback Banner Ramping min-h-[40px] */}
-              <div className="min-h-[40px] h-[40px] sm:h-[44px] w-full shrink-0 flex items-center">
-                {selectedAnswer ? (
-                  <div className={`p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border text-[11px] sm:text-xs font-medium flex items-center justify-between gap-1.5 w-full h-full shrink-0 ${
-                    isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
-                  }`}>
-                    <div className="flex items-center gap-1.5 overflow-hidden">
-                      <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
-                      <span className="truncate">
-                        {isCorrect ? "Luar biasa! Jawabanmu benar (+30 Bintang)" : "Hampir tepat! Periksa kembali nilai buahnya!"}
-                      </span>
+              {/* SISI KANAN: Pilihan Jawaban 2x2 & Feedback Interaktif (5 Kolom di Desktop) */}
+              <div className="lg:col-span-5 flex flex-col justify-center space-y-2 lg:space-y-2.5 w-full shrink-0">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-amber-900 uppercase tracking-wider">
+                    Tebak Berat 1 Peti [ ? ]:
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-500">
+                    Total Kanan: {scaleQuestion.rightTotalWeight} kg
+                  </span>
+                </div>
+
+                {/* Grid Pilihan Jawaban 2x2 Chunky */}
+                <div className="w-full grid grid-cols-2 gap-2">
+                  {scaleQuestion.options.map((opt) => {
+                    const isSelected = selectedScaleAnswer === opt;
+                    const isThisCorrect = isScaleCorrect && isSelected;
+                    const isThisWrong = isScaleCorrect === false && isSelected;
+
+                    let btnStyle = "bg-white border-amber-300 text-slate-800 hover:bg-amber-50 shadow-[0_2px_0_0_#fde68a]";
+                    if (isThisCorrect) {
+                      btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
+                    } else if (isThisWrong) {
+                      btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
+                    }
+
+                    return (
+                      <button
+                        key={opt}
+                        onClick={() => handleSelectScaleAnswer(opt)}
+                        className={`py-2 sm:py-2.5 lg:py-3 px-2 rounded-xl sm:rounded-2xl border-2 font-display font-black text-base sm:text-lg lg:text-xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
+                      >
+                        <span>{opt} kg</span>
+                        {isThisCorrect && <CheckCircle2 className="w-4 h-4 ml-1.5 text-white shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Banner Feedback Hasil Uji Coba */}
+                <div className="min-h-[42px] h-[42px] sm:h-[46px] w-full shrink-0 flex items-center">
+                  {selectedScaleAnswer !== null ? (
+                    <div className={`p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border text-[11px] sm:text-xs font-medium flex items-center justify-between gap-1.5 w-full h-full shrink-0 ${
+                      isScaleCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
+                    }`}>
+                      <div className="flex items-center gap-1.5 overflow-hidden">
+                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        <span className="truncate">
+                          {isScaleCorrect
+                            ? `Seimbang sempurna! Peti = ${scaleQuestion.correctAnswer} kg (+35 Bintang)`
+                            : (tiltAngle < 0
+                                ? "Kiri terlalu berat! Pilih angka yang lebih ringan."
+                                : "Kanan masih berat! Pilih angka yang lebih besar.")}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => newScaleQuestion(scaleLevel)}
+                        className="shrink-0 px-2.5 py-1 rounded-lg sm:rounded-xl bg-amber-500 hover:bg-amber-600 text-amber-950 font-black text-xs btn-chunky shadow-sm border border-amber-600"
+                      >
+                        <span>Lanjut</span>
+                      </button>
                     </div>
-                    <button
-                      onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
-                      className="shrink-0 px-2.5 py-1 rounded-lg sm:rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs btn-chunky shadow-sm"
-                    >
-                      <span>Lanjut</span>
-                    </button>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-slate-400 shrink-0 text-center">
+                      Pilih angka kg di atas untuk menyeimbangkan kedua piringan!
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* =========================================================================
+                KONTEN MODE 1 (KALKULASI BUAH) & MODE 2 (DETEKTIF ALJABAR BUAH)
+                ========================================================================= */
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-4xl mx-auto flex flex-col items-center justify-center gap-3 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+              
+              {/* SISI KIRI: Persamaan Visual Buah */}
+              <div className="lg:col-span-6 flex flex-col items-center justify-center w-full shrink-0">
+                {activeTab === "kalkulasi" ? (
+                  /* Mode 1: Kalkulasi Buah */
+                  <div className="flex flex-col items-center justify-center w-full">
+                    <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200 mb-1.5">
+                      Hitung Nilai Total Buah
+                    </span>
+
+                    {/* Persamaan Visual Buah */}
+                    <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full">
+                      {calcTerms.map((t, idx) => (
+                        <React.Fragment key={idx}>
+                          {idx > 0 && (
+                            <span className="text-lg sm:text-xl font-black text-rose-700">+</span>
+                          )}
+                          <div className="flex items-center gap-1 bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-rose-200 shadow-sm">
+                            <t.fruit.SvgComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                            <div className="text-left">
+                              <span className="text-[11px] sm:text-xs font-black text-slate-900 block leading-tight">
+                                {t.count > 1 ? `${t.count}x ` : ""}{t.fruit.name}
+                              </span>
+                              <span className="text-[9px] font-extrabold text-rose-600 block leading-tight">
+                                (= {t.fruit.value})
+                              </span>
+                            </div>
+                          </div>
+                        </React.Fragment>
+                      ))}
+                      <span className="text-lg sm:text-xl font-black text-rose-700">=</span>
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-rose-600 text-white text-base sm:text-lg font-black flex items-center justify-center shadow-md">
+                        ?
+                      </div>
+                    </div>
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-slate-400 shrink-0">
-                    Pilih angka yang tepat di atas untuk menguji logikamu!
+                  /* Mode 2: Detektif Aljabar Buah */
+                  <div className="flex flex-col items-center justify-center w-full">
+                    <span className="text-[10px] font-black uppercase text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200 mb-1.5">
+                      Pecahkan Nilai Rahasia
+                    </span>
+
+                    <div className="p-2 sm:p-2.5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-rose-50/70 to-amber-50/50 border-2 border-rose-200 shadow-inner w-full space-y-1 sm:space-y-1.5">
+                      {/* Baris 1 */}
+                      <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                        <div className="flex items-center gap-1.5">
+                          <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
+                          <span>+</span>
+                          <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
+                        </div>
+                        <span className="text-sm sm:text-base text-rose-700 font-display">= {detLine1}</span>
+                      </div>
+                      {/* Baris 2 */}
+                      <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-white border border-rose-200 text-xs sm:text-sm font-black text-slate-800">
+                        <div className="flex items-center gap-1.5">
+                          <detFruitA.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
+                          <span>+</span>
+                          <detFruitB.SvgComponent className="w-5 h-5 sm:w-7 sm:h-7" />
+                        </div>
+                        <span className="text-sm sm:text-base text-rose-700 font-display">= {detLine2}</span>
+                      </div>
+                      {/* Baris Target Pertanyaan */}
+                      <div className="flex items-center justify-between p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-rose-600 text-white text-xs sm:text-sm font-black shadow-sm">
+                        <span>
+                          {detTargetOp === "+" ? `Berapa ${detFruitA.name} + ${detFruitB.name}?` : `Berapa nilai 1 ${detFruitB.name}?`}
+                        </span>
+                        <span className="text-sm sm:text-base font-display">= ?</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
+
+              {/* SISI KANAN: Grid Pilihan Jawaban 2x2 & Feedback */}
+              <div className="lg:col-span-6 flex flex-col justify-center space-y-2 lg:space-y-2.5 w-full shrink-0">
+                <span className="hidden lg:block text-xs font-black text-rose-800 uppercase tracking-wider">
+                  Pilih Jawaban yang Tepat:
+                </span>
+
+                {/* Grid Pilihan Jawaban 2x2 Kompak */}
+                <div className="w-full grid grid-cols-2 gap-2">
+                  {(activeTab === "kalkulasi" ? calcOptions : detOptions).map((opt) => {
+                    const isSelected = selectedAnswer === opt;
+                    const isThisCorrect = isCorrect && isSelected;
+                    const isThisWrong = isCorrect === false && isSelected;
+
+                    let btnStyle = "bg-white border-rose-200 text-slate-800 hover:bg-rose-50 shadow-[0_2px_0_0_#fecdd3]";
+                    if (isThisCorrect) {
+                      btnStyle = "bg-emerald-500 border-emerald-600 text-white shadow-[0_2px_0_0_#065f46]";
+                    } else if (isThisWrong) {
+                      btnStyle = "bg-rose-500 border-rose-600 text-white shadow-[0_2px_0_0_#9f1239]";
+                    }
+
+                    return (
+                      <button
+                        key={opt}
+                        onClick={() => handleSelectAnswer(opt)}
+                        className={`py-2 sm:py-2.5 lg:py-3 px-2 rounded-xl sm:rounded-2xl border-2 font-display font-black text-base sm:text-lg lg:text-xl flex items-center justify-center transition-all btn-chunky ${btnStyle}`}
+                      >
+                        <span>{opt}</span>
+                        {isThisCorrect && <CheckCircle2 className="w-4 h-4 ml-1.5 text-white shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Box Feedback Banner Ramping */}
+                <div className="min-h-[40px] h-[40px] sm:h-[44px] w-full shrink-0 flex items-center">
+                  {selectedAnswer ? (
+                    <div className={`p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border text-[11px] sm:text-xs font-medium flex items-center justify-between gap-1.5 w-full h-full shrink-0 ${
+                      isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
+                    }`}>
+                      <div className="flex items-center gap-1.5 overflow-hidden">
+                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        <span className="truncate">
+                          {isCorrect ? "Luar biasa! Jawabanmu benar (+30 Bintang)" : "Hampir tepat! Periksa kembali nilai buahnya!"}
+                        </span>
+                      </div>
+                      <button
+                        onClick={activeTab === "kalkulasi" ? newCalcQuestion : newDetQuestion}
+                        className="shrink-0 px-2.5 py-1 rounded-lg sm:rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs btn-chunky shadow-sm"
+                      >
+                        <span>Lanjut</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-slate-400 shrink-0">
+                      Pilih angka yang tepat di atas untuk menguji logikamu!
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </main>
 
-        {/* 5. Footer & Cheat Sheet Buah */}
+        {/* 5. Footer & Cheat Sheet / Petunjuk Bantuan */}
         <footer className="px-3 py-1.5 sm:px-5 sm:py-2 bg-rose-50/80 border-t border-rose-100 flex items-center justify-between text-xs text-rose-900 shrink-0">
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
-            <span className="text-[10px] font-black uppercase text-slate-500 shrink-0 mr-1">Nilai:</span>
-            {FRUIT_VARIABLES.slice(0, 5).map((f) => (
-              <span key={f.id} className="text-[10px] font-bold bg-white px-1.5 py-0.5 rounded border border-rose-200 shrink-0">
-                {f.name}={f.value}
-              </span>
-            ))}
-          </div>
+          {activeTab === "neraca" ? (
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none text-[10px] font-bold text-amber-900">
+              <span className="font-black uppercase text-slate-500 shrink-0">Beban:</span>
+              <span className="bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300 shrink-0">Peti [?] = Misteri</span>
+              <span className="bg-yellow-100 px-1.5 py-0.5 rounded border border-yellow-300 shrink-0">Kuningan = kg Tetap</span>
+              <span className="bg-cyan-100 px-1.5 py-0.5 rounded border border-cyan-300 shrink-0">Kristal/Kayu</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+              <span className="text-[10px] font-black uppercase text-slate-500 shrink-0 mr-1">Nilai:</span>
+              {FRUIT_VARIABLES.slice(0, 5).map((f) => (
+                <span key={f.id} className="text-[10px] font-bold bg-white px-1.5 py-0.5 rounded border border-rose-200 shrink-0">
+                  {f.name}={f.value}
+                </span>
+              ))}
+            </div>
+          )}
 
           <button
             onClick={() => setShowHint(!showHint)}
@@ -518,10 +1064,10 @@ export default function HitungCeriaPage() {
           </button>
         </footer>
 
-        {/* Popover Bantuan */}
+        {/* Popover Bantuan Edukatif */}
         {showHint && (
           <div className="px-4 py-2 bg-amber-50 border-t border-amber-200 text-xs font-semibold text-amber-900 shrink-0">
-            {activeTab === "kalkulasi" ? calcHint : detHint}
+            {activeTab === "kalkulasi" ? calcHint : activeTab === "detektif" ? detHint : scaleQuestion.hint}
           </div>
         )}
 
