@@ -222,13 +222,10 @@ export default function InteractiveScienceLobbyPage() {
         {/* Papan Kanvas Peta Laboratorium Sains (Aspect Ratio 819/835 Clean Full Frame) */}
         <div className="relative w-full max-w-2xl sm:max-w-2xl lg:max-w-3xl mx-auto aspect-[819/835] rounded-3xl sm:rounded-[36px] overflow-hidden border-4 sm:border-6 border-slate-800 shadow-2xl bg-slate-800">
           {/* Gambar Latar Belakang Ruangan Lab Sains Bersih Tanpa Bayangan Hitam */}
-          <Image
-            src="/images/science/lab_room_map.webp?v=2"
+          <img
+            src="/images/science/lab_room_clean.webp"
             alt="Peta Laboratorium Sains TobiQuest"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 819px"
-            className="object-cover pointer-events-none select-none"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           />
 
           {/* 5 Tombol Bulat Interaktif (Hotspot Nodes) - Klik Langsung Masuk */}
