@@ -76,6 +76,7 @@ export default function TobiQuestHomePage() {
         onOpenCertificate={() => setIsCertificateOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
         onOpenEvaluasi={() => router.push("/evaluasi")}
+        onOpenLaguNasional={() => router.push("/lagu-nasional")}
       />
 
       {/* Main Content Area */}

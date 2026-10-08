@@ -532,7 +532,7 @@ export const LEARNING_ZONES = [
   },
   {
     id: "lagunasional",
-    title: "Harmoni Nasional",
+    title: "Lagu Nasional",
     IconComponent: NationalMusicIcon,
     colorScheme: {
       bg: "bg-red-50 hover:bg-red-100/60",

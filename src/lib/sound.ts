@@ -135,6 +135,14 @@ class SoundEngine {
     this.playCelebration();
   }
 
+  public playVictory() {
+    this.playCelebration();
+  }
+
+  public playPop() {
+    this.playChime();
+  }
+
   // Native Web Speech API for Tobi Text-To-Speech (Indonesian voice)
   public speak(text: string, onStart?: () => void, onEnd?: () => void) {
     if (!this.speechEnabled) return;

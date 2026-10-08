@@ -9,7 +9,8 @@ import {
   Wifi, 
   Zap, 
   Star,
-  GraduationCap
+  GraduationCap,
+  Music
 } from "lucide-react";
 import { StudentProfile, AVAILABLE_AVATARS } from "@/lib/storage";
 import { sound } from "@/lib/sound";
@@ -20,6 +21,7 @@ interface NavbarProps {
   onOpenCertificate: () => void;
   onOpenProfile: () => void;
   onOpenEvaluasi?: () => void;
+  onOpenLaguNasional?: () => void;
 }
 
 export default function Navbar({
@@ -28,6 +30,7 @@ export default function Navbar({
   onOpenCertificate,
   onOpenProfile,
   onOpenEvaluasi,
+  onOpenLaguNasional,
 }: NavbarProps) {
   const [logoBounce, setLogoBounce] = useState(false);
   const [starBounce, setStarBounce] = useState(false);
@@ -160,6 +163,18 @@ export default function Navbar({
             <Award className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Piagam Prestasi</span>
           </button>
+
+          {/* Lagu Nasional Button */}
+          {onOpenLaguNasional && (
+            <button
+              onClick={onOpenLaguNasional}
+              className="hidden lg:flex h-8 sm:h-11 items-center justify-center gap-1.5 px-2.5 sm:px-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-extrabold text-[11px] sm:text-sm border-2 border-red-700 shadow-[0_2px_0_0_#991b1b] sm:shadow-[0_3px_0_0_#991b1b] btn-chunky hover:brightness-105 whitespace-nowrap shrink-0"
+              title="Panggung Lagu Nasional Anak: 12 Lagu Wajib & Video 4K"
+            >
+              <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+              <span>Lagu Nasional</span>
+            </button>
+          )}
 
           {/* Pusat Evaluasi Literasi Button */}
           {onOpenEvaluasi && (
