@@ -19,7 +19,6 @@ interface InteractiveSprite {
   name: string;
   route: string;
   socraticSpeech: string;
-  // Posisi tengah (X, Y) dalam persen terhadap background 9:16
   leftPercent: number;
   topPercent: number;
   widthClass: string;
@@ -27,16 +26,17 @@ interface InteractiveSprite {
   hoverGlow: string;
 }
 
-const SPRITE_HOTSPOTS: InteractiveSprite[] = [
+// Koordinat untuk Tampilan HP (Mobile) - Aspek Rasio 9:16
+const MOBILE_SPRITES: InteractiveSprite[] = [
   {
     id: "rantai-makanan",
     name: "1. Ekosistem",
     route: "/lab-sains/rantai-makanan",
     socraticSpeech: "Stasiun satu: Rantai Makanan dan Krisis Ekosistem!",
-    leftPercent: 25,
+    leftPercent: 35,
     topPercent: 22,
-    widthClass: "w-24 h-24 sm:w-32 sm:h-32",
-    iconSrc: "/images/science/icon_rantai.webp",
+    widthClass: "w-24 h-24 sm:w-28 sm:h-28",
+    iconSrc: "/images/science/sprite_rantai.png",
     hoverGlow: "drop-shadow-[0_0_20px_rgba(20,184,166,0.8)]",
   },
   {
@@ -44,10 +44,10 @@ const SPRITE_HOTSPOTS: InteractiveSprite[] = [
     name: "2. Siklus Air",
     route: "/lab-sains/siklus-air",
     socraticSpeech: "Stasiun dua: Simulasi Siklus Air Bumi!",
-    leftPercent: 75,
+    leftPercent: 78,
     topPercent: 22,
-    widthClass: "w-24 h-24 sm:w-32 sm:h-32",
-    iconSrc: "/images/science/icon_air.webp",
+    widthClass: "w-24 h-24 sm:w-28 sm:h-28",
+    iconSrc: "/images/science/sprite_air.png",
     hoverGlow: "drop-shadow-[0_0_20px_rgba(14,165,233,0.8)]",
   },
   {
@@ -55,10 +55,10 @@ const SPRITE_HOTSPOTS: InteractiveSprite[] = [
     name: "3. Lab Warna",
     route: "/lab-sains/warna",
     socraticSpeech: "Stasiun tiga: Lab Warna dan Pipet Ajaib!",
-    leftPercent: 20,
+    leftPercent: 25,
     topPercent: 62,
-    widthClass: "w-20 h-20 sm:w-28 sm:h-28", // Di atas meja kiri
-    iconSrc: "/images/science/icon_warna.webp",
+    widthClass: "w-24 h-24 sm:w-32 sm:h-32",
+    iconSrc: "/images/science/sprite_warna.png",
     hoverGlow: "drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]",
   },
   {
@@ -66,10 +66,10 @@ const SPRITE_HOTSPOTS: InteractiveSprite[] = [
     name: "4. Sirkuit Listrik",
     route: "/lab-sains/listrik",
     socraticSpeech: "Stasiun empat: Rakit Sirkuit Listrik!",
-    leftPercent: 50,
-    topPercent: 64,
-    widthClass: "w-20 h-20 sm:w-28 sm:h-28", // Di atas meja tengah
-    iconSrc: "/images/science/icon_listrik.webp",
+    leftPercent: 65,
+    topPercent: 63,
+    widthClass: "w-20 h-20 sm:w-28 sm:h-28",
+    iconSrc: "/images/science/sprite_listrik.png",
     hoverGlow: "drop-shadow-[0_0_20px_rgba(245,158,11,0.8)]",
   },
   {
@@ -77,11 +77,70 @@ const SPRITE_HOTSPOTS: InteractiveSprite[] = [
     name: "5. Lab Magnet",
     route: "/lab-sains/magnet",
     socraticSpeech: "Stasiun lima: Petualangan Magnet Hunter!",
-    leftPercent: 80,
-    topPercent: 74,
-    widthClass: "w-16 h-16 sm:w-24 sm:h-24", // Di atas meja kanan bawah
-    iconSrc: "/images/science/icon_magnet.webp",
+    leftPercent: 82,
+    topPercent: 82,
+    widthClass: "w-20 h-20 sm:w-24 sm:h-24",
+    iconSrc: "/images/science/sprite_magnet.png",
     hoverGlow: "drop-shadow-[0_0_20px_rgba(225,29,72,0.8)]",
+  },
+];
+
+// Koordinat untuk Tampilan Laptop (Desktop) - Aspek Rasio 16:9
+const DESKTOP_SPRITES: InteractiveSprite[] = [
+  {
+    id: "rantai-makanan",
+    name: "1. Ekosistem",
+    route: "/lab-sains/rantai-makanan",
+    socraticSpeech: "Stasiun satu: Rantai Makanan!",
+    leftPercent: 30,
+    topPercent: 25,
+    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
+    iconSrc: "/images/science/sprite_rantai.png",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(20,184,166,0.9)]",
+  },
+  {
+    id: "siklus-air",
+    name: "2. Siklus Air",
+    route: "/lab-sains/siklus-air",
+    socraticSpeech: "Stasiun dua: Siklus Air Bumi!",
+    leftPercent: 70,
+    topPercent: 25,
+    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
+    iconSrc: "/images/science/sprite_air.png",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(14,165,233,0.9)]",
+  },
+  {
+    id: "warna",
+    name: "3. Lab Warna",
+    route: "/lab-sains/warna",
+    socraticSpeech: "Stasiun tiga: Lab Warna!",
+    leftPercent: 22,
+    topPercent: 68,
+    widthClass: "md:w-40 md:h-40 lg:w-48 lg:h-48",
+    iconSrc: "/images/science/sprite_warna.png",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(16,185,129,0.9)]",
+  },
+  {
+    id: "listrik",
+    name: "4. Listrik",
+    route: "/lab-sains/listrik",
+    socraticSpeech: "Stasiun empat: Sirkuit Listrik!",
+    leftPercent: 50,
+    topPercent: 70,
+    widthClass: "md:w-32 md:h-32 lg:w-40 lg:h-40",
+    iconSrc: "/images/science/sprite_listrik.png",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(245,158,11,0.9)]",
+  },
+  {
+    id: "magnet",
+    name: "5. Magnet",
+    route: "/lab-sains/magnet",
+    socraticSpeech: "Stasiun lima: Magnet Hunter!",
+    leftPercent: 78,
+    topPercent: 82,
+    widthClass: "md:w-28 md:h-28 lg:w-36 lg:h-36",
+    iconSrc: "/images/science/sprite_magnet.png",
+    hoverGlow: "drop-shadow-[0_0_25px_rgba(225,29,72,0.9)]",
   },
 ];
 
@@ -112,7 +171,7 @@ export default function InteractiveScienceLobbyPage() {
     if (profile.audioEnabled) {
       sound.speak(sprite.socraticSpeech);
     }
-    // Timeout untuk memberi waktu animasi klik terlihat (active:scale) sebelum pindah halaman
+    // Waktu tunggu agar efek animasi klik terlihat sebelum pindah
     setTimeout(() => {
       router.push(sprite.route);
     }, 400);
@@ -121,52 +180,51 @@ export default function InteractiveScienceLobbyPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-slate-900 font-sans pb-10 select-none flex flex-col">
+    <div className="min-h-screen bg-[#758ba8] font-sans pb-10 select-none flex flex-col">
       {/* Top Navigation Header */}
-      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b-2 border-indigo-900 shadow-md no-print shrink-0">
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-40 bg-[#4e6480]/95 backdrop-blur-md border-b-2 border-[#33465e] shadow-md no-print shrink-0">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
               onClick={() => sound.playPop()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-bold border-2 border-slate-700 transition-all btn-chunky"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#33465e] hover:bg-[#25364d] text-white text-xs sm:text-sm font-bold border-2 border-[#25364d] transition-all"
               title="Kembali ke Beranda TobiQuest"
             >
-              <Home className="w-3.5 h-3.5 text-indigo-400" />
+              <Home className="w-3.5 h-3.5 text-blue-300" />
               <span className="hidden sm:inline">Beranda</span>
             </Link>
 
-            <div className="h-5 w-px bg-slate-700" />
+            <div className="h-5 w-px bg-[#758ba8]" />
 
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-slate-950 flex items-center justify-center font-black shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-300 text-slate-900 flex items-center justify-center font-black shadow-sm">
                 <Compass className="w-4 h-4" />
               </div>
               <div>
                 <h1 className="text-xs sm:text-sm font-black text-white leading-tight">
                   Peta Laboratorium Sains
                 </h1>
-                <p className="text-[10px] text-indigo-300 font-bold hidden sm:block">
-                  Ketuk objek di meja atau dinding untuk mulai eksperimen!
+                <p className="text-[10px] text-blue-200 font-bold hidden sm:block">
+                  Ketuk objek yang menyala untuk mulai!
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 text-amber-400 font-black text-xs sm:text-sm border border-slate-700 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#33465e] text-amber-400 font-black text-xs sm:text-sm border border-[#25364d] shadow-sm">
               <Star className="w-3.5 h-3.5 fill-amber-400" />
               <span>{profile.stars}</span>
             </div>
 
             <button
               onClick={handleToggleAudio}
-              className={`p-2 rounded-xl border transition-all btn-chunky flex items-center justify-center ${
+              className={`p-2 rounded-xl border transition-all flex items-center justify-center ${
                 profile.audioEnabled
-                  ? "bg-indigo-600 text-white border-indigo-500 shadow-sm"
-                  : "bg-slate-800 text-slate-400 border-slate-700"
+                  ? "bg-blue-500 text-white border-blue-400 shadow-sm"
+                  : "bg-[#33465e] text-slate-400 border-[#25364d]"
               }`}
-              title={profile.audioEnabled ? "Matikan Suara Tobi" : "Nyalakan Suara Tobi"}
             >
               {profile.audioEnabled ? (
                 <Volume2 className="w-4 h-4 text-yellow-300 animate-pulse" />
@@ -179,54 +237,85 @@ export default function InteractiveScienceLobbyPage() {
       </header>
 
       {/* Main Map Container */}
-      <main className="flex-1 w-full flex items-center justify-center pt-2 sm:pt-4 px-3">
-        {/* Papan Kanvas Peta Laboratorium (Aspect Ratio 9:16 untuk Vertical Image) */}
-        <div className="relative w-full max-w-md mx-auto aspect-[9/16] rounded-3xl overflow-hidden border-4 sm:border-6 border-slate-800 shadow-2xl bg-slate-800">
-          
-          {/* Latar Belakang Lab KOSONG (Background Saja) */}
+      <main className="flex-1 w-full flex items-center justify-center pt-2 sm:pt-6 px-3">
+        
+        {/* ======================================================== */}
+        {/* LAYOUT UNTUK HP (MOBILE ONLY) - Tampil di bawah layar md */}
+        {/* ======================================================== */}
+        <div className="relative w-full max-w-md mx-auto aspect-[9/16] rounded-3xl overflow-hidden border-4 border-[#33465e] shadow-2xl bg-[#4e6480] block md:hidden">
+          {/* Background KOSONG Mobile */}
           <img
-            src="/images/science/lab_empty_bg.jpg"
-            alt="Laboratorium Sains Kosong"
+            src="/images/science/lab_empty_bg_mobile.jpg"
+            alt="Laboratorium Mobile"
             className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           />
 
-          {/* Label Panduan */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-[10px] sm:text-xs font-bold text-indigo-300 flex items-center gap-1.5 shadow-lg whitespace-nowrap pointer-events-none">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-[10px] font-bold text-blue-200 flex items-center gap-1.5 shadow-lg whitespace-nowrap pointer-events-none">
             <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
             Sentuh objek yang menyala!
           </div>
 
-          {/* Sprite Interaktif Transparan (Objek-Objek yang Hidup) */}
-          {SPRITE_HOTSPOTS.map((sprite) => (
+          {/* Sprite Components Mobile */}
+          {MOBILE_SPRITES.map((sprite) => (
             <Link
               key={sprite.id}
               href={sprite.route}
               onClick={(e) => handleSpriteClick(sprite, e)}
-              style={{
-                left: `${sprite.leftPercent}%`,
-                top: `${sprite.topPercent}%`,
-              }}
-              // Group untuk mendeteksi hover dan active pada container koordinat
+              style={{ left: `${sprite.leftPercent}%`, top: `${sprite.topPercent}%` }}
               className="absolute z-20 group cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
-              title={sprite.name}
             >
-              {/* Gambar Objek (Transparan PNG/WebP) yang Hidup */}
-              {/* Saat hover: membesar (scale-125), naik sedikit (-translate-y-2), dan bercahaya (hoverGlow) */}
-              {/* Saat klik (active): mengecil (scale-90) seperti ditekan */}
+              {/* Animasi membesar, melompat, & bersinar */}
               <img
                 src={sprite.iconSrc}
                 alt={sprite.name}
-                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-125 group-hover:-translate-y-2 group-active:scale-90 drop-shadow-md group-hover:${sprite.hoverGlow}`}
+                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-125 group-hover:-translate-y-3 group-active:scale-90 group-hover:${sprite.hoverGlow}`}
               />
-
-              {/* Tooltip Nama Stasiun (Muncul saat Hover) */}
-              <div className="absolute -bottom-6 px-2 py-1 bg-slate-900/90 text-white font-bold text-[10px] sm:text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-indigo-500/50">
+              <div className="absolute -bottom-6 px-2 py-1 bg-slate-900/90 text-white font-bold text-[10px] rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-blue-500/50">
                 {sprite.name}
               </div>
             </Link>
           ))}
-
         </div>
+
+
+        {/* ======================================================== */}
+        {/* LAYOUT UNTUK LAPTOP (DESKTOP ONLY) - Tampil di layar md+ */}
+        {/* ======================================================== */}
+        <div className="relative w-full max-w-6xl mx-auto aspect-[16/9] rounded-[2rem] overflow-hidden border-6 border-[#33465e] shadow-2xl bg-[#4e6480] hidden md:block">
+          {/* Background KOSONG Desktop */}
+          <img
+            src="/images/science/lab_empty_bg_desktop.jpg"
+            alt="Laboratorium Desktop"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+          />
+
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 px-6 py-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-sm font-bold text-blue-200 flex items-center gap-2 shadow-lg whitespace-nowrap pointer-events-none">
+            <Sparkles className="w-5 h-5 text-yellow-400" />
+            Sentuh objek yang menyala untuk bereksperimen!
+          </div>
+
+          {/* Sprite Components Desktop */}
+          {DESKTOP_SPRITES.map((sprite) => (
+            <Link
+              key={sprite.id}
+              href={sprite.route}
+              onClick={(e) => handleSpriteClick(sprite, e)}
+              style={{ left: `${sprite.leftPercent}%`, top: `${sprite.topPercent}%` }}
+              className="absolute z-20 group cursor-pointer -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
+            >
+              {/* Animasi membesar, melompat, & bersinar */}
+              <img
+                src={sprite.iconSrc}
+                alt={sprite.name}
+                className={`${sprite.widthClass} object-contain transition-all duration-300 ease-out transform group-hover:scale-125 group-hover:-translate-y-4 group-active:scale-90 group-hover:${sprite.hoverGlow}`}
+              />
+              <div className="absolute -bottom-8 px-3 py-1.5 bg-slate-900/90 text-white font-bold text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg pointer-events-none border border-blue-500/50">
+                {sprite.name}
+              </div>
+            </Link>
+          ))}
+        </div>
+
       </main>
     </div>
   );
