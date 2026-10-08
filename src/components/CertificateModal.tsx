@@ -111,110 +111,116 @@ export default function CertificateModal({
         )}
 
         {/* THE CERTIFICATE (Ready for Screen and Print) */}
-        <div className="certificate-container p-6 sm:p-10 md:p-12 bg-[#fffdfa] relative text-center">
+        <div 
+          id="printable-certificate"
+          className="certificate-container p-6 sm:p-10 md:p-12 bg-[#fffdfa] relative text-center"
+        >
           {/* Ornate Double Border */}
-          <div className="border-4 sm:border-8 border-amber-500 rounded-3xl p-5 sm:p-8 md:p-10 relative bg-radial from-amber-50/50 to-white">
+          <div 
+            id="printable-certificate-inner"
+            className="border-4 sm:border-8 border-amber-500 rounded-3xl p-5 sm:p-8 md:p-10 relative bg-radial from-amber-50/50 to-white"
+          >
             {/* Corner Decorative Ornaments */}
-            <div className="absolute top-2 left-2 text-amber-500 text-xl select-none">✦</div>
-            <div className="absolute top-2 right-2 text-amber-500 text-xl select-none">✦</div>
-            <div className="absolute bottom-2 left-2 text-amber-500 text-xl select-none">✦</div>
-            <div className="absolute bottom-2 right-2 text-amber-500 text-xl select-none">✦</div>
+            <div className="absolute top-2 left-2 text-amber-500 text-xl print:text-base select-none">✦</div>
+            <div className="absolute top-2 right-2 text-amber-500 text-xl print:text-base select-none">✦</div>
+            <div className="absolute bottom-2 left-2 text-amber-500 text-xl print:text-base select-none">✦</div>
+            <div className="absolute bottom-2 right-2 text-amber-500 text-xl print:text-base select-none">✦</div>
 
             {/* Header Logos */}
-            <div className="flex items-center justify-between border-b-2 border-amber-300 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b-2 border-amber-300 pb-3 mb-4 print:pb-1.5 print:mb-2">
               <div className="text-left">
-                <span className="text-xs font-extrabold text-red-600 tracking-wider uppercase block">
+                <span className="text-xs print:text-[10px] font-extrabold text-red-600 tracking-wider uppercase block">
                   Telkomsel Indonesia
                 </span>
-                <span className="text-[10px] text-slate-500 font-bold block">
+                <span className="text-[10px] print:text-[8px] text-slate-500 font-bold block">
                   M-ONE Coding Competition 2026
                 </span>
               </div>
 
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-400 text-amber-900 text-xs font-black">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <div className="flex items-center gap-1.5 px-3 py-1 print:px-2 print:py-0.5 rounded-full bg-amber-100 border border-amber-400 text-amber-900 text-xs print:text-[10px] font-black">
+                <Sparkles className="w-3.5 h-3.5 print:w-3 print:h-3 text-amber-600" />
                 <span>TobiQuest EdTech</span>
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-extrabold text-sky-700 tracking-wider uppercase block">
+                <span className="text-xs print:text-[10px] font-extrabold text-sky-700 tracking-wider uppercase block">
                   Kurikulum Merdeka SD
                 </span>
-                <span className="text-[10px] text-slate-500 font-bold block">
+                <span className="text-[10px] print:text-[8px] text-slate-500 font-bold block">
                   Joyful & Socratic Learning
                 </span>
               </div>
             </div>
 
             {/* Certificate Title */}
-            <div className="my-4">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-amber-900 uppercase">
+            <div className="my-3 print:my-1">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl print:text-3xl font-black font-display tracking-tight text-amber-900 uppercase">
                 Piagam Penghargaan
               </h1>
-              <p className="text-xs sm:text-sm font-bold tracking-widest text-amber-700 uppercase mt-1">
+              <p className="text-xs sm:text-sm print:text-[10px] font-bold tracking-widest text-amber-700 uppercase mt-0.5">
                 Bintang Prestasi Penjelajah Cilik
               </p>
             </div>
 
             {/* Recipient */}
-            <p className="text-xs sm:text-sm text-slate-600 font-medium italic mt-4">
+            <p className="text-xs sm:text-sm print:text-[10px] text-slate-600 font-medium italic mt-2 print:mt-1">
               Dengan penuh kebanggaan dan apresiasi dianugerahkan kepada:
             </p>
 
-            <div className="my-3 sm:my-5">
-              <span className="inline-block text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 border-b-4 border-amber-400 pb-2 px-6 font-display">
+            <div className="my-3 sm:my-5 print:my-1.5">
+              <span className="inline-block text-2xl sm:text-4xl md:text-5xl print:text-3xl font-extrabold text-slate-900 border-b-4 print:border-b-2 border-amber-400 pb-1 px-6 font-display">
                 {profile.name}
               </span>
-              <p className="text-xs sm:text-sm font-bold text-sky-700 mt-2">
+              <p className="text-xs sm:text-sm print:text-[10px] font-bold text-sky-700 mt-1">
                 {profile.grade}
               </p>
             </div>
 
             {/* Citation */}
-            <p className="max-w-2xl mx-auto text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+            <p className="max-w-2xl mx-auto text-xs sm:text-sm print:text-[10px] print:leading-tight text-slate-700 leading-relaxed font-medium">
               Atas semangat belajar, rasa ingin tahu yang tinggi, dan keberhasilan luar biasa dalam menuntaskan misi eksplorasi di <strong>Lab Sains Cilik</strong>, <strong>Petualangan Berhitung</strong>, serta <strong>Tebak Cerita Nusantara</strong>.
             </p>
 
             {/* Star Honor Badge */}
-            <div className="inline-flex items-center gap-2 my-5 px-5 py-2.5 rounded-2xl bg-amber-100 border-2 border-amber-400 text-amber-950 font-black text-sm sm:text-base shadow-sm">
-              <Star className="w-5 h-5 fill-amber-500 text-amber-500" />
+            <div className="inline-flex items-center gap-2 my-4 print:my-1.5 px-5 py-2 print:px-3 print:py-1 rounded-2xl bg-amber-100 border-2 border-amber-400 text-amber-950 font-black text-sm sm:text-base print:text-xs shadow-sm">
+              <Star className="w-4 h-4 print:w-3.5 print:h-3.5 fill-amber-500 text-amber-500" />
               <span>Pencapaian: {profile.stars} Bintang Kehormatan</span>
-              <Star className="w-5 h-5 fill-amber-500 text-amber-500" />
+              <Star className="w-4 h-4 print:w-3.5 print:h-3.5 fill-amber-500 text-amber-500" />
             </div>
 
             {/* Signatures & Seal Section */}
-            <div className="grid grid-cols-3 items-end gap-4 mt-6 pt-4 border-t border-amber-200">
+            <div className="grid grid-cols-3 items-end gap-4 mt-4 print:mt-1.5 pt-3 print:pt-1 border-t border-amber-200">
               {/* Left Signer: Mascot Tobi */}
               <div className="text-center">
-                <div className="text-2xl mb-1">🤖</div>
-                <div className="font-display font-bold text-xs sm:text-sm text-slate-800">
+                <div className="text-2xl print:text-lg mb-0.5">🤖</div>
+                <div className="font-display font-bold text-xs sm:text-sm print:text-[10px] text-slate-800">
                   Tobi si Robot
                 </div>
-                <p className="text-[10px] sm:text-xs text-slate-500 font-semibold">
+                <p className="text-[10px] sm:text-xs print:text-[8px] text-slate-500 font-semibold">
                   AI Socratic Kids Mentor
                 </p>
               </div>
 
               {/* Center Seal */}
               <div className="flex flex-col items-center justify-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-amber-600 bg-gradient-to-br from-amber-400 to-yellow-500 flex flex-col items-center justify-center shadow-md text-amber-950">
-                  <Award className="w-6 h-6 sm:w-8 sm:h-8" />
-                  <span className="text-[8px] font-black uppercase tracking-tighter">RESMI</span>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 print:w-12 print:h-12 rounded-full border-4 print:border-2 border-amber-600 bg-gradient-to-br from-amber-400 to-yellow-500 flex flex-col items-center justify-center shadow-md text-amber-950">
+                  <Award className="w-6 h-6 sm:w-8 sm:h-8 print:w-5 print:h-5" />
+                  <span className="text-[8px] print:text-[6px] font-black uppercase tracking-tighter">RESMI</span>
                 </div>
-                <span className="text-[9px] text-amber-800 font-bold mt-1">
+                <span className="text-[9px] print:text-[8px] text-amber-800 font-bold mt-1">
                   M-ONE Telkomsel
                 </span>
               </div>
 
               {/* Right Signer: Competition Committee */}
               <div className="text-center">
-                <p className="text-[10px] sm:text-xs text-slate-500 mb-1">
+                <p className="text-[10px] sm:text-xs print:text-[8px] text-slate-500 mb-0.5">
                   {todayStr}
                 </p>
-                <div className="font-display font-bold text-xs sm:text-sm text-slate-800">
+                <div className="font-display font-bold text-xs sm:text-sm print:text-[10px] text-slate-800">
                   Komite Juri M-ONE
                 </div>
-                <p className="text-[10px] sm:text-xs text-slate-500 font-semibold">
+                <p className="text-[10px] sm:text-xs print:text-[8px] text-slate-500 font-semibold">
                   Innovating Education Tech
                 </p>
               </div>
