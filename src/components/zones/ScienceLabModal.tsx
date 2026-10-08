@@ -2579,12 +2579,17 @@ export default function ScienceLabModal({
             )}
 
             {/* Papan Alur Rantai Makanan (Background Ilustrasi WebP dengan Lingkaran Interaktif) */}
-            <div className="relative w-full aspect-[1024/571] rounded-3xl overflow-hidden border-2 border-slate-200 shadow-lg mb-4 select-none bg-slate-900">
+            <div className={`relative w-full aspect-[1024/571] rounded-3xl overflow-hidden border-2 border-slate-200 shadow-lg mb-4 select-none ${
+              selectedEcosystemId === "sawah" ? "bg-emerald-100" : "bg-sky-900"
+            }`}>
               {/* Latar Belakang Gambar WebP Sesuai Ekosistem */}
               <img
-                src={selectedEcosystemId === "sawah" ? "/images/foodchain/sawah.webp" : "/images/foodchain/laut.webp"}
+                key={selectedEcosystemId}
+                src={selectedEcosystemId === "sawah" ? "/images/foodchain/sawah.webp?v=2" : "/images/foodchain/laut.webp?v=2"}
                 alt={`Papan Rantai Makanan ${activeEcosystem.name}`}
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                loading="eager"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-300"
               />
 
               {/* Overlay Efek Krisis pada Papan jika simulasi aktif */}
