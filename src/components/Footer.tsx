@@ -25,10 +25,10 @@ export default function Footer({
           {/* Col 1: About */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-3">
-              <div className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_2px_0_0_#c2410c]">
-                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-50" strokeWidth={2.5} />
+              <div className="flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white shadow-[0_2px_0_0_#c2410c] sm:shadow-[0_3px_0_0_#c2410c]">
+                <Compass className="w-4 h-4 sm:w-6 sm:h-6 text-amber-50" strokeWidth={2.5} />
               </div>
-              <span className="text-2xl font-black font-display bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-black font-display bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 bg-clip-text text-transparent">
                 TobiQuest
               </span>
             </div>

@@ -18,8 +18,6 @@ interface NavbarProps {
   onUpdateProfile: (data: Partial<StudentProfile>) => void;
   onOpenCertificate: () => void;
   onOpenProfile: () => void;
-  onOpenEvaluasi?: () => void;
-  onOpenLaguNasional?: () => void;
 }
 
 export default function Navbar({
@@ -27,8 +25,6 @@ export default function Navbar({
   onUpdateProfile,
   onOpenCertificate,
   onOpenProfile,
-  onOpenEvaluasi,
-  onOpenLaguNasional,
 }: NavbarProps) {
   const [logoBounce, setLogoBounce] = useState(false);
   const [starBounce, setStarBounce] = useState(false);

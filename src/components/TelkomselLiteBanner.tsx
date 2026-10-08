@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Zap, Wifi, ShieldCheck, HeartHandshake, CheckCircle2 } from "lucide-react";
+import { Zap, Wifi, CheckCircle2 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 interface TelkomselLiteBannerProps {
