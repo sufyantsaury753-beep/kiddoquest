@@ -7,17 +7,14 @@ import {
   Home, 
   Star, 
   Volume2, 
-  VolumeX,
-  Calculator,
-  Scale,
-  Search
+  VolumeX 
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 export type MathStationId = "lobby" | "kalkulasi" | "neraca" | "detektif";
 
 interface MathNavHeaderProps {
-  activeStation: MathStationId;
+  activeStation?: MathStationId;
   stars: number;
   audioEnabled: boolean;
   onToggleAudio: () => void;
@@ -26,42 +23,17 @@ interface MathNavHeaderProps {
 }
 
 export default function MathNavHeader({
-  activeStation,
   stars,
   audioEnabled,
   onToggleAudio,
   stationTitle,
   stationSubtitle,
 }: MathNavHeaderProps) {
-  const stations = [
-    {
-      id: "kalkulasi" as const,
-      label: "Kalkulasi Buah",
-      shortLabel: "Kalkulasi",
-      href: "/hitung-ceria/kalkulasi",
-      icon: Calculator,
-    },
-    {
-      id: "neraca" as const,
-      label: "Timbangan Neraca",
-      shortLabel: "Neraca",
-      href: "/hitung-ceria/neraca",
-      icon: Scale,
-    },
-    {
-      id: "detektif" as const,
-      label: "Detektif Aljabar",
-      shortLabel: "Detektif",
-      href: "/hitung-ceria/detektif",
-      icon: Search,
-    },
-  ];
-
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-200/80 shadow-md no-print">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-2">
         {/* Tombol Navigasi Keluar: Kembali ke Peta Kelas Hitung & Beranda */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <Link
             href="/hitung-ceria"
             replace
@@ -85,7 +57,7 @@ export default function MathNavHeader({
           </Link>
 
           {stationTitle && (
-            <div className="hidden xl:block ml-2 pl-3 border-l-2 border-slate-200">
+            <div className="hidden lg:block ml-2 pl-3 border-l-2 border-slate-200">
               <h1 className="text-sm font-black text-slate-800 font-display leading-tight">
                 {stationTitle}
               </h1>
@@ -98,33 +70,8 @@ export default function MathNavHeader({
           )}
         </div>
 
-        {/* Quick Switcher Antar Stasiun */}
-        <div className="flex items-center gap-1 overflow-x-auto py-0.5 scrollbar-none">
-          {stations.map((st) => {
-            const Icon = st.icon;
-            const isActive = activeStation === st.id;
-            return (
-              <Link
-                key={st.id}
-                href={st.href}
-                replace
-                onClick={() => sound.playChime()}
-                className={`h-8 sm:h-9 px-2 sm:px-3 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all btn-chunky shrink-0 ${
-                  isActive
-                    ? "bg-rose-500 text-white border-2 border-rose-600 shadow-[0_2px_0_0_#9f1239]"
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-2 border-slate-300"
-                }`}
-              >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-white" : "text-slate-600"}`} />
-                <span className="hidden md:inline">{st.label}</span>
-                <span className="md:hidden">{st.shortLabel}</span>
-              </Link>
-            );
-          })}
-        </div>
-
         {/* Indikator Bintang & Tombol Audio Narasi */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <div
             className="h-8 sm:h-9 px-2 sm:px-3 rounded-xl bg-amber-400 text-amber-950 font-black text-xs sm:text-sm border-2 border-amber-500 shadow-[0_2px_0_0_#b45309] flex items-center gap-1.5 shrink-0"
             title="Total Bintang Prestasi Siswa"
