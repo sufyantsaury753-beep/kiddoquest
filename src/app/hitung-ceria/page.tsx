@@ -5,7 +5,6 @@ import Link from "next/link";
 import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
-  Sparkles, 
   Star, 
   Volume2, 
   Shuffle, 
@@ -869,7 +868,11 @@ export default function HitungCeriaPage() {
                       isScaleCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
                     }`}>
                       <div className="flex items-center gap-1.5 overflow-hidden">
-                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        {isScaleCorrect ? (
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-600" />
+                        ) : (
+                          <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        )}
                         <span className="truncate">
                           {isScaleCorrect
                             ? `Seimbang sempurna! Peti = ${scaleQuestion.correctAnswer} kg (+35 Bintang)`
@@ -1012,7 +1015,11 @@ export default function HitungCeriaPage() {
                       isCorrect ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950"
                     }`}>
                       <div className="flex items-center gap-1.5 overflow-hidden">
-                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        {isCorrect ? (
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-emerald-600" />
+                        ) : (
+                          <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-600" />
+                        )}
                         <span className="truncate">
                           {isCorrect ? "Luar biasa! Jawabanmu benar (+30 Bintang)" : "Hampir tepat! Periksa kembali nilai buahnya!"}
                         </span>

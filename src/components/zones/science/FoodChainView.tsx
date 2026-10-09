@@ -9,7 +9,8 @@ import {
   Shuffle, 
   AlertTriangle, 
   RotateCcw, 
-  Sparkles, 
+  Zap, 
+  Compass, 
   CheckCircle2, 
   Fish, 
   CloudRain, 
@@ -806,7 +807,7 @@ export default function FoodChainView({
               {isCurrentBurst && (
                 <div className="absolute -top-10 sm:-top-12 z-30 animate-bounce pointer-events-none whitespace-nowrap">
                   <div className="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-black text-[9px] sm:text-xs shadow-2xl border-2 border-amber-600 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-amber-900" />
+                    <Zap className="w-3 h-3 text-amber-900" />
                     <span>{actionBurst.text}</span>
                   </div>
                 </div>
@@ -1106,7 +1107,7 @@ export default function FoodChainView({
               onClick={() => resetFoodChain(selectedEcosystemId === "sawah" ? "laut" : "sawah")}
               className="py-2 px-4 rounded-xl bg-amber-400 text-amber-950 font-black text-xs sm:text-sm border-2 border-amber-500 btn-chunky flex items-center gap-1.5 shadow-sm"
             >
-              <Sparkles className="w-4 h-4 text-amber-900" />
+              <Compass className="w-4 h-4 text-amber-900" />
               <span>
                 Jelajahi Ekosistem {selectedEcosystemId === "sawah" ? "Laut" : "Sawah"}
               </span>

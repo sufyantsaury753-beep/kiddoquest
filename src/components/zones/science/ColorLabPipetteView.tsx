@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { 
   RotateCcw, 
-  Sparkles, 
+  FlaskConical, 
   Trophy, 
   CheckCircle2, 
   Volume2, 
@@ -363,7 +363,7 @@ export default function ColorLabPipetteView({
             style={{ backgroundColor: activeQuest.targetHex }}
             className="w-12 h-12 rounded-2xl border-3 border-white shadow-md flex items-center justify-center shrink-0 animate-soft-bounce"
           >
-            <Sparkles className="w-6 h-6 text-white drop-shadow" />
+            <FlaskConical className="w-6 h-6 text-white drop-shadow" />
           </div>
 
           <div>
@@ -528,7 +528,7 @@ export default function ColorLabPipetteView({
               style={{ backgroundColor: mixedResult?.hex }}
             >
               {mixedResult ? (
-                <Sparkles className="w-6 h-6 text-white drop-shadow animate-pulse" />
+                <FlaskConical className="w-6 h-6 text-white drop-shadow animate-pulse" />
               ) : (
                 <span className="text-base font-black">?</span>
               )}
@@ -613,7 +613,7 @@ export default function ColorLabPipetteView({
             {isFizzing && (
               <div className="absolute inset-x-4 bottom-8 top-16 pointer-events-none flex flex-col items-center justify-end z-20">
                 <span className="px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black animate-bounce mb-2">
-                  ✨ Reaksi Kimia!
+                  Reaksi Percobaan Kimia!
                 </span>
                 <div className="w-full h-20 relative">
                   <div className="absolute bottom-2 left-6 w-4 h-4 rounded-full bg-white/90 border border-emerald-400 animate-ping" />
@@ -632,8 +632,8 @@ export default function ColorLabPipetteView({
                 disabled={isStirring}
                 className="py-3 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 hover:from-emerald-400 hover:to-teal-300 text-white font-black text-sm sm:text-base border-3 border-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.9)] animate-pulse btn-chunky flex items-center gap-2 cursor-pointer"
               >
-                <Sparkles className="w-5 h-5 text-yellow-300 animate-spin" />
-                <span>{isStirring ? "Mengaduk Pusaran..." : "✨ ADUK RAMUAN AJAIB! ✨"}</span>
+                <FlaskConical className="w-5 h-5 text-yellow-300 animate-bounce" />
+                <span>{isStirring ? "Mengaduk Pusaran..." : "ADUK RAMUAN WARNA!"}</span>
               </button>
             )}
 

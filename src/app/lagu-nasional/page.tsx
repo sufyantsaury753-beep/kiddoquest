@@ -8,7 +8,7 @@ import {
   Play,
   Star,
   Music,
-  Sparkles,
+  Heart,
   BookOpen,
   CheckCircle2,
   Volume2,
@@ -166,7 +166,6 @@ export default function LaguNasionalPage() {
               <h1 className="text-sm sm:text-xl md:text-2xl font-black font-display text-slate-800 tracking-tight">
                 Panggung Lagu Nasional
               </h1>
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 hidden sm:inline" />
             </div>
             <p className="text-[10px] sm:text-xs text-slate-500 font-bold hidden sm:block">
               11 Lagu Wajib & Perjuangan Anak Indonesia (MJP Advertising Channel)
@@ -454,7 +453,7 @@ export default function LaguNasionalPage() {
                 {/* Kotak Makna Karakter Kebangsaan */}
                 <div className="bg-rose-50/70 rounded-2xl p-3.5 sm:p-4 border-2 border-rose-200 space-y-1.5">
                   <div className="flex items-center gap-1.5 text-rose-800">
-                    <Sparkles className="w-3.5 h-3.5 text-rose-600" />
+                    <Heart className="w-3.5 h-3.5 text-rose-600" />
                     <h4 className="text-xs font-black uppercase tracking-wider">
                       Makna Karakter Kebangsaan:
                     </h4>

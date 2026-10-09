@@ -8,7 +8,6 @@ import {
   Lightbulb, 
   Info, 
   RotateCcw, 
-  Sparkles, 
   Check, 
   Volume2 
 } from "lucide-react";

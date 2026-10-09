@@ -14,7 +14,6 @@ import {
   ArrowRight, 
   ArrowLeft, 
   RotateCcw, 
-  Sparkles, 
   Compass, 
   Heart, 
   Shield, 
@@ -379,7 +378,7 @@ export default function EvaluasiModal({
                   </div>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-indigo-300 text-xs font-bold text-indigo-700 shadow-sm flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-amber-500" />
+                  <BookOpen className="w-4 h-4 text-indigo-600" />
                   <span>300+ Bank Soal SD</span>
                 </div>
               </div>

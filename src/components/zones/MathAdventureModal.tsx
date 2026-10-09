@@ -5,16 +5,15 @@ import confetti from "canvas-confetti";
 import { 
   X, 
   RotateCcw, 
-  Sparkles, 
   Star, 
   CheckCircle, 
   Volume2, 
   HelpCircle, 
-  Shuffle,
-  ArrowRight,
-  Lightbulb,
-  Search,
-  Calculator
+  Shuffle, 
+  ArrowRight, 
+  Lightbulb, 
+  Search, 
+  Calculator 
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 

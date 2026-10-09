@@ -8,7 +8,7 @@ import {
   Utensils,
   Landmark,
   Volume2,
-  Sparkles,
+  Lightbulb,
   CheckCircle2,
   Shuffle,
   ArrowRight,
@@ -487,7 +487,7 @@ export default function CultureStoriesModal({
                     {/* Fakta Edukasi & Penjelasan Sejarah / Rasa */}
                     <div className="bg-white/85 rounded-2xl p-3.5 sm:p-4 border border-emerald-300 space-y-2">
                       <div className="flex items-center gap-1.5 text-xs font-black text-emerald-800 uppercase tracking-wider">
-                        <Sparkles className="w-4 h-4 text-emerald-600" />
+                        <BookOpen className="w-4 h-4 text-emerald-600" />
                         <span>Fakta Edukasi Nusantara:</span>
                       </div>
                       <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed">
@@ -508,7 +508,7 @@ export default function CultureStoriesModal({
                 ) : (
                   <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-950 space-y-2 shadow-sm">
                     <div className="flex items-center gap-2">
-                      <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
+                      <Lightbulb className="w-5 h-5 text-amber-600 shrink-0" />
                       <span className="text-sm sm:text-base font-black text-amber-900">
                         Hampir Tepat! Yuk Coba Tebak Lagi
                       </span>

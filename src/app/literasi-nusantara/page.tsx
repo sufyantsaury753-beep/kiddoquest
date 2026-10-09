@@ -13,7 +13,10 @@ import {
   Star,
   Utensils,
   Landmark,
-  Sparkles,
+  Compass,
+  BookOpen,
+  Lightbulb,
+  Search,
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 import { DATA_LITERASI_NUSANTARA, SoalNusantara } from "@/data/literasiNusantaraData";
@@ -376,7 +379,7 @@ export default function LiterasiNusantaraPage() {
             {/* Kotak Pertanyaan Misi Detektif */}
             <div className="bg-gradient-to-r from-purple-100/80 via-indigo-50/80 to-purple-50 p-3 sm:p-4 rounded-2xl sm:rounded-3xl border-2 border-purple-200 text-left shadow-sm">
               <div className="flex items-center gap-1.5 mb-1">
-                <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                <Search className="w-3.5 h-3.5 text-purple-600" />
                 <span className="text-[10px] sm:text-xs font-black uppercase text-purple-700 tracking-wider">
                   Misi Detektif Daerah:
                 </span>
@@ -464,7 +467,7 @@ export default function LiterasiNusantaraPage() {
 
                     <div className="bg-white/90 rounded-2xl p-3 border border-emerald-200 shadow-xs">
                       <div className="flex items-start gap-2">
-                        <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                        <BookOpen className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">
                           {currentSoal.funFact}
                         </p>
@@ -475,7 +478,7 @@ export default function LiterasiNusantaraPage() {
                   /* Kotak Petunjuk Sokrates saat Salah */
                   <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-3 sm:p-3.5 shadow-sm text-left flex items-start gap-2.5 animate-in fade-in duration-150">
                     <div className="w-7 h-7 rounded-lg bg-amber-400/30 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
-                      <Sparkles className="w-4 h-4 text-amber-600" />
+                      <Lightbulb className="w-4 h-4 text-amber-600" />
                     </div>
                     <div className="flex-1">
                       <h5 className="font-black text-xs sm:text-sm text-amber-950 mb-0.5">
@@ -490,7 +493,7 @@ export default function LiterasiNusantaraPage() {
               ) : (
                 /* Panduan Ringan Sebelum Memilih */
                 <div className="bg-purple-50/70 border-2 border-purple-200/80 rounded-2xl p-3 text-center text-xs text-purple-900 font-bold flex items-center justify-center gap-2 shadow-xs">
-                  <Sparkles className="w-4 h-4 text-purple-500" />
+                  <Compass className="w-4 h-4 text-purple-500" />
                   <span>Pilih salah satu jawaban di atas untuk memecahkan misi detektif!</span>
                 </div>
               )}

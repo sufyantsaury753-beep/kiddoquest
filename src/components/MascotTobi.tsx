@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Volume2, Sparkles, HelpCircle, Heart, Lightbulb, Compass } from "lucide-react";
+import { Volume2, HelpCircle, Heart, Lightbulb, Compass } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 interface MascotTobiProps {
@@ -163,7 +163,7 @@ export default function MascotTobi({
             <div className="hidden md:block absolute -left-3 top-8 w-6 h-6 bg-white border-l-3 border-b-3 border-amber-300 transform rotate-45" />
 
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
+              <Lightbulb className="w-5 h-5 text-amber-500 fill-amber-400" />
               <h3 className="text-base sm:text-lg font-black font-display text-slate-800">
                 Kata Tobi Hari Ini:
               </h3>

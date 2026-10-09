@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Printer, Award, Sparkles, Star, CheckCircle } from "lucide-react";
+import { X, Printer, Award, Star, CheckCircle } from "lucide-react";
 import { StudentProfile } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
@@ -138,7 +138,7 @@ export default function CertificateModal({
               </div>
 
               <div className="flex items-center gap-1.5 px-3 py-1 print:px-2 print:py-0.5 rounded-full bg-amber-100 border border-amber-400 text-amber-900 text-xs print:text-[10px] font-black">
-                <Sparkles className="w-3.5 h-3.5 print:w-3 print:h-3 text-amber-600" />
+                <Award className="w-3.5 h-3.5 print:w-3 print:h-3 text-amber-600" />
                 <span>TobiQuest EdTech</span>
               </div>
 

@@ -5,7 +5,6 @@ import confetti from "canvas-confetti";
 import { 
   X, 
   Orbit, 
-  Sparkles, 
   Volume2, 
   Star, 
   CheckCircle2, 
@@ -303,8 +302,8 @@ export default function SolarSystemModal({
         <div className="mb-6 bg-slate-950/80 rounded-2xl p-3 sm:p-4 border border-indigo-900/80">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-black text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-              Sentuh Objek Antariksa untuk Menjelajah:
+              <Orbit className="w-3.5 h-3.5 text-yellow-400" />
+              Jelajahi Objek Antariksa:
             </span>
             <span className="text-[11px] text-slate-400 font-semibold">
               Geser ke kanan ➔

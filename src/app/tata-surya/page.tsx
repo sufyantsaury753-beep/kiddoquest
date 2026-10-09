@@ -6,7 +6,6 @@ import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
   Orbit, 
-  Sparkles, 
   Volume2, 
   Star, 
   CheckCircle2, 
@@ -329,7 +328,7 @@ export default function TataSuryaPage() {
 
           {/* Petunjuk Interaktif Swipe / Ketuk */}
           <div className="mt-3 sm:mt-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-800/50 text-[11px] sm:text-xs text-indigo-300 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+            <Volume2 className="w-3.5 h-3.5 text-yellow-400" />
             <span>Geser layar atau ketuk planet untuk mendengar suara Tobi!</span>
           </div>
         </div>

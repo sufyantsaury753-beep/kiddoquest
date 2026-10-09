@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import { 
   Lightbulb, 
-  Sparkles, 
   CheckCircle2, 
   HelpCircle, 
   Volume2, 
@@ -276,7 +275,7 @@ export default function SocraticMentorBox({
                 <h4 className="text-sm font-black uppercase tracking-wide mb-1 flex items-center gap-1.5 font-display">
                   {solved ? (
                     <>
-                      <Sparkles className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       <span>Hebat! Jawabanmu Benar!</span>
                     </>
                   ) : (
