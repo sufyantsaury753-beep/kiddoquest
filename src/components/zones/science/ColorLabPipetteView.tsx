@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   RotateCcw, 
   FlaskConical, 
@@ -304,14 +303,6 @@ export default function ColorLabPipetteView({
           setQuestSuccess(true);
           sound.playCelebration();
           onEarnStars(15);
-          if (!liteMode) {
-            confetti({
-              particleCount: 65,
-              spread: 80,
-              origin: { y: 0.6 },
-              colors: [result.hex, "#facc15", "#38bdf8", "#10b981"],
-            });
-          }
           if (audioEnabled) {
             sound.speak(`Hebat sekali! Resep ${activeQuest.title} berhasil diracik!`);
           }

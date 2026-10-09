@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import confetti from "canvas-confetti";
 import {
   Magnet,
   Star,
@@ -282,13 +281,6 @@ export default function MagnetHunterView({
           setHasEarnedMagnetStars(true);
           onEarnStars(45);
           sound.playCelebration();
-          if (!liteMode) {
-            confetti({
-              particleCount: 60,
-              spread: 80,
-              origin: { y: 0.6 },
-            });
-          }
           if (audioEnabled) {
             sound.speak(
               "Luar biasa, Detektif Cilik! Kamu berhasil menemukan seluruh 3 benda feromagnetik yang menempel kuat pada kutub magnet!"

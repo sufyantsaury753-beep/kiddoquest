@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import confetti from "canvas-confetti";
 import { 
   Zap, 
   Power, 
@@ -74,14 +73,6 @@ export default function ElectricCircuitsView({
         sound.playCelebration();
         onEarnStars(30);
         setHasEarnedAssemblyStars(true);
-        if (!liteMode) {
-          confetti({
-            particleCount: 50,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ["#f59e0b", "#10b981", "#3b82f6", "#ef4444"],
-          });
-        }
         if (audioEnabled) {
           sound.speak("Luar biasa! Seluruh komponen berhasil terpasang di papan sirkuit! Sekarang tutup saklar untuk mengalirkan arus listrik!");
         }

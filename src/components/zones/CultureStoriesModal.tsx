@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import confetti from "canvas-confetti";
 import {
   X,
   MapPin,
@@ -119,14 +118,6 @@ export default function CultureStoriesModal({
       if (!isSolved) {
         onEarnStars(40);
         setSolvedIds((prev) => [...prev, currentSoal.id]);
-      }
-
-      if (!liteMode) {
-        confetti({
-          particleCount: 55,
-          spread: 70,
-          origin: { y: 0.65 },
-        });
       }
 
       if (audioEnabled) {

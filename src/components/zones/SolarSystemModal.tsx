@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   X, 
   Orbit, 
@@ -232,14 +231,6 @@ export default function SolarSystemModal({
       setExploredPlanets((prev) => [...prev, planet.id]);
       onEarnStars(35);
       sound.playCelebration();
-      if (!liteMode) {
-        confetti({
-          particleCount: 45,
-          spread: 60,
-          origin: { y: 0.6 },
-          colors: ["#38bdf8", "#fbbf24", "#c084fc", "#f472b6"],
-        });
-      }
     }
 
     if (audioEnabled) {

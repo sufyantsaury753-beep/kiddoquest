@@ -390,52 +390,35 @@ export default function EvaluasiModal({
                 </div>
               </div>
 
-              {/* Grid 10 Mapel */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3.5 sm:gap-4">
+              {/* Grid 10 Mapel Modern App-Launcher (3 Kolom di HP) */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4 py-1">
                 {DAFTAR_MAPEL.map((mapel) => {
                   const Icon = getMapelIcon(mapel.ikonNama);
+                  const bgClass =
+                    mapel.id === "agama" ? "bg-emerald-600 shadow-[0_4px_0_0_#059669]" :
+                    mapel.id === "pancasila" ? "bg-red-600 shadow-[0_4px_0_0_#b91c1c]" :
+                    mapel.id === "bahasaIndonesia" ? "bg-amber-600 shadow-[0_4px_0_0_#d97706]" :
+                    mapel.id === "matematika" ? "bg-blue-600 shadow-[0_4px_0_0_#2563eb]" :
+                    mapel.id === "ipas" ? "bg-teal-600 shadow-[0_4px_0_0_#0d9488]" :
+                    mapel.id === "seniBudaya" ? "bg-purple-600 shadow-[0_4px_0_0_#9333ea]" :
+                    mapel.id === "pjok" ? "bg-orange-600 shadow-[0_4px_0_0_#ea580c]" :
+                    mapel.id === "bahasaInggris" ? "bg-sky-600 shadow-[0_4px_0_0_#0284c7]" :
+                    mapel.id === "muatanLokal" ? "bg-rose-600 shadow-[0_4px_0_0_#e11d48]" :
+                    "bg-indigo-600 shadow-[0_4px_0_0_#4f46e5]";
+
                   return (
-                    <div
+                    <button
                       key={mapel.id}
                       onClick={() => handleSelectMapel(mapel.id)}
-                      className={`group rounded-2xl p-4 sm:p-5 border-3 transition-all duration-200 cursor-pointer select-none bg-white ${
-                        mapel.warnaTema.border
-                      } hover:shadow-lg hover:-translate-y-1 active:translate-y-0.5 ${
-                        liteMode ? "" : mapel.warnaTema.shadow
-                      }`}
+                      className="group flex flex-col items-center justify-start p-2 rounded-2xl hover:bg-white/90 active:bg-white transition-all cursor-pointer select-none text-center focus:outline-none"
                     >
-                      <div className="flex items-center justify-between gap-3 mb-3">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-md flex-shrink-0 ${
-                            mapel.id === "agama" ? "bg-emerald-600" :
-                            mapel.id === "pancasila" ? "bg-red-600" :
-                            mapel.id === "bahasaIndonesia" ? "bg-amber-600" :
-                            mapel.id === "matematika" ? "bg-blue-600" :
-                            mapel.id === "ipas" ? "bg-teal-600" :
-                            mapel.id === "seniBudaya" ? "bg-purple-600" :
-                            mapel.id === "pjok" ? "bg-orange-600" :
-                            mapel.id === "bahasaInggris" ? "bg-sky-600" :
-                            mapel.id === "muatanLokal" ? "bg-rose-600" :
-                            "bg-indigo-600"
-                          }`}>
-                            <Icon className="w-6 h-6" />
-                          </div>
-                          <h4 className="text-base sm:text-lg font-black text-slate-800 group-hover:text-indigo-600 transition-colors">
-                            {mapel.nama}
-                          </h4>
-                        </div>
-                        <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border flex-shrink-0 ${mapel.warnaTema.badge}`}>
-                          30 Soal
-                        </span>
+                      <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-md mx-auto transition-transform hover:scale-105 active:scale-95 ${bgClass}`}>
+                        <Icon className="w-7 h-7 sm:w-8 sm:h-8" />
                       </div>
-
-                      <div className="flex items-center justify-end pt-2.5 border-t border-slate-100 text-xs font-bold text-slate-600">
-                        <div className="flex items-center gap-1 text-indigo-600 font-black group-hover:translate-x-1 transition-transform">
-                          <span>Mulai Evaluasi</span>
-                          <ChevronRight className="w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
+                      <span className="text-[11px] sm:text-xs font-bold text-slate-800 text-center leading-tight mt-1.5 line-clamp-2">
+                        {mapel.nama}
+                      </span>
+                    </button>
                   );
                 })}
               </div>

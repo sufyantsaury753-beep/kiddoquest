@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   Shuffle, 
   CheckCircle2, 
@@ -70,9 +69,6 @@ export default function FruitCalculationView({
       setIsCorrect(true);
       sound.playCelebration();
       onEarnStars(30);
-      if (!liteMode) {
-        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-      }
       if (audioEnabled) {
         sound.speak(`Hebat sekali! Jawabanmu benar, yaitu ${ans}! Kamu mendapatkan 30 bintang!`);
       }

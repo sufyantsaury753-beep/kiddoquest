@@ -185,7 +185,7 @@ export default function MascotTobi({
                   }`}
                 >
                   <Volume2 className={`w-4 h-4 shrink-0 ${isSpeaking ? "animate-spin" : ""}`} />
-                  <span>{isSpeaking ? "Berhenti Bicara" : "Dengarkan Suara Tobi"}</span>
+                  <span>{isSpeaking ? "Berhenti Bicara" : "Dengarkan Tobi"}</span>
                 </button>
 
                 <button

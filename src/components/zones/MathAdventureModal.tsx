@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   X, 
   RotateCcw, 
@@ -518,15 +517,6 @@ export default function MathAdventureModal({
       sound.playCelebration();
       onEarnStars(35);
       setStreakCount((prev) => prev + 1);
-
-      if (!liteMode) {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ["#fbbf24", "#f43f5e", "#38bdf8", "#10b981", "#a855f7"],
-        });
-      }
 
       if (audioEnabled) {
         sound.speak(`Luar biasa cerdas! Jawabanmu benar ${ans}. Kamu mendapatkan tiga puluh lima bintang!`);

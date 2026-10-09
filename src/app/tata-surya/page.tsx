@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
   Orbit, 
@@ -181,14 +180,6 @@ export default function TataSuryaPage() {
       const updated = saveStudentProfile({ stars: profile.stars + 35 });
       setProfile(updated);
       sound.playCelebration();
-      if (!profile.liteMode) {
-        confetti({
-          particleCount: 45,
-          spread: 60,
-          origin: { y: 0.6 },
-          colors: ["#38bdf8", "#fbbf24", "#c084fc", "#f472b6"],
-        });
-      }
     }
 
     if (profile.audioEnabled) {

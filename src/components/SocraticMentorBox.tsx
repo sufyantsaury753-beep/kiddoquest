@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import confetti from "canvas-confetti";
 import { 
   Lightbulb, 
   CheckCircle2, 
@@ -132,14 +131,6 @@ export default function SocraticMentorBox({
     if (chosen.isCorrect) {
       setSolved(true);
       sound.playCelebration();
-      if (!liteMode) {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.7 },
-          colors: ["#fbbf24", "#38bdf8", "#34d399", "#fb7185"],
-        });
-      }
       onEarnStars(15);
       if (audioEnabled) {
         sound.speak(chosen.socraticHint);

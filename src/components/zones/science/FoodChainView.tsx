@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   Sprout, 
   Droplets, 
@@ -573,14 +572,6 @@ export default function FoodChainView({
         }
         sound.playCelebration();
         onEarnStars(35);
-        if (!liteMode) {
-          confetti({
-            particleCount: 50,
-            spread: 75,
-            origin: { y: 0.6 },
-            colors: ["#22c55e", "#f59e0b", "#3b82f6", "#a855f7", "#facc15"],
-          });
-        }
         if (audioEnabled) {
           sound.speak(activeEcosystem.successSpeech);
         }
@@ -620,14 +611,6 @@ export default function FoodChainView({
     if (!earnedCrisisStars) {
       onEarnStars(40);
       setEarnedCrisisStars(true);
-    }
-    if (!liteMode) {
-      confetti({
-        particleCount: 65,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ["#10b981", "#06b6d4", "#f59e0b", "#8b5cf6", "#ec4899"],
-      });
     }
     if (audioEnabled) {
       sound.speak(scenario.successSpeech);

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { 
   Scale, 
   Shuffle, 
@@ -62,9 +61,6 @@ export default function BalanceScaleView({
       setIsScaleCorrect(true);
       sound.playCelebration();
       onEarnStars(35);
-      if (!liteMode) {
-        confetti({ particleCount: 55, spread: 65, origin: { y: 0.58 } });
-      }
       if (audioEnabled) {
         sound.speak(
           `Luar biasa! Neraca sekarang seimbang sempurna di ${currentRightTotal} kilogram! Berat setiap peti adalah ${ans} kilogram. Kamu mendapatkan 35 bintang!`

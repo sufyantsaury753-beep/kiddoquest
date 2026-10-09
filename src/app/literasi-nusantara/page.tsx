@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 import {
   ArrowLeft,
   Volume2,
@@ -114,14 +113,6 @@ export default function LiterasiNusantaraPage() {
       if (!isSolved) {
         handleEarnStars(40);
         setSolvedIds((prev) => [...prev, currentSoal.id]);
-      }
-
-      if (!profile.liteMode) {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
       }
 
       if (profile.audioEnabled) {

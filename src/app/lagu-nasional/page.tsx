@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 import {
   ArrowLeft,
   Play,
@@ -99,16 +98,6 @@ export default function LaguNasionalPage() {
     sound.speak(
       `Luar biasa! Kamu telah mendengarkan dan bernyanyi lagu ${activeSong.title} bersama Tobi. Kamu mendapatkan 25 bintang prestasi!`
     );
-
-    // Efek konfeti visual (disembunyikan saat liteMode aktif)
-    if (!profile.liteMode) {
-      confetti({
-        particleCount: 75,
-        spread: 65,
-        origin: { y: 0.65 },
-        colors: ["#ef4444", "#ffffff", "#f59e0b", "#3b82f6"],
-      });
-    }
   };
 
   // Toggle Narasi Makna Lagu oleh Tobi
