@@ -175,24 +175,24 @@ export default function MascotTobi({
 
             {/* Read Aloud Button & Voice Controls */}
             <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
+              <div className="grid grid-cols-2 gap-2 w-full sm:flex sm:w-auto">
                 <button
                   onClick={() => (isSpeaking ? stopSpeaking() : handleSpeak(currentText, "happy"))}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl font-black text-sm border-2 btn-chunky ${
+                  className={`min-h-[44px] py-2.5 px-2 sm:px-4 rounded-2xl font-black text-xs sm:text-sm border-2 btn-chunky flex items-center justify-center text-center gap-1.5 leading-tight whitespace-normal ${
                     isSpeaking
                       ? "bg-rose-500 text-white border-rose-600 shadow-[0_3px_0_0_#9f1239]"
                       : "bg-sky-500 text-white border-sky-600 shadow-[0_3px_0_0_#0369a1] hover:bg-sky-400"
                   }`}
                 >
-                  <Volume2 className={`w-4 h-4 ${isSpeaking ? "animate-spin" : ""}`} />
+                  <Volume2 className={`w-4 h-4 shrink-0 ${isSpeaking ? "animate-spin" : ""}`} />
                   <span>{isSpeaking ? "Berhenti Bicara" : "Dengarkan Suara Tobi"}</span>
                 </button>
 
                 <button
                   onClick={() => handleSpeak("Semangat belajarnya ya sahabat cilik! Kamu adalah anak hebat dan cerdas!", "excited")}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-300 text-xs sm:text-sm font-bold shadow-[0_3px_0_0_#d97706] btn-chunky"
+                  className="min-h-[44px] py-2.5 px-2 sm:px-3.5 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-300 font-black text-xs sm:text-sm shadow-[0_3px_0_0_#d97706] btn-chunky flex items-center justify-center text-center gap-1.5 leading-tight whitespace-normal"
                 >
-                  <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
+                  <Heart className="w-4 h-4 shrink-0 text-rose-500 fill-rose-500" />
                   <span>Beri Semangat</span>
                 </button>
               </div>

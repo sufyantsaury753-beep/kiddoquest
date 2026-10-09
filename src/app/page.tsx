@@ -114,10 +114,7 @@ export default function TobiQuestHomePage() {
       </main>
 
       {/* 7. Footer & Teacher Guide */}
-      <Footer
-        onOpenCertificate={() => setIsCertificateOpen(true)}
-        onResetProgress={handleResetProgress}
-      />
+      <Footer />
 
       {/* --- MODAL DIALOGS --- */}
 
