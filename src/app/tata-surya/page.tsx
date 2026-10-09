@@ -15,7 +15,7 @@ import {
   Moon
 } from "lucide-react";
 import { sound } from "@/lib/sound";
-import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
+import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE, unlockBadge } from "@/lib/storage";
 
 interface PlanetData {
   id: string;
@@ -154,7 +154,7 @@ export default function TataSuryaPage() {
   const dockRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("tata-surya");
     setProfile(stored);
     sound.setSpeechEnabled(stored.audioEnabled);
     setMounted(true);

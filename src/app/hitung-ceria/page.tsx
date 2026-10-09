@@ -15,7 +15,7 @@ import {
   Scale
 } from "lucide-react";
 import { sound } from "@/lib/sound";
-import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
+import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE, unlockBadge } from "@/lib/storage";
 
 /* =========================================================================
    100% PURE SVG ILUSTRASI 10 BUAH VARIABEL LOGIKA MATEMATIKA (NO EMOJI)
@@ -461,7 +461,7 @@ export default function HitungCeriaPage() {
   };
 
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("hitung-ceria");
     setProfile(stored);
     sound.setSpeechEnabled(stored.audioEnabled);
     setMounted(true);

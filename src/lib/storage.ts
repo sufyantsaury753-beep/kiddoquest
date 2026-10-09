@@ -19,7 +19,7 @@ export const DEFAULT_PROFILE: StudentProfile = {
   grade: "Kelas 2 SD",
   avatar: "🚀",
   stars: 65,
-  badges: ["penjelajah-pemula", "sahabat-tobi"],
+  badges: ["lab-sains", "hitung-ceria"],
   completedQuests: ["warna-dasar"],
   audioEnabled: true,
   soundEffects: true,
@@ -59,50 +59,101 @@ export const AVAILABLE_AVATARS: AvatarCharacter[] = [
   { id: "spark", name: "Petir Cilik", role: "Energi Listrik", emoji: "⚡", bgColor: "bg-yellow-100", borderColor: "border-yellow-400", textColor: "text-yellow-900" },
 ];
 
-export const AVAILABLE_BADGES = [
+export interface BadgeCharacter {
+  id: string;
+  legacyIds?: string[];
+  title: string;
+  zoneTitle: string;
+  desc: string;
+  iconType: "science" | "math" | "solar" | "culture" | "music" | "exam";
+  color: string;
+  badgeBg: string;
+}
+
+export const AVAILABLE_BADGES: BadgeCharacter[] = [
   {
-    id: "penjelajah-pemula",
-    title: "Penjelajah Cilik",
-    desc: "Mulai petualangan belajar di TobiQuest",
-    icon: "🌟",
-    color: "bg-amber-100 text-amber-800 border-amber-300",
+    id: "lab-sains",
+    legacyIds: ["penemu-warna", "penjelajah-pemula"],
+    title: "Saintis Lab Sains",
+    zoneTitle: "Lab Sains",
+    desc: "Eksperimen 5 stasiun laboratorium sains: warna, air, rantai makanan, listrik & magnet",
+    iconType: "science",
+    color: "bg-emerald-50 text-emerald-900 border-emerald-300",
+    badgeBg: "from-emerald-400 to-teal-500",
   },
   {
-    id: "sahabat-tobi",
-    title: "Sahabat Karib Tobi",
-    desc: "Menyapa maskot robot Tobi dan mendengarkan suaranya",
-    icon: "🤖",
-    color: "bg-sky-100 text-sky-800 border-sky-300",
+    id: "hitung-ceria",
+    legacyIds: ["juara-hitung", "sahabat-tobi"],
+    title: "Pakar Hitung Ceria",
+    zoneTitle: "Hitung Ceria",
+    desc: "Menaklukkan neraca timbangan logika & tantangan berhitung matematika ceria",
+    iconType: "math",
+    color: "bg-rose-50 text-rose-900 border-rose-300",
+    badgeBg: "from-rose-400 to-amber-500",
   },
   {
-    id: "penemu-warna",
-    title: "Ilmuwan Warna",
-    desc: "Mencampur warna primer dan sekunder di Lab Sains",
-    icon: "🧪",
-    color: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    id: "tata-surya",
+    legacyIds: ["penjelajah-tatasurya"],
+    title: "Penjelajah Tata Surya",
+    zoneTitle: "Tata Surya",
+    desc: "Menjelajahi matahari, 8 planet & rahasia orbit kosmik antariksa",
+    iconType: "solar",
+    color: "bg-indigo-50 text-indigo-900 border-indigo-300",
+    badgeBg: "from-indigo-500 to-purple-600",
   },
   {
-    id: "juara-hitung",
-    title: "Master Hitung Apel",
-    desc: "Menyelesaikan manipulatif matematika pohon buah",
-    icon: "🍎",
-    color: "bg-rose-100 text-rose-800 border-rose-300",
+    id: "literasi-nusantara",
+    legacyIds: ["penjaga-nusantara"],
+    title: "Duta Literasi Nusantara",
+    zoneTitle: "Literasi Nusantara",
+    desc: "Mengenal kekayaan tradisi, ikon budaya & kuliner khas nusantara se-Indonesia",
+    iconType: "culture",
+    color: "bg-purple-50 text-purple-900 border-purple-300",
+    badgeBg: "from-purple-500 to-fuchsia-600",
   },
   {
-    id: "penjaga-nusantara",
-    title: "Duta Budaya Cilik",
-    desc: "Mengenal kekayaan budaya dan cerita Nusantara",
-    icon: "🏝️",
-    color: "bg-purple-100 text-purple-800 border-purple-300",
+    id: "lagu-nasional",
+    legacyIds: ["lagu-nasional"],
+    title: "Bintang Lagu Nasional",
+    zoneTitle: "Lagu Nasional",
+    desc: "Memainkan pianika & menghayati 11 lagu wajib perjuangan bangsa Indonesia",
+    iconType: "music",
+    color: "bg-red-50 text-red-900 border-red-300",
+    badgeBg: "from-red-500 to-rose-600",
   },
   {
-    id: "penjelajah-tatasurya",
-    title: "Astronot Cilik",
-    desc: "Menjelajahi matahari dan planet di Lab Tata Surya",
-    icon: "🪐",
-    color: "bg-indigo-100 text-indigo-800 border-indigo-300",
+    id: "evaluasi-sd",
+    legacyIds: ["evaluasi-sd"],
+    title: "Pahlawan Asesmen SD",
+    zoneTitle: "Evaluasi SD",
+    desc: "Menuntaskan 300+ bank soal asesmen diagnostik Kurikulum Merdeka",
+    iconType: "exam",
+    color: "bg-amber-50 text-amber-900 border-amber-300",
+    badgeBg: "from-amber-400 to-yellow-500",
   },
 ];
+
+export function isBadgeUnlocked(profileBadges: string[] = [], badge: BadgeCharacter): boolean {
+  if (!profileBadges || !Array.isArray(profileBadges)) return false;
+  if (profileBadges.includes(badge.id)) return true;
+  if (badge.legacyIds && badge.legacyIds.some((lid) => profileBadges.includes(lid))) return true;
+  return false;
+}
+
+export function unlockBadge(badgeId: string): StudentProfile {
+  if (typeof window === "undefined") return DEFAULT_PROFILE;
+  try {
+    const current = getStudentProfile();
+    if (!current.badges.includes(badgeId)) {
+      const updated = { ...current, badges: [...current.badges, badgeId] };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    }
+    return current;
+  } catch (e) {
+    return DEFAULT_PROFILE;
+  }
+}
 
 export function getStudentProfile(): StudentProfile {
   if (typeof window === "undefined") {

@@ -130,12 +130,14 @@ export default function TobiQuestHomePage() {
       />
 
       {/* Profile Modal */}
-      <ProfileModal
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-        profile={profile}
-        onUpdateProfile={handleUpdateProfile}
-      />
+      {isProfileOpen && (
+        <ProfileModal
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+          profile={profile}
+          onUpdateProfile={handleUpdateProfile}
+        />
+      )}
     </div>
   );
 }

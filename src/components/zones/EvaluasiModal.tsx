@@ -39,6 +39,7 @@ import {
   DAFTAR_AGAMA, 
   getPaketEvaluasi 
 } from "@/data/evaluasi";
+import { unlockBadge } from "@/lib/storage";
 
 interface EvaluasiModalProps {
   isOpen: boolean;
@@ -98,6 +99,12 @@ export default function EvaluasiModal({
   // Quiz Arena States
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<number, number>>({}); // index -> choice index (0..3)
+
+  useEffect(() => {
+    if (isOpen) {
+      unlockBadge("evaluasi-sd");
+    }
+  }, [isOpen]);
   const [showPembahasan, setShowPembahasan] = useState<boolean>(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [starsAwarded, setStarsAwarded] = useState(false);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Printer, Award, Star, CheckCircle } from "lucide-react";
+import { X, Printer, Award, Star, CheckCircle, Bot } from "lucide-react";
 import { StudentProfile } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
@@ -178,7 +178,7 @@ export default function CertificateModal({
 
             {/* Citation */}
             <p className="max-w-2xl mx-auto text-xs sm:text-sm print:text-[10px] print:leading-tight text-slate-700 leading-relaxed font-medium">
-              Atas semangat belajar, rasa ingin tahu yang tinggi, dan keberhasilan luar biasa dalam menuntaskan misi eksplorasi di <strong>Lab Sains Cilik</strong>, <strong>Petualangan Berhitung</strong>, serta <strong>Tebak Cerita Nusantara</strong>.
+              Atas semangat belajar, rasa ingin tahu yang tinggi, dan keberhasilan luar biasa dalam menuntaskan misi eksplorasi di <strong>Lab Sains</strong>, <strong>Hitung Ceria</strong>, <strong>Tata Surya</strong>, <strong>Literasi Nusantara</strong>, <strong>Lagu Nasional</strong>, serta <strong>Evaluasi SD</strong>.
             </p>
 
             {/* Star Honor Badge */}
@@ -191,13 +191,15 @@ export default function CertificateModal({
             {/* Signatures & Seal Section */}
             <div className="grid grid-cols-3 items-end gap-4 mt-4 print:mt-1.5 pt-3 print:pt-1 border-t border-amber-200">
               {/* Left Signer: Mascot Tobi */}
-              <div className="text-center">
-                <div className="text-2xl print:text-lg mb-0.5">🤖</div>
+              <div className="text-center flex flex-col items-center">
+                <div className="w-8 h-8 print:w-6 print:h-6 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-700 mb-0.5">
+                  <Bot className="w-5 h-5 print:w-4 print:h-4 text-sky-600" />
+                </div>
                 <div className="font-display font-bold text-xs sm:text-sm print:text-[10px] text-slate-800">
                   Tobi si Robot
                 </div>
                 <p className="text-[10px] sm:text-xs print:text-[8px] text-slate-500 font-semibold">
-                  AI Socratic Kids Mentor
+                  Socratic Kids Mentor
                 </p>
               </div>
 

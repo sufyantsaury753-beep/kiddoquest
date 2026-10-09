@@ -26,6 +26,7 @@ import {
   saveStudentProfile,
   StudentProfile,
   DEFAULT_PROFILE,
+  unlockBadge,
 } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
@@ -51,7 +52,7 @@ export default function LaguNasionalPage() {
 
   // Inisialisasi profil siswa dan penyimpanan lokal
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("lagu-nasional");
     setProfile(stored);
     sound.setSpeechEnabled(stored.audioEnabled);
 

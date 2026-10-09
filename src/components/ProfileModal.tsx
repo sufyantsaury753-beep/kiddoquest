@@ -1,13 +1,44 @@
 "use client";
 
-import React, { useState } from "react";
-import { X, Check, Star, Award } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { 
+  X, 
+  Check, 
+  Star, 
+  Award,
+  FlaskConical,
+  Scale,
+  Orbit,
+  Landmark,
+  Music,
+  GraduationCap
+} from "lucide-react";
 import { 
   StudentProfile, 
   AVAILABLE_AVATARS, 
-  AVAILABLE_BADGES 
+  AVAILABLE_BADGES,
+  isBadgeUnlocked
 } from "@/lib/storage";
 import { sound } from "@/lib/sound";
+
+function RenderBadgeIcon({ type, className = "w-3.5 h-3.5" }: { type: string; className?: string }) {
+  switch (type) {
+    case "science":
+      return <FlaskConical className={className} />;
+    case "math":
+      return <Scale className={className} />;
+    case "solar":
+      return <Orbit className={className} />;
+    case "culture":
+      return <Landmark className={className} />;
+    case "music":
+      return <Music className={className} />;
+    case "exam":
+      return <GraduationCap className={className} />;
+    default:
+      return <Award className={className} />;
+  }
+}
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -34,6 +65,13 @@ export default function ProfileModal({
   const [name, setName] = useState(profile.name);
   const [grade, setGrade] = useState(profile.grade);
   const [selectedAvatar, setSelectedAvatar] = useState(profile.avatar);
+
+  // Sync state whenever modal opens or profile changes
+  useEffect(() => {
+    setName(profile.name);
+    setGrade(profile.grade);
+    setSelectedAvatar(profile.avatar);
+  }, [profile.name, profile.grade, profile.avatar, isOpen]);
 
   const activeChar = AVAILABLE_AVATARS.find((av) => av.emoji === selectedAvatar || av.id === selectedAvatar) || AVAILABLE_AVATARS[0];
 
@@ -102,7 +140,7 @@ export default function ProfileModal({
 
           <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-56 sm:max-h-64 overflow-y-auto p-1.5 pr-2 rounded-2xl bg-slate-50/70 border border-slate-200">
             {AVAILABLE_AVATARS.map((av) => {
-              const isSelected = selectedAvatar === av.emoji;
+              const isSelected = selectedAvatar === av.emoji || selectedAvatar === av.id;
               return (
                 <button
                   key={av.id}
@@ -189,7 +227,7 @@ export default function ProfileModal({
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-black text-slate-600 uppercase tracking-wider flex items-center gap-1">
               <Award className="w-3.5 h-3.5 text-purple-600" />
-              Lencana Koleksi ({profile.badges.length}/{AVAILABLE_BADGES.length})
+              Lencana Koleksi ({AVAILABLE_BADGES.filter((b) => isBadgeUnlocked(profile.badges, b)).length}/{AVAILABLE_BADGES.length})
             </span>
             <span className="text-xs font-bold text-amber-600 flex items-center gap-1">
               <Star className="w-3 h-3 fill-amber-500" />
@@ -197,21 +235,28 @@ export default function ProfileModal({
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {AVAILABLE_BADGES.map((b) => {
-              const isUnlocked = profile.badges.includes(b.id);
+              const isUnlocked = isBadgeUnlocked(profile.badges, b);
               return (
                 <div
                   key={b.id}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-bold border ${
+                  className={`flex items-center gap-2 p-2 rounded-xl text-xs font-bold border transition-all ${
                     isUnlocked
                       ? b.color
-                      : "bg-slate-100 text-slate-400 border-slate-200 opacity-60"
+                      : "bg-slate-50 text-slate-400 border-slate-200 opacity-60"
                   }`}
-                  title={b.desc}
+                  title={`${b.title} (${b.zoneTitle}): ${b.desc}`}
                 >
-                  <span>{b.icon}</span>
-                  <span>{b.title}</span>
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                    isUnlocked ? `bg-gradient-to-br ${b.badgeBg} text-white` : "bg-slate-200 text-slate-400"
+                  }`}>
+                    <RenderBadgeIcon type={b.iconType} className="w-4 h-4" />
+                  </div>
+                  <div className="truncate">
+                    <span className="block truncate font-black text-[11px] leading-tight">{b.title}</span>
+                    <span className="block truncate text-[9px] opacity-80 leading-tight">{b.zoneTitle}</span>
+                  </div>
                 </div>
               );
             })}

@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import EvaluasiModal from "@/components/zones/EvaluasiModal";
-import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
+import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE, unlockBadge } from "@/lib/storage";
 
 export default function EvaluasiPage() {
   const [profile, setProfile] = useState<StudentProfile>(DEFAULT_PROFILE);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("evaluasi-sd");
     setProfile(stored);
     setMounted(true);
   }, []);

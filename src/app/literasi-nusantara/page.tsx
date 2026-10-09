@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 import { DATA_LITERASI_NUSANTARA, SoalNusantara } from "@/data/literasiNusantaraData";
-import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
+import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE, unlockBadge } from "@/lib/storage";
 
 const ISLAND_LABELS: Record<string, string> = {
   all: "Semua Wilayah",
@@ -44,7 +44,7 @@ export default function LiterasiNusantaraPage() {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("literasi-nusantara");
     setProfile(stored);
     sound.setSpeechEnabled(stored.audioEnabled);
     setMounted(true);

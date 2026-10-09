@@ -10,7 +10,7 @@ import {
   VolumeX,
   Compass,
 } from "lucide-react";
-import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE } from "@/lib/storage";
+import { getStudentProfile, saveStudentProfile, StudentProfile, DEFAULT_PROFILE, unlockBadge } from "@/lib/storage";
 import { sound } from "@/lib/sound";
 
 interface InteractiveSprite {
@@ -171,7 +171,7 @@ export default function InteractiveScienceLobbyPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = getStudentProfile();
+    const stored = unlockBadge("lab-sains");
     setProfile(stored);
     setMounted(true);
   }, []);
