@@ -264,6 +264,7 @@ export default function MagnetHunterView({
   liteMode,
 }: MagnetHunterViewProps) {
   const [stuckMagnetIds, setStuckMagnetIds] = useState<string[]>([]);
+  const [testedNonMagneticIds, setTestedNonMagneticIds] = useState<string[]>([]);
   const [lastTestedMagnetId, setLastTestedMagnetId] = useState<string | null>(null);
   const [isMagnetShaking, setIsMagnetShaking] = useState<boolean>(false);
   const [hasEarnedMagnetStars, setHasEarnedMagnetStars] = useState<boolean>(false);
@@ -305,6 +306,9 @@ export default function MagnetHunterView({
         }
       }
     } else {
+      if (!testedNonMagneticIds.includes(obj.id)) {
+        setTestedNonMagneticIds((prev) => [...prev, obj.id]);
+      }
       setIsMagnetShaking(true);
       setTimeout(() => setIsMagnetShaking(false), 600);
       sound.playSocraticHint();
@@ -316,6 +320,7 @@ export default function MagnetHunterView({
 
   const handleResetMagnetHunter = () => {
     setStuckMagnetIds([]);
+    setTestedNonMagneticIds([]);
     setLastTestedMagnetId(null);
     sound.playChime();
     if (audioEnabled) {
@@ -650,74 +655,50 @@ export default function MagnetHunterView({
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {MAGNET_OBJECTS.map((obj) => {
             const isStuck = stuckMagnetIds.includes(obj.id);
+            const isNonMagneticTested = testedNonMagneticIds.includes(obj.id);
             const SvgIcon = obj.SvgComponent;
             return (
-              <div
+              <button
                 key={obj.id}
                 onClick={() => handleTestMagnetObject(obj)}
-                className={`p-3 rounded-2xl border-2 transition-all cursor-pointer btn-chunky flex flex-col justify-between ${
+                className={`p-3.5 sm:p-4 rounded-2xl border-2 sm:border-3 transition-all cursor-pointer btn-chunky flex flex-col items-center justify-between text-center relative group min-h-[140px] sm:min-h-[160px] ${
                   isStuck
-                    ? "bg-emerald-50 border-emerald-400 shadow-[0_3px_0_0_#059669]"
-                    : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                    ? "bg-emerald-50/90 border-emerald-400 shadow-[0_4px_0_0_#059669] scale-102"
+                    : isNonMagneticTested
+                    ? "bg-slate-100/80 border-slate-300 text-slate-500 shadow-none"
+                    : "bg-white hover:bg-slate-50 border-slate-200 hover:border-slate-300 shadow-sm"
                 }`}
               >
-                <div>
-                  {/* Status Badge */}
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${
-                      isStuck
-                        ? "bg-emerald-200 text-emerald-950 border-emerald-400"
-                        : obj.badgeBg
-                    }`}>
-                      {isStuck ? "Menempel di Magnet" : obj.category}
-                    </span>
-                  </div>
-
-                  {/* Visual SVG Icon */}
-                  <div className="flex items-center justify-center py-2">
-                    <SvgIcon />
-                  </div>
-
-                  {/* Title & Material */}
-                  <h5 className="font-black text-xs sm:text-sm text-slate-900 leading-tight">
-                    {obj.name}
-                  </h5>
-                  <p className="text-[10px] text-slate-500 font-bold mb-1">
-                    {obj.material}
-                  </p>
-                  <p className="text-[10px] text-slate-600 line-clamp-2 leading-snug">
-                    {obj.desc}
-                  </p>
+                {/* Visual SVG Icon (Besar & Jelas di Tengah) */}
+                <div className="flex-1 flex items-center justify-center py-2 group-hover:scale-115 transition-transform duration-200">
+                  <SvgIcon />
                 </div>
 
-                {/* Action Button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleTestMagnetObject(obj);
-                  }}
-                  className={`mt-2.5 py-1.5 px-2 rounded-xl text-xs font-black border flex items-center justify-center gap-1.5 btn-chunky transition-all ${
-                    isStuck
-                      ? "bg-emerald-500 text-white border-emerald-600 shadow-[0_2px_0_0_#065f46]"
-                      : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
-                  }`}
-                >
-                  {isStuck ? (
-                    <>
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Menempel</span>
-                    </>
-                  ) : (
-                    <>
-                      <Magnet className="w-3.5 h-3.5 text-rose-500" />
-                      <span>Uji Tempel</span>
-                    </>
-                  )}
-                </button>
-              </div>
+                {/* Hanya Gambar & Nama Benda Saja */}
+                <h5 className="font-black text-xs sm:text-sm text-slate-900 leading-tight mt-1 mb-2">
+                  {obj.name}
+                </h5>
+
+                {/* Indikator Status Hasil Tes yang Bersih & Rapi */}
+                {isStuck ? (
+                  <span className="text-[10px] sm:text-xs font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1 shadow-xs">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                    <span>Menempel</span>
+                  </span>
+                ) : isNonMagneticTested ? (
+                  <span className="text-[10px] sm:text-xs font-bold text-slate-500 bg-slate-200/90 px-2 py-0.5 rounded-full">
+                    ✕ Tak Menempel
+                  </span>
+                ) : (
+                  <span className="text-[10px] sm:text-[11px] font-black text-rose-700 bg-rose-50 group-hover:bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200 transition-colors flex items-center gap-1">
+                    <Magnet className="w-3 h-3 text-rose-500" />
+                    <span>Sentuh Uji</span>
+                  </span>
+                )}
+              </button>
             );
           })}
         </div>
