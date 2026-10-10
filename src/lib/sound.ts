@@ -1,4 +1,4 @@
-// KiddoQuest Audio & Speech Synthesis Engine
+// TobiQuest Audio & Speech Synthesis Engine
 // Zero external audio files required -> Instant load, 100% offline & Telkomsel Lite friendly!
 
 class SoundEngine {

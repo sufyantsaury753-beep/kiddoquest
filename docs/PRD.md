@@ -1,5 +1,5 @@
 # Product Requirements Document (PRD)
-## KiddoQuest - Platform Edukasi Interaktif Siswa SD
+## TobiQuest - Platform Edukasi Interaktif Siswa SD
 **Kategori Lomba:** M-ONE Telkomsel Coding Competition  
 **Tema:** Innovating Education Through Technology  
 **Subtema:** Web Education for Kids (SD)  
@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary & Visi Produk
 
-**KiddoQuest** adalah platform web pembelajaran interaktif masa depan yang dirancang khusus untuk siswa Sekolah Dasar (SD Kelas 1–6) di seluruh Indonesia. Mengusung semangat inovasi Telkomsel untuk pemerataan pendidikan digital berkualitas (*Inclusive & Accessible EdTech*), KiddoQuest memadukan:
+**TobiQuest** adalah platform web pembelajaran interaktif masa depan yang dirancang khusus untuk siswa Sekolah Dasar (SD Kelas 1–6) di seluruh Indonesia. Mengusung semangat inovasi Telkomsel untuk pemerataan pendidikan digital berkualitas (*Inclusive & Accessible EdTech*), TobiQuest memadukan:
 - **Gamifikasi Pembelajaran Menyenangkan (Joyful Learning):** Mengubah materi sains, matematika, dan literasi menjadi petualangan visual manipulatif.
 - **Dukungan Audio & Suara Inklusif:** Terintegrasi dengan Web Speech API untuk membacakan teks (*Text-to-Speech*) bagi anak yang baru belajar membaca atau anak dengan gaya belajar auditori.
 - **AI Socratic Kids Mentor ("Tobi si Robot Sahabat"):** Memberikan bimbingan ramah dan kalimat pemantik pemikiran (*Socratic method*) ketika anak salah menjawab, menghapus rasa takut gagal (*fear of failure*).
@@ -29,7 +29,7 @@
 
 ## 3. Target Persona
 
-| Persona | Profil | Kebutuhan Utama | Solusi di KiddoQuest |
+| Persona | Profil | Kebutuhan Utama | Solusi di TobiQuest |
 | :--- | :--- | :--- | :--- |
 | **Budi (7 Thn)** | Siswa Kelas 1 SD, belum lancar membaca kalimat panjang. | Membutuhkan tombol besar, visual warna-warni, serta bantuan suara yang membacakan instruksi. | Audio narator Tobi (Text-to-Speech), manipulatif hitung apel visual, navigasi ikonik intuitif. |
 | **Siti (10 Thn)** | Siswa Kelas 4 SD, aktif, penasaran dengan eksperimen alam. | Ingin mencoba simulasi sains tanpa takut salah atau bahaya fisik. | Lab Sains Cilik (campur cairan warna, siklus air & hujan interaktif realtime). |
@@ -41,7 +41,7 @@
 
 ```
 +-------------------------------------------------------------------------+
-|                              KiddoQuest UI                              |
+|                              TobiQuest UI                               |
 |   (Next.js App Router, Tailwind CSS 4, Lucide Icons, Chunky Kids UI)    |
 +-------------------------------------------------------------------------+
                                     |
@@ -151,7 +151,7 @@
 
 ```mermaid
 flowchart TD
-    A[Buka KiddoQuest] --> B{Pilih Karakter & Nama Anak}
+    A[Buka TobiQuest] --> B{Pilih Karakter & Nama Anak}
     B --> C[Dashboard Petualangan Ceria]
     C -->|Sapaan Suara| D[Maskot Tobi Menyapa 'Halo Sahabat Cilik!']
     C --> E[Pilihan Zona Belajar]

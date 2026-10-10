@@ -1,4 +1,4 @@
-// Zero-Crash LocalStorage-first State Management for KiddoQuest
+// Zero-Crash LocalStorage-first State Management for TobiQuest
 
 export interface StudentProfile {
   name: string;
@@ -12,7 +12,8 @@ export interface StudentProfile {
   liteMode: boolean;
 }
 
-const STORAGE_KEY = "kiddoquest_profile_v1";
+const STORAGE_KEY = "tobiquest_profile_v1";
+const LEGACY_STORAGE_KEY = "kiddoquest_profile_v1";
 
 export const DEFAULT_PROFILE: StudentProfile = {
   name: "Budi Pratama",
@@ -161,12 +162,24 @@ export function getStudentProfile(): StudentProfile {
   }
 
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      // Seamless migration from legacy storage key if present
+      raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (raw) {
+        try {
+          localStorage.setItem(STORAGE_KEY, raw);
+          localStorage.removeItem(LEGACY_STORAGE_KEY);
+        } catch {
+          // ignore storage error
+        }
+      }
+    }
     if (!raw) return DEFAULT_PROFILE;
     const parsed = JSON.parse(raw);
     return { ...DEFAULT_PROFILE, ...parsed };
   } catch (e) {
-    console.warn("Error reading KiddoQuest profile from localStorage:", e);
+    console.warn("Error reading TobiQuest profile from localStorage:", e);
     return DEFAULT_PROFILE;
   }
 }
@@ -182,7 +195,7 @@ export function saveStudentProfile(profile: Partial<StudentProfile>): StudentPro
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     return updated;
   } catch (e) {
-    console.warn("Error saving KiddoQuest profile to localStorage:", e);
+    console.warn("Error saving TobiQuest profile to localStorage:", e);
     return DEFAULT_PROFILE;
   }
 }
