@@ -5,9 +5,85 @@ class SoundEngine {
   private ctx: AudioContext | null = null;
   private soundEnabled: boolean = true;
   private speechEnabled: boolean = true;
+  private cachedVoices: SpeechSynthesisVoice[] = [];
+  private currentUtterance: SpeechSynthesisUtterance | null = null;
+  private isAudioUnlocked: boolean = false;
 
   constructor() {
-    // AudioContext will be initialized on first user gesture
+    if (typeof window !== "undefined") {
+      this.initClientVoices();
+      this.setupFirstGestureUnlock();
+    }
+  }
+
+  // Pre-load voices in background as soon as available (prevents mobile queue stall)
+  private initClientVoices() {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    const loadVoices = () => {
+      try {
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          this.cachedVoices = voices;
+        }
+      } catch {
+        // silent fallback
+      }
+    };
+
+    loadVoices();
+    if (typeof window.speechSynthesis !== "undefined" && "onvoiceschanged" in window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+  }
+
+  // Pre-warm audio and speech synthesis on first touch/click anywhere on screen
+  private setupFirstGestureUnlock() {
+    if (typeof window === "undefined") return;
+
+    const unlockHandler = () => {
+      this.unlockAudio();
+    };
+
+    window.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+    window.addEventListener("touchend", unlockHandler, { once: true, passive: true });
+    window.addEventListener("click", unlockHandler, { once: true, passive: true });
+  }
+
+  // Awakens Mobile AudioContext & Google TTS pipeline silently without stutter
+  public unlockAudio() {
+    if (typeof window === "undefined") return;
+
+    // 1. Resume Web Audio API AudioContext
+    try {
+      const ctx = this.getContext();
+      if (ctx && ctx.state === "suspended") {
+        ctx.resume();
+      }
+    } catch {
+      // silent fallback
+    }
+
+    // 2. Pre-warm SpeechSynthesis without audible noise
+    if ("speechSynthesis" in window) {
+      try {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+
+        if (!this.isAudioUnlocked) {
+          if (this.cachedVoices.length === 0) {
+            this.cachedVoices = window.speechSynthesis.getVoices();
+          }
+
+          window.speechSynthesis.resume();
+          window.speechSynthesis.cancel();
+          this.isAudioUnlocked = true;
+        }
+      } catch {
+        // silent fallback
+      }
+    }
   }
 
   private getContext(): AudioContext | null {
@@ -195,42 +271,61 @@ class SoundEngine {
     }
   }
 
-  // Native Web Speech API for Tobi Text-To-Speech (Indonesian voice)
+  // Native Web Speech API for Tobi Text-To-Speech (Instant mobile playback)
   public speak(text: string, onStart?: () => void, onEnd?: () => void) {
     if (!this.speechEnabled) return;
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
     try {
-      window.speechSynthesis.cancel(); // Stop any pending speech
+      // 1. Anti-freeze: ensure engine is not paused or stuck with stalled queue
+      window.speechSynthesis.resume();
+      window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "id-ID";
       utterance.rate = 0.95; // Friendly cadence for elementary school kids
       utterance.pitch = 1.15; // Cheerful robot mascot tone
 
-      const voices = window.speechSynthesis.getVoices();
-      // Try to find an Indonesian voice
-      const idVoice = voices.find(
-        (v) =>
-          v.lang.toLowerCase().startsWith("id") ||
-          v.name.toLowerCase().includes("indonesia") ||
-          v.lang.toLowerCase().includes("id-id")
-      );
-      if (idVoice) {
-        utterance.voice = idVoice;
+      // 2. Pick Indonesian voice from cache or fresh voices list
+      const voices = this.cachedVoices.length > 0 ? this.cachedVoices : window.speechSynthesis.getVoices();
+      if (voices && voices.length > 0) {
+        this.cachedVoices = voices;
+        const idVoice = voices.find(
+          (v) =>
+            v.lang.toLowerCase().startsWith("id") ||
+            v.name.toLowerCase().includes("indonesia") ||
+            v.lang.toLowerCase().includes("id-id")
+        );
+        if (idVoice) {
+          utterance.voice = idVoice;
+        }
       }
 
-      if (onStart) utterance.onstart = onStart;
-      utterance.onend = () => {
-        if (onEnd) onEnd();
-      };
-      utterance.onerror = () => {
+      // 3. Pin utterance reference to prevent Android Chrome Garbage Collection mid-speech
+      this.currentUtterance = utterance;
+
+      let finished = false;
+      const handleEnd = () => {
+        if (finished) return;
+        finished = true;
+        if (this.currentUtterance === utterance) {
+          this.currentUtterance = null;
+        }
         if (onEnd) onEnd();
       };
 
+      if (onStart) utterance.onstart = onStart;
+      utterance.onend = handleEnd;
+      utterance.onerror = () => {
+        handleEnd();
+      };
+
+      // 4. Awaken mobile audio pipeline right before speak
+      window.speechSynthesis.resume();
       window.speechSynthesis.speak(utterance);
     } catch (e) {
       console.warn("Speech synthesis error:", e);
+      this.currentUtterance = null;
       if (onEnd) onEnd();
     }
   }
@@ -238,6 +333,7 @@ class SoundEngine {
   public stopSpeaking() {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
+      this.currentUtterance = null;
     }
   }
 }
