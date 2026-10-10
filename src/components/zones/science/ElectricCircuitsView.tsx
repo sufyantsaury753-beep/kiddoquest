@@ -8,7 +8,9 @@ import {
   Info, 
   RotateCcw, 
   Check, 
-  Volume2 
+  Volume2,
+  Link,
+  GitFork 
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 
@@ -190,64 +192,35 @@ export default function ElectricCircuitsView({
       `}</style>
 
       {/* Mode Switcher Bar */}
-      <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2.5">
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-          <button
-            onClick={() => {
-              setCircuitMode("assembly");
-              sound.playChime();
-            }}
-            className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky flex items-center gap-1.5 ${
-              circuitMode === "assembly"
-                ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
-                : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
-            }`}
-          >
-            <Zap className="w-3.5 h-3.5 text-amber-950" />
-            <span>Rakit Sirkuit (Puzzle)</span>
-          </button>
+      <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-2.5">
+        <div className="grid grid-cols-2 gap-2 w-full sm:flex sm:w-auto">
+          {[
+            { id: "assembly" as const, label: "Rakit Sirkuit (Puzzle)", icon: Zap },
+            { id: "basic" as const, label: "Rangkaian Dasar", icon: Lightbulb },
+            { id: "series" as const, label: "Rangkaian Seri", icon: Link },
+            { id: "parallel" as const, label: "Rangkaian Paralel", icon: GitFork },
+          ].map((mode) => {
+            const IconComp = mode.icon;
+            const isActive = circuitMode === mode.id;
 
-          <button
-            onClick={() => {
-              setCircuitMode("basic");
-              sound.playChime();
-            }}
-            className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
-              circuitMode === "basic"
-                ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
-                : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
-            }`}
-          >
-            Rangkaian Dasar
-          </button>
-
-          <button
-            onClick={() => {
-              setCircuitMode("series");
-              sound.playChime();
-            }}
-            className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
-              circuitMode === "series"
-                ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
-                : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
-            }`}
-          >
-            Rangkaian Seri
-          </button>
-
-          <button
-            onClick={() => {
-              setCircuitMode("parallel");
-              sound.playChime();
-            }}
-            className={`px-3 py-1.5 rounded-xl font-black text-xs sm:text-sm border-2 transition-all btn-chunky ${
-              circuitMode === "parallel"
-                ? "bg-amber-500 text-slate-950 border-amber-600 shadow-[0_2px_0_0_#b45309]"
-                : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
-            }`}
-          >
-            Rangkaian Paralel
-          </button>
+            return (
+              <button
+                key={mode.id}
+                onClick={() => {
+                  setCircuitMode(mode.id);
+                  sound.playChime();
+                }}
+                className={`min-h-[44px] py-2 px-2 sm:px-3 text-center flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black rounded-xl sm:rounded-2xl transition-all btn-chunky ${
+                  isActive
+                    ? "bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-black border-2 border-amber-600 shadow-[0_3px_0_0_#b45309] scale-[1.02]"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-2 border-slate-300 font-bold"
+                }`}
+              >
+                <IconComp className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? "text-slate-950" : "text-slate-600"}`} />
+                <span className="leading-tight">{mode.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         <button
@@ -265,10 +238,10 @@ export default function ElectricCircuitsView({
               }
             }
           }}
-          className="p-2 rounded-xl bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 text-xs font-bold btn-chunky flex items-center gap-1"
+          className="w-full sm:w-auto mt-1 sm:mt-0 py-2.5 sm:py-2 px-4 rounded-xl sm:rounded-2xl justify-center flex items-center gap-2 text-xs sm:text-sm font-black sm:font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 border-2 border-sky-300 shadow-sm transition-all active:scale-95"
         >
-          <Volume2 className="w-4 h-4 text-sky-600" />
-          <span className="hidden sm:inline">Dengar Penjelasan</span>
+          <Volume2 className="w-4 h-4 text-sky-700 shrink-0" />
+          <span>Dengar Penjelasan</span>
         </button>
       </div>
 

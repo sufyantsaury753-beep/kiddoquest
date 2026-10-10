@@ -7,7 +7,6 @@ import {
   Orbit, 
   Volume2, 
   Star, 
-  CheckCircle2, 
   ChevronLeft, 
   ChevronRight,
   Thermometer,
@@ -316,12 +315,6 @@ export default function TataSuryaPage() {
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
           </div>
-
-          {/* Petunjuk Interaktif Swipe / Ketuk */}
-          <div className="mt-3 sm:mt-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-800/50 text-[11px] sm:text-xs text-indigo-300 shadow-sm">
-            <Volume2 className="w-3.5 h-3.5 text-yellow-400" />
-            <span>Geser layar atau ketuk planet untuk mendengar suara Tobi!</span>
-          </div>
         </div>
 
         {/* Kolom Kanan: Lembar Fakta Kosmik & Tombol Aksi Fokus */}
@@ -393,12 +386,8 @@ export default function TataSuryaPage() {
           </div>
 
           {/* Status Penjelajahan */}
-          <div className="flex items-center justify-between text-xs pt-0.5 px-1">
-            <span className="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px] sm:text-xs">
-              <CheckCircle2 className="w-4 h-4" />
-              +35 Bintang Tiap Planet Baru
-            </span>
-            <span className="text-indigo-300 font-extrabold text-[11px] sm:text-xs">
+          <div className="flex items-center justify-center text-center w-full pt-1 px-1">
+            <span className="text-center justify-center w-full text-indigo-300 font-extrabold text-xs">
               {exploredPlanets.length} / {PLANETS.length} Objek Dijelajahi
             </span>
           </div>

@@ -27,7 +27,12 @@ import {
   GraduationCap, 
   Star,
   Check,
-  ListOrdered
+  ListOrdered,
+  MoonStar,
+  Cross,
+  Church,
+  Flame,
+  Flower2
 } from "lucide-react";
 import { sound } from "@/lib/sound";
 import { 
@@ -77,6 +82,15 @@ const getMapelIcon = (ikonNama: string) => {
     default:
       return BookOpen;
   }
+};
+
+const AGAMA_META: Record<string, { label: string; icon: React.ElementType }> = {
+  islam: { label: "Islam", icon: MoonStar },
+  kristen: { label: "Kristen", icon: Cross },
+  katolik: { label: "Katolik", icon: Church },
+  hindu: { label: "Hindu", icon: Flame },
+  buddha: { label: "Buddha", icon: Flower2 },
+  khonghucu: { label: "Khonghucu", icon: BookOpen },
 };
 
 export default function EvaluasiModal({
@@ -457,41 +471,26 @@ export default function EvaluasiModal({
               </div>
 
               {/* Grid 6 Agama */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
-                {DAFTAR_AGAMA.map((item) => (
-                  <div
-                    key={item.subtype}
-                    onClick={() => handleSelectAgama(item.subtype)}
-                    className="group rounded-2xl p-4 sm:p-5 bg-white border-3 border-emerald-400 shadow-[0_4px_0_0_#059669] hover:shadow-lg hover:-translate-y-1 active:translate-y-0.5 transition-all cursor-pointer select-none flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black text-sm mb-3 border border-emerald-300">
-                        <Heart className="w-5 h-5 fill-emerald-600 text-emerald-600" />
+              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
+                {DAFTAR_AGAMA.map((item) => {
+                  const meta = AGAMA_META[item.subtype] || { label: item.nama, icon: Heart };
+                  const IconComp = meta.icon;
+
+                  return (
+                    <button
+                      key={item.subtype}
+                      onClick={() => handleSelectAgama(item.subtype)}
+                      className="group flex flex-col items-center justify-start p-2 rounded-2xl hover:bg-white/90 active:bg-white transition-all cursor-pointer select-none text-center focus:outline-none"
+                    >
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-md mx-auto transition-transform hover:scale-105 active:scale-95 border-2 border-emerald-300">
+                        <IconComp className="w-7 h-7 sm:w-8 sm:h-8" />
                       </div>
-
-                      <h4 className="text-base font-black text-slate-800 group-hover:text-emerald-700 transition-colors">
-                        {item.nama}
-                      </h4>
-
-                      <div className="space-y-1 my-2.5 text-[11px] text-slate-600 font-semibold bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-200">
-                        <p><strong className="text-slate-800">Kitab Suci:</strong> {item.kitabSuci}</p>
-                        <p><strong className="text-slate-800">Rumah Ibadah:</strong> {item.tempatIbadah}</p>
-                      </div>
-
-                      <p className="text-xs text-slate-500 font-medium line-clamp-2">
-                        {item.deskripsi}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-black text-emerald-600">
-                      <span>30 Soal Lengkap</span>
-                      <div className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        <span>Pilih</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                      <span className="text-[11px] sm:text-xs font-bold text-slate-800 text-center leading-tight mt-1.5">
+                        {meta.label}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
