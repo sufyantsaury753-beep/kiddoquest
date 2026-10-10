@@ -42,11 +42,11 @@ export default function Footer() {
                 <span>Lab Sains Campur Warna & Siklus Air</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                <span>Manipulatif Pohon Apel CPA</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                <span>Hitung Ceria & Detektif Aljabar</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
                 <span>Telkomsel Lite Mode (&lt;500 KB)</span>
               </li>
             </ul>
