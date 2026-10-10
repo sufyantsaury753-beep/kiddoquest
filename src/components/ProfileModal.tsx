@@ -190,6 +190,7 @@ export default function ProfileModal({
           </label>
           <input
             type="text"
+            maxLength={35}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Tulis namamu di sini..."

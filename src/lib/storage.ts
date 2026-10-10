@@ -141,14 +141,41 @@ export function isBadgeUnlocked(profileBadges: string[] = [], badge: BadgeCharac
   return false;
 }
 
+export function sanitizeProfile(data: unknown): StudentProfile {
+  if (!data || typeof data !== "object") return DEFAULT_PROFILE;
+  const p = data as Partial<StudentProfile>;
+
+  return {
+    name: typeof p.name === "string" && p.name.trim().length > 0 
+      ? p.name.trim().slice(0, 40) 
+      : DEFAULT_PROFILE.name,
+    grade: typeof p.grade === "string" && p.grade.trim().length > 0 
+      ? p.grade.trim().slice(0, 30) 
+      : DEFAULT_PROFILE.grade,
+    avatar: typeof p.avatar === "string" && p.avatar.trim().length > 0 
+      ? p.avatar.trim().slice(0, 20) 
+      : DEFAULT_PROFILE.avatar,
+    stars: typeof p.stars === "number" && !isNaN(p.stars) 
+      ? Math.max(0, Math.min(99999, Math.floor(p.stars))) 
+      : DEFAULT_PROFILE.stars,
+    badges: Array.isArray(p.badges) 
+      ? p.badges.filter((b): b is string => typeof b === "string" && b.length > 0 && b.length <= 50) 
+      : DEFAULT_PROFILE.badges,
+    completedQuests: Array.isArray(p.completedQuests) 
+      ? p.completedQuests.filter((q): q is string => typeof q === "string" && q.length > 0 && q.length <= 50) 
+      : DEFAULT_PROFILE.completedQuests,
+    audioEnabled: typeof p.audioEnabled === "boolean" ? p.audioEnabled : true,
+    soundEffects: typeof p.soundEffects === "boolean" ? p.soundEffects : true,
+    liteMode: typeof p.liteMode === "boolean" ? p.liteMode : false,
+  };
+}
+
 export function unlockBadge(badgeId: string): StudentProfile {
   if (typeof window === "undefined") return DEFAULT_PROFILE;
   try {
     const current = getStudentProfile();
     if (!current.badges.includes(badgeId)) {
-      const updated = { ...current, badges: [...current.badges, badgeId] };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      return updated;
+      return saveStudentProfile({ badges: [...current.badges, badgeId] });
     }
     return current;
   } catch (e) {
@@ -177,7 +204,7 @@ export function getStudentProfile(): StudentProfile {
     }
     if (!raw) return DEFAULT_PROFILE;
     const parsed = JSON.parse(raw);
-    return { ...DEFAULT_PROFILE, ...parsed };
+    return sanitizeProfile(parsed);
   } catch (e) {
     console.warn("Error reading TobiQuest profile from localStorage:", e);
     return DEFAULT_PROFILE;
@@ -189,13 +216,13 @@ export function saveStudentProfile(profile: Partial<StudentProfile>): StudentPro
     return DEFAULT_PROFILE;
   }
 
+  const current = getStudentProfile();
+  const updated = sanitizeProfile({ ...current, ...profile });
+
   try {
-    const current = getStudentProfile();
-    const updated = { ...current, ...profile };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    return updated;
   } catch (e) {
-    console.warn("Error saving TobiQuest profile to localStorage:", e);
-    return DEFAULT_PROFILE;
+    console.warn("Error saving TobiQuest profile to localStorage (storage quota/disabled):", e);
   }
+  return updated;
 }

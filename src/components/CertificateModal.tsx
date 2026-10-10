@@ -87,6 +87,7 @@ export default function CertificateModal({
               <label className="block text-xs font-bold text-slate-700 mb-1">Nama Siswa:</label>
               <input
                 type="text"
+                maxLength={35}
                 value={customName}
                 onChange={(e) => setCustomName(e.target.value)}
                 className="w-full px-3 py-1.5 rounded-xl border border-amber-300 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -96,6 +97,7 @@ export default function CertificateModal({
               <label className="block text-xs font-bold text-slate-700 mb-1">Kelas SD:</label>
               <input
                 type="text"
+                maxLength={25}
                 value={customGrade}
                 onChange={(e) => setCustomGrade(e.target.value)}
                 className="w-full px-3 py-1.5 rounded-xl border border-amber-300 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-500"

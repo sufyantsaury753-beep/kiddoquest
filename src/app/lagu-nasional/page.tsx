@@ -125,8 +125,8 @@ export default function LaguNasionalPage() {
     }, 350);
   };
 
-  // URL Sematan YouTube resmi dengan parameter timestamp akurat
-  const youtubeUrl = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?start=${activeSong.startTime}&autoplay=1`;
+  // URL Sematan YouTube resmi dengan mode privasi anak (youtube-nocookie) & rel=0
+  const youtubeUrl = `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?start=${activeSong.startTime}&autoplay=1&rel=0`;
 
   return (
     <div
@@ -186,7 +186,8 @@ export default function LaguNasionalPage() {
                 key={`${activeSong.id}-${activeSong.startTime}`}
                 src={youtubeUrl}
                 title={`Panggung Lagu Nasional - ${activeSong.title}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="w-full h-full border-0"
               />
