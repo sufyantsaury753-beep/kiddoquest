@@ -247,28 +247,11 @@ export default function FruitCalculationView({
         </div>
       </div>
 
-      {/* Cheat Sheet Nilai 10 Buah */}
-      <div className="pt-4 border-t-2 border-rose-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-[10px] font-black uppercase text-slate-500 shrink-0 mr-1">
-            Katalog Nilai Buah:
-          </span>
-          {FRUIT_VARIABLES.map((f) => (
-            <div
-              key={f.id}
-              className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-xl border border-slate-200 shrink-0"
-            >
-              <f.SvgComponent className="w-4 h-4" />
-              <span className="text-[11px] font-bold text-slate-700">
-                {f.name} = {f.value}
-              </span>
-            </div>
-          ))}
-        </div>
-
+      {/* Footer Panduan Hint */}
+      <div className="pt-4 border-t-2 border-rose-100 flex items-center justify-end">
         <button
           onClick={() => setShowHint(!showHint)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-black self-end sm:self-auto shrink-0 btn-chunky"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-black shrink-0 btn-chunky"
         >
           <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
           <span>{showHint ? "Tutup Panduan" : "Panduan Hint"}</span>

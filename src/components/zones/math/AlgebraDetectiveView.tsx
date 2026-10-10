@@ -21,6 +21,8 @@ interface AlgebraDetectiveViewProps {
   liteMode: boolean;
 }
 
+type TargetPattern = "singleB" | "doubleB" | "diff" | "combo";
+
 export default function AlgebraDetectiveView({
   onEarnStars,
   audioEnabled,
@@ -30,7 +32,8 @@ export default function AlgebraDetectiveView({
   const [detFruitB, setDetFruitB] = useState<FruitVariable>(FRUIT_VARIABLES[2]);
   const [detLine1, setDetLine1] = useState(4);
   const [detLine2, setDetLine2] = useState(5);
-  const [detTargetOp, setDetTargetOp] = useState<"+" | "onlyB">("+");
+  const [detTargetType, setDetTargetType] = useState<TargetPattern>("singleB");
+  const [missionQuestionText, setMissionQuestionText] = useState<string>("Berapa nilai 1 Jeruk?");
   const [detAnswer, setDetAnswer] = useState(0);
   const [detOptions, setDetOptions] = useState<number[]>([]);
   const [detHint, setDetHint] = useState("");
@@ -48,20 +51,53 @@ export default function AlgebraDetectiveView({
     const fB = shuffled[1];
     const l1 = fA.value * 2;
     const l2 = fA.value + fB.value;
-    const op = Math.random() > 0.5 ? "+" : "onlyB";
-    const ans = op === "+" ? fA.value + fB.value : fB.value;
+
+    const patterns: TargetPattern[] = ["singleB", "doubleB", "diff", "combo"];
+    const targetType = patterns[Math.floor(Math.random() * patterns.length)];
+
+    let ans = 0;
+    let questionText = "";
+    let step3Hint = "";
+
+    switch (targetType) {
+      case "singleB":
+        ans = fB.value;
+        questionText = `Berapa nilai 1 ${fB.name}?`;
+        step3Hint = `Langkah 3: Hitung misi target pertanyaan! Nilai 1 ${fB.name} adalah ${ans}.`;
+        break;
+      case "doubleB":
+        ans = fB.value * 2;
+        questionText = `Berapa ${fB.name} + ${fB.name}?`;
+        step3Hint = `Langkah 3: Hitung misi target pertanyaan! ${fB.name} + ${fB.name} = ${fB.value} + ${fB.value} = ${ans}.`;
+        break;
+      case "diff":
+        if (fB.value > fA.value) {
+          ans = fB.value - fA.value;
+          questionText = `Berapa ${fB.name} - ${fA.name}?`;
+          step3Hint = `Langkah 3: Hitung misi target pertanyaan! ${fB.name} (${fB.value}) - ${fA.name} (${fA.value}) = ${ans}.`;
+        } else {
+          ans = fA.value - fB.value;
+          questionText = `Berapa ${fA.name} - ${fB.name}?`;
+          step3Hint = `Langkah 3: Hitung misi target pertanyaan! ${fA.name} (${fA.value}) - ${fB.name} (${fB.value}) = ${ans}.`;
+        }
+        break;
+      case "combo":
+        ans = fA.value + (fB.value * 2);
+        questionText = `Berapa ${fA.name} + ${fB.name} + ${fB.name}?`;
+        step3Hint = `Langkah 3: Hitung misi target pertanyaan! ${fA.name} (${fA.value}) + ${fB.name} (${fB.value}) + ${fB.name} (${fB.value}) = ${ans}.`;
+        break;
+    }
 
     setDetFruitA(fA);
     setDetFruitB(fB);
     setDetLine1(l1);
     setDetLine2(l2);
-    setDetTargetOp(op);
+    setDetTargetType(targetType);
+    setMissionQuestionText(questionText);
     setDetAnswer(ans);
     setDetOptions(generateOptions(ans));
     setDetHint(
-      `Langkah 1: Dua ${fA.name} bernilai ${l1}, maka 1 ${fA.name} = ${l1} ÷ 2 = ${fA.value}. Langkah 2: ${fA.value} + ${fB.name} = ${l2}, maka 1 ${fB.name} = ${l2} - ${fA.value} = ${fB.value}! ${
-        op === "+" ? `Langkah 3: Jumlahkan ${fA.value} + ${fB.value} = ${ans}.` : ""
-      }`
+      `Langkah 1: Temukan nilai ${fA.name} dari baris atas (${l1} ÷ 2 = ${fA.value}). Langkah 2: Kurangkan baris kedua dengan ${fA.name} untuk mengetahui nilai ${fB.name} (${l2} - ${fA.value} = ${fB.value}). ${step3Hint}`
     );
   };
 
@@ -179,18 +215,56 @@ export default function AlgebraDetectiveView({
             </div>
 
             {/* Baris 3: Target Misi Pertanyaan */}
-            <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white shadow-md border-2 border-rose-700">
-              <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-lg">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white shadow-md border-2 border-rose-700 gap-2.5">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                <span className="text-xs sm:text-sm font-black uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-lg shrink-0">
                   Misi:
                 </span>
-                <span className="text-sm sm:text-base font-black">
-                  {detTargetOp === "+"
-                    ? `Berapa ${detFruitA.name} + ${detFruitB.name}?`
-                    : `Berapa nilai 1 ${detFruitB.name}?`}
+
+                {/* Visual Ikon Misi */}
+                <div className="flex items-center gap-1.5 bg-black/20 px-2.5 py-1 rounded-xl">
+                  {detTargetType === "singleB" && (
+                    <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                  )}
+                  {detTargetType === "doubleB" && (
+                    <>
+                      <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                      <span className="text-base sm:text-lg font-black text-rose-200">+</span>
+                      <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                    </>
+                  )}
+                  {detTargetType === "diff" && (
+                    detFruitB.value > detFruitA.value ? (
+                      <>
+                        <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                        <span className="text-base sm:text-lg font-black text-rose-200">-</span>
+                        <detFruitA.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                      </>
+                    ) : (
+                      <>
+                        <detFruitA.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                        <span className="text-base sm:text-lg font-black text-rose-200">-</span>
+                        <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                      </>
+                    )
+                  )}
+                  {detTargetType === "combo" && (
+                    <>
+                      <detFruitA.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                      <span className="text-base sm:text-lg font-black text-rose-200">+</span>
+                      <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                      <span className="text-base sm:text-lg font-black text-rose-200">+</span>
+                      <detFruitB.SvgComponent className="w-7 h-7 sm:w-8 sm:h-8" />
+                    </>
+                  )}
+                </div>
+
+                <span className="text-xs sm:text-sm font-extrabold text-white">
+                  {missionQuestionText}
                 </span>
               </div>
-              <span className="text-xl sm:text-2xl font-black font-display text-yellow-300">
+
+              <span className="text-xl sm:text-2xl font-black font-display text-yellow-300 self-end sm:self-auto shrink-0">
                 = ?
               </span>
             </div>
@@ -270,28 +344,11 @@ export default function AlgebraDetectiveView({
         </div>
       </div>
 
-      {/* Footer Cheat Sheet & Panduan */}
-      <div className="pt-4 border-t-2 border-rose-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-[10px] font-black uppercase text-slate-500 shrink-0 mr-1">
-            Katalog Nilai Buah:
-          </span>
-          {FRUIT_VARIABLES.map((f) => (
-            <div
-              key={f.id}
-              className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-xl border border-slate-200 shrink-0"
-            >
-              <f.SvgComponent className="w-4 h-4" />
-              <span className="text-[11px] font-bold text-slate-700">
-                {f.name} = {f.value}
-              </span>
-            </div>
-          ))}
-        </div>
-
+      {/* Footer Panduan Detektif */}
+      <div className="pt-4 border-t-2 border-rose-100 flex items-center justify-end">
         <button
           onClick={() => setShowHint(!showHint)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-black self-end sm:self-auto shrink-0 btn-chunky"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-black shrink-0 btn-chunky"
         >
           <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
           <span>{showHint ? "Tutup Panduan" : "Panduan Detektif"}</span>
